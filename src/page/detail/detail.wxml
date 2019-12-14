@@ -1,0 +1,38 @@
+<view wx:for="{{itemList}}" wx:key="index">
+    <view class="main" wx:if="{{current==index}}">
+        <view>
+            <text wx:if="{{item.single}}" class="single">单选题</text>
+            <text wx:else class="single">多选题</text>
+            <text class="question">{{item.question}}</text>
+        </view>
+        <view class="answer">
+            <text class="tag">A</text>
+            {{item.A}}
+        </view>
+        <view class="answer">
+            <text class="tag">B</text>
+            {{item.B}}
+        </view>
+        <view class="answer">
+            <text class="tag">C</text>
+            {{item.C}}
+        </view>
+        <view class="answer">
+            <text class="tag">D</text>
+            {{item.D}}
+        </view>
+        <view class="correct">
+            答案 {{item.correct}}
+        </view>
+        <view class="analysis">
+        <view class="lineTop">
+            <text class="line"></text>
+            <text class="lineText">试题详解</text>
+            <text class="line"></text>
+        </view>
+        <view class="content">
+            <rich-text nodes="{{item.analysis}}"></rich-text>
+        </view>
+        </view>
+    </view>
+</view>
