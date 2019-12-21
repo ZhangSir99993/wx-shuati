@@ -1,5 +1,5 @@
 <view class="main">
-    <view bindtap="detailClick">
-        新产品开发战略
+    <view wx:for="{{itemList}}" bindtap="detailClick" data-albumid="{{item.albumId}}">
+        {{item.albumId}}
     </view>
 </view>

@@ -3,8 +3,8 @@ Page({
      * 页面的初始数据
      */
     data: {
-        site: "http://dev.xinyunc.com",
-        url: ':8081/audioDetail',
+        site: "http://localhost",
+        url: ':9090/detail/',
         current:0,
         itemList: [{
             question: '精益新产品开发的一个原则是？',
@@ -22,17 +22,20 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-
+        this.init(this.options.albumid)
     },
-    init: function () {
+    init: function (albumid) {
         var that = this
         wx.request({
-            url: that.data.site + that.data.url,
-            method: 'GET',
+            url: that.data.site + that.data.url + "npdp",
+            method: 'POST',
+            data:{
+                albumId:albumid
+            },
             dataType: 'json',
             success: function (res) {
                 console.log(res)
-                if (res.data.statusCode == 200) {
+                if (res.data.code == 200) {
                     that.setData({
                         itemList: res.data.data
                     })
