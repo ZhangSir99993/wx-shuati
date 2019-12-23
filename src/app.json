@@ -2,6 +2,7 @@
   "pages": [
     "page/index/index",
     "page/detail/detail",
+    "page/result/result",
     "page/demo/demo"
   ],
   "window": {

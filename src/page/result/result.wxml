@@ -1,0 +1,25 @@
+<view class="result">
+    <view class="circle-box">
+          <canvas class="circle" canvas-id="canvasCircle">
+          </canvas>
+          <canvas class="circle" canvas-id="canvasArcCir">
+          </canvas>
+          <view class="circle_content">
+            <text class="top_content">答对</text>
+            <view>
+                <text class="right_count">{{rightCount}}</text>
+                <text class="total_count">/{{itemList.length}}</text>
+            </view>
+          </view>
+      </view>
+    <block wx:for="{{itemList}}" wx:key="index">
+        <text class="tag right" wx:if="{{item.right==1}}">{{index+1}}</text>
+        <text class="tag error" wx:elif="{{item.right==2}}">{{index+1}}</text>
+        <text class="tag" wx:else>{{index+1}}</text>
+    </block>
+
+</view>
+<view class="foot">
+    <view class="analyse">题目解析</view>
+    <view class="continue" bindtap="continueClick">继续练习</view>
+</view>

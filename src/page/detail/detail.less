@@ -1,38 +1,45 @@
 .main {
   font-size: 28rpx;
-  padding: 36rpx;
+  padding: 0 30rpx;
   background: #ffffff;
 
-  .single {
-    display: inline-block;
-    width: 96rpx;
-    height: 40rpx;
-    color: rgba(42, 130, 228, 1);
-    border-radius: 5rpx;
-    font-size: 28rpx;
-    line-height: 150%;
-    border: rgba(42, 130, 228, 1) solid 2rpx;
-    text-align: center;
-    margin-right: 26rpx;
+  .chapters {
+    height: 94rpx;
+    line-height: 94rpx;
+    border-bottom: 1rpx solid #f5f5f5;
+    font-size: 30rpx;
+    color: #111111;
+    display: flex;
+    justify-content: space-between;
+
+    .current{
+      font-size: 40rpx;
+      color: #1292ff;
+    }
+    .total{
+      font-size: 30rpx;
+      color: #555555;
+    }
   }
 
   .question {
     color: rgba(0, 0, 0, 1);
-    font-size: 36rpx;
+    font-size: 30rpx;
     line-height: 150%;
     text-align: left;
     display: inline-block;
+    margin-top: 30rpx;
 
   }
 
   .answer {
     height: 64rpx;
     color: rgba(80, 80, 80, 1);
-    font-size: 36rpx;
+    font-size: 30rpx;
     line-height: 150%;
     text-align: left;
-    margin-top: 40rpx;
-    margin-left: 20rpx;
+    padding-top: 40rpx;
+    padding-left: 20rpx;
 
     .tag {
       display: inline-block;
@@ -40,7 +47,7 @@
       height: 48rpx;
       color: rgba(3, 0, 0, 1);
       border-radius: 26rpx;
-      font-size: 32rpx;
+      font-size: 30rpx;
       line-height: 150%;
       border: rgba(56, 56, 56, 1) solid 2rpx;
       text-align: center;
@@ -52,7 +59,7 @@
     margin-left: 20rpx;
     height: 96rpx;
     color: rgba(80, 80, 80, 1);
-    font-size: 36rpx;
+    font-size: 30rpx;
     line-height: 150%;
     text-align: left;
   }
