@@ -1,7 +1,7 @@
+//api.js
+const site = require('../../api/site.js').site;
 Page({
     data:{
-        site: "http://localhost",
-        url: ':9090/list',
         itemList: [],
         navArr: ["推荐", "情感", "文学", "财商", "传记", "相声", "小说", "音乐"],
         currentTap: 0,
@@ -56,7 +56,7 @@ Page({
     init: function () {
         var that = this
         wx.request({
-            url: that.data.site + that.data.url,
+            url: site.m + 'list',
             method: 'GET',
             dataType: 'json',
             success: function (res) {
@@ -100,6 +100,10 @@ Page({
 
     },
     goNav: function(e){
+        wx.showToast({
+            title:'开发中，敬请期待',
+            icon:'none'
+        })
         // wx.navigateTo({
         //     url: `/pages/result/result?albumid=${this.data.itemList[0].albumid}`
         // })

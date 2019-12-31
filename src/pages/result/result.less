@@ -1,5 +1,5 @@
 .result {
-    padding: 80rpx;
+    padding: 50rpx 0;
 
     .circle-box {
         display: flex;
@@ -23,44 +23,52 @@
         flex-direction: column;
         justify-content: center;
         text-align: center;
-        .top_content{
+
+        .top_content {
             font-size: 42rpx;
             color: #262626;
         }
-        .right_count{
+
+        .right_count {
             font-size: 58rpx;
             color: #4db361;
         }
-        .total_count{
+
+        .total_count {
             color: #555555;
             font-size: 28rpx;
         }
     }
 
+    .mark_conter {
+        background: white;
+        padding: 50rpx;
+        padding-left: 100rpx;
 
+        .tag {
+            display: inline-block;
+            width: 60rpx;
+            height: 60rpx;
+            border-radius: 30rpx;
+            color: #1292ff;
+            border: solid 2rpx #1292ff;
+            text-align: center;
+            margin: 40rpx;
+            box-sizing: border-box;
+            line-height: 60rpx;
+        }
 
-    .tag {
-        display: inline-block;
-        width: 60rpx;
-        height: 60rpx;
-        border-radius: 30rpx;
-        color: #4db361;
-        border: solid 2rpx #4db361;
-        text-align: center;
-        margin: 40rpx;
-        box-sizing: border-box;
-    }
+        .error {
+            border: none;
+            color: white;
+            background-color: #fb6262;
+        }
 
-    .error {
-        border:none;
-        color: white;
-        background-color: #fb6262;
-    }
-
-    .right {
-        border:none;
-        color: white;
-        background-color: #4db361;
+        .right {
+            border: none;
+            color: white;
+            background-color: #4db361;
+        }
     }
 
 }

@@ -96,6 +96,12 @@ Page({
         }
 
     },
+    analyseClick:function(){
+        wx.showToast({
+            title:'开发中，敬请期待',
+            icon:'none'
+        })
+    },
     continueClick: function () {
         wx.navigateTo({
             url: `/pages/detail/detail?albumid=${this.options.albumid}`

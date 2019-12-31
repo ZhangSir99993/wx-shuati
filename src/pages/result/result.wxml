@@ -12,13 +12,15 @@
         </view>
         </view>
     </view>
+    <view class="mark_conter">
     <block wx:for="{{itemList}}" wx:key="index">
         <text class="tag right" wx:if="{{item==1}}">{{index+1}}</text>
         <text class="tag error" wx:elif="{{item==2}}">{{index+1}}</text>
         <text class="tag" wx:else>{{index+1}}</text>
     </block>
+    </view>
 </view>
 <view class="foot">
-    <view class="analyse">题目解析</view>
+    <view class="analyse" bindtap="analyseClick">题目解析</view>
     <view class="continue" bindtap="continueClick">继续练习</view>
 </view>

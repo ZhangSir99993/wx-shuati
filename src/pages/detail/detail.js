@@ -1,10 +1,9 @@
+const site = require('../../api/site.js').site;
 Page({
     /**
      * 页面的初始数据
      */
     data: {
-        site: "http://localhost",
-        url: ':9090/detail/',
         current: 0,
         itemList: [],
         chapters: '',
@@ -38,7 +37,7 @@ Page({
     init: function (albumid) {
         var that = this
         wx.request({
-            url: that.data.site + that.data.url + "npdp",
+            url: site.m + "detail/npdp",
             method: 'POST',
             data: {
                 albumId: albumid,
