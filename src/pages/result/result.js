@@ -30,23 +30,22 @@ Page({
         this.init();
     },
     init: function () {
-        var that = this
-        if (!wx.getStorageSync(this.options.albumid)) {
-            return
-        }
-        var temData = wx.getStorageSync(this.options.albumid),
-            rightCount = 0;
-        for (let index = 0; index < temData.length; index++) {
-            if (temData[index] == 1) {
-                rightCount++
+        var temObj = wx.getStorageSync(this.options.albumid);
+        if (temObj && temObj.answerList) {
+            var rightCount = 0,
+                temData = temObj.answerList;
+            for (let index = 0; index < temData.length; index++) {
+                if (temData[index] == 1) {
+                    rightCount++
+                }
             }
+            this.setData({
+                rightCount: rightCount,
+                scale: (rightCount / temData.length) * 2,
+                itemList: temData
+            })
+            this.drawCircle();
         }
-        that.setData({
-            rightCount: rightCount,
-            scale: (rightCount / temData.length) * 2,
-            itemList: temData
-        })
-        that.drawCircle();
     },
 
     drawCircle: function () {

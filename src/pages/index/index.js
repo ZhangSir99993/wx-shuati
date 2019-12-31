@@ -100,8 +100,8 @@ Page({
 
     },
     goNav: function(e){
-        wx.navigateTo({
-            url: `/pages/result/result?albumid=${this.data.itemList[0].albumid}`
-        })
+        // wx.navigateTo({
+        //     url: `/pages/result/result?albumid=${this.data.itemList[0].albumid}`
+        // })
     }
 })

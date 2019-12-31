@@ -10,24 +10,28 @@ Page({
         chapters: '',
         tempAnswerList: [],
         showMarkView: false,
-        duration:200
+        duration: 200,
+        currentPage: 0
     },
-
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function () {
-        if (wx.getStorageSync(this.options.albumid)) {
-            this.data.tempAnswerList = wx.getStorageSync(this.options.albumid)
-            var current = 0
+        var temObj = wx.getStorageSync(this.options.albumid);
+        if (temObj && temObj.answerList) {
+            this.data.tempAnswerList = temObj.answerList
             for (let index = 0; index < this.data.tempAnswerList.length; index++) {
                 if (this.data.tempAnswerList[index]) {
-                    current = index + 1
+                    this.data.current = index + 1
                 }
             }
-            this.setData({
-                current: current
-            })
+            if (this.data.current >= this.data.tempAnswerList.length) {
+                this.data.currentPage = temObj.currentPage + 1;
+                this.data.tempAnswerList = []
+                this.data.current = 0
+            } else {
+                this.data.currentPage = temObj.currentPage
+            }
         }
         this.init(this.options.albumid)
     },
@@ -37,22 +41,38 @@ Page({
             url: that.data.site + that.data.url + "npdp",
             method: 'POST',
             data: {
-                albumId: albumid
+                albumId: albumid,
+                currentPage: that.data.currentPage
             },
             dataType: 'json',
             success: function (res) {
                 if (res.data.code == 200) {
-                    if (!that.data.tempAnswerList.length) {
-                        that.data.tempAnswerList.length = res.data.data.length
-                        for (let index = 0; index < that.data.tempAnswerList.length; index++) {
-                            that.data.tempAnswerList[index] = 0;
+                    if (res.data.data && res.data.data.length) {
+                        if (!that.data.tempAnswerList.length) {
+                            that.data.tempAnswerList.length = res.data.data.length
+                            for (let index = 0; index < that.data.tempAnswerList.length; index++) {
+                                that.data.tempAnswerList[index] = 0;
+                            }
                         }
+                        that.setData({
+                            current: that.data.current,
+                            itemList: res.data.data,
+                            chapters: that.options.albumid,
+                            tempAnswerList: that.data.tempAnswerList
+                        })
+                    } else {
+                        wx.showModal({
+                            title: '本章节没有更多内容了,是否重新练习?',
+                            success(res) {
+                                if (res.confirm) {
+                                    that.data.currentPage = 0
+                                    that.init(that.options.albumid)
+                                } else if (res.cancel) {
+                                    wx.navigateBack()
+                                }
+                            }
+                        })
                     }
-                    that.setData({
-                        itemList: res.data.data,
-                        chapters: that.options.albumid,
-                        tempAnswerList: that.data.tempAnswerList
-                    })
                 } else {
                     wx.showToast({
                         title: '服务器出了点问题，请稍候重试',
@@ -86,14 +106,14 @@ Page({
             [key]: right
         })
         if (this.data.current >= this.data.itemList.length) {
-            wx.navigateTo({
+            wx.redirectTo({
                 url: `/pages/result/result?albumid=${this.options.albumid}`
             })
         }
     },
-    bindchange:function(e){
+    bindchange: function (e) {
         this.setData({
-            current:e.detail.current
+            current: e.detail.current
         })
     },
     markShowClick: function () {
@@ -138,14 +158,14 @@ Page({
             })
         }.bind(this), 400)
     },
-    tagClick:function(e){
+    tagClick: function (e) {
         var that = this
         this.setData({
-            duration:0
-        },function(){
+            duration: 0
+        }, function () {
             that.setData({
-                duration:200,
-                current:e.currentTarget.dataset.current
+                duration: 200,
+                current: e.currentTarget.dataset.current
             })
         })
         this.markHideClick();
@@ -161,7 +181,7 @@ Page({
         this.markHideClick();
     },
     submitClick: function () {
-        wx.navigateTo({
+        wx.redirectTo({
             url: `/pages/result/result?albumid=${this.options.albumid}`
         })
         this.markHideClick();
@@ -194,10 +214,15 @@ Page({
         this.saveData()
     },
     saveData: function () {
-        try {
-            var tempKey = `${this.options.albumid}`;
-            wx.setStorageSync(tempKey, this.data.tempAnswerList)
-        } catch (e) {}
+        if (this.data.tempAnswerList.includes(1) || this.data.tempAnswerList.includes(2)) {
+            try {
+                var tempKey = `${this.options.albumid}`;
+                wx.setStorageSync(tempKey, {
+                    answerList: this.data.tempAnswerList,
+                    currentPage: this.data.currentPage
+                })
+            } catch (e) {}
+        }
     },
     /**
      * 页面相关事件处理函数--监听用户下拉动作
