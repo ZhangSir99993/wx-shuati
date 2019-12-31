@@ -35,23 +35,22 @@ Page({
         ],
         navList:[{
             name:'学习记录',
-            imgUrl:'../image/learnRecord.png'
+            imgUrl:'../images/learnRecord.png'
         },{
             name:'错题本',
-            imgUrl:'../../image/errSubject.png'
+            imgUrl:'../../images/errSubject.png'
         },{
             name:'学习记录',
-            imgUrl:'../../image/learnRecord.png'
+            imgUrl:'../../images/learnRecord.png'
         },{
             name:'错题本',
-            imgUrl:'../../image/errSubject.png'
+            imgUrl:'../../images/errSubject.png'
         }]
 
 
 
     },
     onLoad:function () {
-        console.log("onLoad")
         this.init()        
     },
     init: function () {
@@ -61,7 +60,6 @@ Page({
             method: 'GET',
             dataType: 'json',
             success: function (res) {
-                console.log(res)
                 if (res.data.code == 200) {
                     that.setData({
                         itemList: res.data.data
@@ -91,11 +89,11 @@ Page({
         console.log("onHide");
     },
     onPageScroll:function (params) {
-        console.log(params.scrollTop)
+        // console.log(params.scrollTop)
     },
     detailClick:function (e) {
         wx.navigateTo({
-            url: `/page/detail/detail?albumid=${e.currentTarget.dataset.albumid}`
+            url: `/pages/detail/detail?albumid=${e.currentTarget.dataset.albumid}`
         });
     },
     navTap: function (e) {
@@ -103,7 +101,7 @@ Page({
     },
     goNav: function(e){
         wx.navigateTo({
-            url: `/page/result/result?albumid=${this.data.itemList[0].albumid}`
+            url: `/pages/result/result?albumid=${this.data.itemList[0].albumid}`
         })
     }
 })

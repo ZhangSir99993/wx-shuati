@@ -16,7 +16,7 @@
      <view class="nav_list">
             <block wx:for="{{navList}}" wx:key="{{index}}">
                 <view class="nav_item"  data-name="{{item.name}}" data-index="{{index}}" bindtap="goNav">
-                    <image src="../../image/learnRecord.png" mode="aspectFill"></image>
+                    <image src="../../images/learnRecord.png" mode="aspectFill"></image>
                     <view>{{item.name}}</view>
                 </view>
             </block>

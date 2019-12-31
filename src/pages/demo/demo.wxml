@@ -1,4 +1,4 @@
-<!--page/demo/demo.wxml-->
+<!--pages/demo/demo.wxml-->
 <view bindtap='swiperchange' style="background:red;width100px;height50px;">
   点击
 </view>

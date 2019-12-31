@@ -1,9 +1,9 @@
 {
   "pages": [
-    "page/index/index",
-    "page/detail/detail",
-    "page/result/result",
-    "page/demo/demo"
+    "pages/index/index",
+    "pages/detail/detail",
+    "pages/result/result",
+    "pages/demo/demo"
   ],
   "window": {
     "navigationBarTextStyle": "black",
@@ -17,14 +17,14 @@
     "borderStyle": "black",
     "backgroundColor": "#ffffff",
     "list": [{
-      "pagePath": "page/index/index",
-      "iconPath": "image/wechat.png",
-      "selectedIconPath": "image/wechatHL.png",
+      "pagePath": "pages/index/index",
+      "iconPath": "images/wechat.png",
+      "selectedIconPath": "images/wechatHL.png",
       "text": "组件"
     }, {
-      "pagePath": "page/demo/demo",
-      "iconPath": "image/wechat.png",
-      "selectedIconPath": "image/wechatHL.png",
+      "pagePath": "pages/demo/demo",
+      "iconPath": "images/wechat.png",
+      "selectedIconPath": "images/wechatHL.png",
       "text": "接口"
     }]
   },

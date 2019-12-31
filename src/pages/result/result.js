@@ -1,4 +1,4 @@
-// page/demo/demo.js
+// pages/demo/demo.js
 var varName;
 Page({
 
@@ -9,24 +9,13 @@ Page({
         site: "http://localhost",
         url: ':9090/detail/',
         scale: 0,
-        allAnswerList: {},
-        currentAnswerList: [],
-        rightCount:0,
+        rightCount: 0,
         itemList: []
     },
     /**
      * 生命周期函数--监听页面加载
      */
-    onLoad: function (options) {
-        this.options.albumid = '第一章 新产品开发战略'
-        this.data.allAnswerList = wx.getStorageSync('allAnswerList');
-        if (this.data.allAnswerList && this.data.allAnswerList[this.options.albumid]) {
-            this.setData({
-                currentAnswerList: this.data.allAnswerList[this.options.albumid]
-            })
-            this.init(this.options.albumid)
-        }
-
+    onLoad: function () {
         //创建并返回绘图上下文context对象。
         var cxt_arc = wx.createCanvasContext('canvasCircle');
         cxt_arc.setLineWidth(10);
@@ -38,57 +27,26 @@ Page({
         cxt_arc.stroke();
         cxt_arc.draw();
 
+        this.init();
     },
-    init: function (albumid) {
+    init: function () {
         var that = this
-        wx.request({
-            url: that.data.site + that.data.url + "npdp",
-            method: 'POST',
-            data: {
-                albumId: albumid
-            },
-            dataType: 'json',
-            success: function (res) {
-                if (res.data.code == 200) {
-                    var temData = res.data.data;
-                    var temLength = that.data.currentAnswerList.length;
-                    var rightCount = 0
-                    for (let index = 0; index < temData.length; index++) {
-                        const element = temData[index];
-                        if (index<temLength) {
-                            if (element.correct == that.data.currentAnswerList[index]) {
-                                element.right = 1;//正确
-                                rightCount++;
-                            }else{
-                                element.right = 2;//错误
-                            }
-                        }else{
-                            element.right = 0;//没答题
-                        }
-                    }
-                    that.setData({
-                        rightCount:rightCount,
-                        scale:(rightCount/temData.length)*2,
-                        itemList: temData
-                    })
-                    that.drawCircle();
-                } else {
-                    wx.showToast({
-                        title: '服务器出了点问题，请稍候重试',
-                        icon: 'none',
-                        duration: 2000
-                    })
-                }
-            },
-            fail: function (err) {
-                wx.showToast({
-                    title: '服务器出了点问题，请稍候重试',
-                    icon: 'none',
-                    duration: 2000
-                })
-            },
-            complete: function () {}
+        if (!wx.getStorageSync(this.options.albumid)) {
+            return
+        }
+        var temData = wx.getStorageSync(this.options.albumid),
+            rightCount = 0;
+        for (let index = 0; index < temData.length; index++) {
+            if (temData[index] == 1) {
+                rightCount++
+            }
+        }
+        that.setData({
+            rightCount: rightCount,
+            scale: (rightCount / temData.length) * 2,
+            itemList: temData
         })
+        that.drawCircle();
     },
 
     drawCircle: function () {
@@ -129,7 +87,7 @@ Page({
             gradient.addColorStop("0.75", "#94e143");
             gradient.addColorStop("1.0", "#7de433");
             //用渐变进行填充
-            ctx.setStrokeStyle('#1292ff');
+            ctx.setStrokeStyle('#4db361');
             ctx.setStrokeStyle(gradient);
             ctx.arc(x, y, radius, s, e, false);
             // ctx.setFillStyle(gradient)
@@ -139,11 +97,11 @@ Page({
         }
 
     },
-    continueClick:function(){
+    continueClick: function () {
         wx.navigateTo({
-            url: `/page/detail/detail?albumid=${this.options.albumid}`
+            url: `/pages/detail/detail?albumid=${this.options.albumid}`
         });
-    },  
+    },
     /**
      * 生命周期函数--监听页面初次渲染完成
      */
