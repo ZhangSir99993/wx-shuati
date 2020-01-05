@@ -91,6 +91,7 @@ Page({
         })
     },
     answerClick: function (e) {
+        var that = this
         var current = e.currentTarget.dataset.current,
             answer = e.currentTarget.dataset.answer;
         var right = 0;
@@ -100,14 +101,51 @@ Page({
             right = 2
         }
         var key = `tempAnswerList[${current}]`
+        var item = `itemList[${current}].select`
         this.setData({
             current: current + 1,
-            [key]: right
+            [key]: right,
+            [item]:answer
         })
         if (this.data.current >= this.data.itemList.length) {
-            wx.redirectTo({
-                url: `/pages/result/result?albumid=${this.options.albumid}`
+            this.setData({
+                current: this.data.current - 1,
             })
+            var temCount = 0;
+            for (let index = 0; index < this.data.tempAnswerList.length; index++) {
+                if (this.data.tempAnswerList[index] == 0) {
+                    temCount++;
+                }
+            }
+            if (temCount) {
+                wx.showModal({
+                    title: '提交答案',
+                    content: `共${this.data.itemList.length}道题，还有${temCount}道未作答`,
+                    cancelText:'答题卡',
+                    confirmText:'提交',
+                    success(res) {
+                        if (res.confirm) {
+                            that.submitClick();
+                        } else if (res.cancel) {
+                            that.markShowClick();
+                        }
+                    }
+                })
+            } else {
+                wx.showModal({
+                    title: '提交答案',
+                    content: `共${this.data.itemList.length}道题，您已全部作答`,
+                    cancelText:'答题卡',
+                    confirmText:'提交',
+                    success(res) {
+                        if (res.confirm) {
+                            that.submitClick();
+                        } else if (res.cancel) {
+                            that.markShowClick();
+                        }
+                    }
+                })
+            }
         }
     },
     bindchange: function (e) {
@@ -184,6 +222,7 @@ Page({
             url: `/pages/result/result?albumid=${this.options.albumid}`
         })
         this.markHideClick();
+        this.saveData();
     },
     /**
      * 生命周期函数--监听页面初次渲染完成
@@ -203,14 +242,14 @@ Page({
      * 生命周期函数--监听页面隐藏
      */
     onHide: function () {
-        this.saveData()
+        
     },
 
     /**
      * 生命周期函数--监听页面卸载
      */
     onUnload: function () {
-        this.saveData()
+        
     },
     saveData: function () {
         if (this.data.tempAnswerList.includes(1) || this.data.tempAnswerList.includes(2)) {
@@ -220,6 +259,38 @@ Page({
                     answerList: this.data.tempAnswerList,
                     currentPage: this.data.currentPage
                 })
+                //添加错题到错题集
+                var error_subject = wx.getStorageSync("error_subject")||[];//获取全部错题集(数组)
+                var error_id = wx.getStorageSync("error_id")||[];//获取全部错题集id(数组)
+                for (let index = 0; index < this.data.itemList.length; index++) {
+                    const element = this.data.itemList[index];
+                    //如果存在错题
+                    if (element.select && (element.select != element.correct)) {
+                        //如果错题集里存在该错题
+                        if (error_id.includes(element.id)) {
+                            //找到改错题，修改对应的错误答案
+                            error_subject.forEach(item => {
+                                if (item.id==element.id) {
+                                    item.select = element.select//更新错误答案
+                                }
+                            });
+                        }else{//如果不存在就新增该错题
+                            element.time = new Date().toLocaleString().split(' ')[0];
+                            error_subject.push(element)
+                            error_id.push(element.id)
+                        }
+                    }
+                }
+                wx.setStorageSync("error_subject", error_subject)
+                wx.setStorageSync("error_id", error_id)
+                //添加到练习记录
+                //添加错题到错题集
+                var exercise_record = wx.getStorageSync("exercise_record")||[];//获取全部练习记录(数组)
+                var obj = {
+                    albumId:this.options.albumid,
+                    currentPage:this.data.currentPage
+                }
+
             } catch (e) {}
         }
     },

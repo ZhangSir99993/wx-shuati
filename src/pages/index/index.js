@@ -1,12 +1,11 @@
 //api.js
 const site = require('../../api/site.js').site;
 Page({
-    data:{
+    data: {
         itemList: [],
         navArr: ["推荐", "情感", "文学", "财商", "传记", "相声", "小说", "音乐"],
         currentTap: 0,
-        bannerAudioList: [
-            {
+        bannerAudioList: [{
                 "id": 4,
                 "albumId": "相声/郭德纲于谦专场/01郭德纲于谦专场/",
                 "isAlbum": "01郭德纲于谦专场",
@@ -33,25 +32,25 @@ Page({
                 "version": 0
             }
         ],
-        navList:[{
-            name:'学习记录',
-            imgUrl:'../images/learnRecord.png'
-        },{
-            name:'错题本',
-            imgUrl:'../../images/errSubject.png'
-        },{
-            name:'学习记录',
-            imgUrl:'../../images/learnRecord.png'
-        },{
-            name:'错题本',
-            imgUrl:'../../images/errSubject.png'
+        navList: [{
+            name: '学习记录',
+            imgUrl: '../images/learnRecord.png'
+        }, {
+            name: '错题本',
+            imgUrl: '../../images/errSubject.png'
+        }, {
+            name: '学习记录',
+            imgUrl: '../../images/learnRecord.png'
+        }, {
+            name: '错题本',
+            imgUrl: '../../images/errSubject.png'
         }]
 
 
 
     },
-    onLoad:function () {
-        this.init()        
+    onLoad: function () {
+        this.init()
     },
     init: function () {
         var that = this
@@ -82,30 +81,42 @@ Page({
             complete: function () {}
         })
     },
-    onShow:function(){
+    onShow: function () {
         console.log("onShow");
     },
     onHide: function () {
         console.log("onHide");
     },
-    onPageScroll:function (params) {
+    onPageScroll: function (params) {
         // console.log(params.scrollTop)
     },
-    detailClick:function (e) {
+    detailClick: function (e) {
         wx.navigateTo({
             url: `/pages/detail/detail?albumid=${e.currentTarget.dataset.albumid}`
         });
     },
     navTap: function (e) {
-
+       
+       
     },
-    goNav: function(e){
-        wx.showToast({
-            title:'开发中，敬请期待',
-            icon:'none'
-        })
-        // wx.navigateTo({
-        //     url: `/pages/result/result?albumid=${this.data.itemList[0].albumid}`
-        // })
+    goNav: function (e) {
+        switch (e.currentTarget.dataset.index) {
+            case 0:
+
+                break;
+            case 1:
+                wx.navigateTo({
+                    url: '/pages/errsubject/errsubject'
+                });
+                break;
+            case 2:
+
+                break;
+            case 3:
+
+                break;
+            default:
+                break;
+        }
     }
 })

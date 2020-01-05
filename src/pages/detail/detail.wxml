@@ -1,3 +1,4 @@
+<wxs src="../../utils/tool.wxs" module="util"></wxs>
 <view class="main">
     <view class="chapters">
         <text>{{chapters}}</text>
@@ -10,24 +11,24 @@
     <swiper class="items" current="{{current}}" duration="{{duration}}" bindchange="bindchange">
         <block wx:for="{{itemList}}" wx:key="index">
             <swiper-item class="item">
-                <view class="question">{{item.question}}</view>
-                <button class="answer" bindtap="answerClick" data-answer="A" data-current="{{current}}" hover-class="defaultTap">
+                <view class="question">{{util.deleteNum(item.question)}}</view>
+                <button class="answer {{item.select=='A'?'active':''}}" bindtap="answerClick" data-answer="A" data-current="{{current}}" hover-class="defaultTap">
                     <text class="tag">A</text>
                     <text>{{item.A}}</text>
                 </button>
-                <button class="answer" bindtap="answerClick" data-answer="B" data-current="{{current}}" hover-class="defaultTap">
+                <button class="answer {{item.select=='B'?'active':''}}" bindtap="answerClick" data-answer="B" data-current="{{current}}" hover-class="defaultTap">
                     <text class="tag">B</text>
                     <text>{{item.B}}</text>
                 </button>
-                <button class="answer" wx:if="{{item.C}}" bindtap="answerClick" data-answer="C" data-current="{{current}}" hover-class="defaultTap">
+                <button class="answer {{item.select=='C'?'active':''}}" wx:if="{{item.C}}" bindtap="answerClick" data-answer="C" data-current="{{current}}" hover-class="defaultTap">
                     <text class="tag">C</text>
                     <text>{{item.C}}</text>
                 </button>
-                <button class="answer" wx:if="{{item.D}}" bindtap="answerClick" data-answer="D" data-current="{{current}}" hover-class="defaultTap">
+                <button class="answer {{item.select=='D'?'active':''}}" wx:if="{{item.D}}" bindtap="answerClick" data-answer="D" data-current="{{current}}" hover-class="defaultTap">
                     <text class="tag">D</text>
                     <text>{{item.D}}</text>
                 </button>
-                <button class="answer" wx:if="{{item.E}}" bindtap="answerClick" data-answer="E" data-current="{{current}}" hover-class="defaultTap">
+                <button class="answer {{item.select=='E'?'active':''}}" wx:if="{{item.E}}" bindtap="answerClick" data-answer="E" data-current="{{current}}" hover-class="defaultTap">
                     <text class="tag">E</text>
                     <text>{{item.E}}</text>
                 </button>

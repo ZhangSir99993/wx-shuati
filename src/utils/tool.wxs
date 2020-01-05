@@ -1,0 +1,50 @@
+//价格小数点前
+var priceb = function(p){
+  var p = ''+p;
+  return p.split('.')[0];
+}
+//价格小数点后
+var prices = function(p){
+  var p = ''+p;
+  return p.split('.')[1];
+}
+//修改图片地址为https
+var imgUrl = function img(url){
+  return 'https://'+url.split('//')[1]
+}
+//字符串数字转整形
+var toInts = function(t){
+  return parseInt(t);
+}
+//判断一个元素是否在某个数组中
+var indexOf = function(arr,item){
+  return arr.indexOf(item)
+}
+//>99999 显示10万11万.....
+var toThousand = function(t){
+  if(t > 99999){
+    return parseInt(t/10000) + '万';
+  }else {
+    return t;
+  }
+}
+// 向上取整
+var ceil = function(t){
+  return Math.ceil(t)
+}
+//去除题目前面的序号
+var deleteNum = function(str){
+  var reg=getRegExp('\d+\.');
+  return str.replace(reg,'')
+}
+
+module.exports = {
+  toInt:toInts,
+  priceb:priceb,
+  prices:prices,
+  imgUrl:imgUrl,
+  indexOf:indexOf,
+  toThousand:toThousand,
+  ceil:ceil,
+  deleteNum:deleteNum
+};

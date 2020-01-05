@@ -79,15 +79,16 @@ Page({
             ctx.setLineCap('round');
 
             ctx.beginPath();
-            var gradient = ctx.createLinearGradient(0, 180, 180, 0);
-            gradient.addColorStop("0", "#f07f65");
-            gradient.addColorStop("0.25", "#f08063");
-            gradient.addColorStop("0.5", "#f3ba6f");
-            gradient.addColorStop("0.75", "#94e143");
-            gradient.addColorStop("1.0", "#7de433");
+            // var gradient = ctx.createLinearGradient(0, 180, 180, 0);
+            // gradient.addColorStop("0", "#f07f65");
+            // gradient.addColorStop("0.25", "#f08063");
+            // gradient.addColorStop("0.5", "#f3ba6f");
+            // gradient.addColorStop("0.75", "#94e143");
+            // gradient.addColorStop("1.0", "#7de433");
             //用渐变进行填充
+            // ctx.setStrokeStyle(gradient);
+            //用单一色进行填充
             ctx.setStrokeStyle('#4db361');
-            ctx.setStrokeStyle(gradient);
             ctx.arc(x, y, radius, s, e, false);
             // ctx.setFillStyle(gradient)
             // ctx.fillRect(0, 0, 200, 200)

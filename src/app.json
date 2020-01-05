@@ -3,6 +3,7 @@
     "pages/index/index",
     "pages/detail/detail",
     "pages/result/result",
+    "pages/errsubject/errsubject",
     "pages/demo/demo"
   ],
   "window": {
