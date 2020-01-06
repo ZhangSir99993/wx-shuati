@@ -2,7 +2,7 @@
 <view class="main">
     <view class="chapters">
         <text>{{chapters}}</text>
-        <text wx:if="{{currentAnswerList.length}}" bindtap="markShowClick">  答题卡</text>
+        <text wx:if="{{showCard}}" bindtap="markShowClick">  答题卡</text>
         <view>
             <text class="current">{{util.toInt(current)+1}}</text>
             <text class="total">/{{itemList.length}}</text>
@@ -11,42 +11,70 @@
     <swiper class="items" current="{{current}}" duration="{{duration}}" bindchange="bindchange">
         <block wx:for="{{itemList}}" wx:key="index">
             <swiper-item class="item">
-                <view class="question">{{util.deleteNum(item.question)}}</view>
-                <button class="answer {{item.correct=='A'?'correct':''}} {{item.select=='A'?'error':''}}" hover-class="defaultTap">
-                    <text class="tag">A</text>
-                    <text>{{item.A}}</text>
-                </button>
-                <button class="answer {{item.correct=='B'?'correct':''}} {{item.select=='B'?'error':''}}" hover-class="defaultTap">
-                    <text class="tag">B</text>
-                    <text>{{item.B}}</text>
-                </button>
-                <button class="answer {{item.correct=='C'?'correct':''}} {{item.select=='C'?'error':''}}" wx:if="{{item.C}}" hover-class="defaultTap">
-                    <text class="tag">C</text>
-                    <text>{{item.C}}</text>
-                </button>
-                <button class="answer {{item.correct=='D'?'correct':''}} {{item.select=='D'?'error':''}}" wx:if="{{item.D}}" hover-class="defaultTap">
-                    <text class="tag">D</text>
-                    <text>{{item.D}}</text>
-                </button>
-                <button class="answer {{item.correct=='E'?'correct':''}} {{item.select=='E'?'error':''}}" wx:if="{{item.E}}" hover-class="defaultTap">
-                    <text class="tag">E</text>
-                    <text>{{item.E}}</text>
-                </button>
-                <view class="correctView">
-                    答案 {{item.correct}}
-                </view>
-                <view class="analysis" wx:if="{{item.analysis}}">
-                    <view class="lineTop">
-                        <text class="line"></text>
-                        <text class="lineText">试题详解</text>
-                        <text class="line"></text>
+                <view wx-if="{{showAnalyse}}">
+                    <view class="question">{{util.deleteNum(item.question)}}</view>
+                    <button class="answer {{item.correct=='A'?'correct':''}} {{item.select=='A'?'error':''}}" hover-class="defaultTap">
+                        <text class="tag">A</text>
+                        <text>{{item.A}}</text>
+                    </button>
+                    <button class="answer {{item.correct=='B'?'correct':''}} {{item.select=='B'?'error':''}}" hover-class="defaultTap">
+                        <text class="tag">B</text>
+                        <text>{{item.B}}</text>
+                    </button>
+                    <button class="answer {{item.correct=='C'?'correct':''}} {{item.select=='C'?'error':''}}" wx:if="{{item.C}}" hover-class="defaultTap">
+                        <text class="tag">C</text>
+                        <text>{{item.C}}</text>
+                    </button>
+                    <button class="answer {{item.correct=='D'?'correct':''}} {{item.select=='D'?'error':''}}" wx:if="{{item.D}}" hover-class="defaultTap">
+                        <text class="tag">D</text>
+                        <text>{{item.D}}</text>
+                    </button>
+                    <button class="answer {{item.correct=='E'?'correct':''}} {{item.select=='E'?'error':''}}" wx:if="{{item.E}}" hover-class="defaultTap">
+                        <text class="tag">E</text>
+                        <text>{{item.E}}</text>
+                    </button>
+                    <view class="correctView">
+                        答案 {{item.correct}}
                     </view>
-                    <view class="content">
-                        <rich-text nodes="{{item.analysis}}"></rich-text>
+                    <view class="analysis" wx:if="{{item.analysis}}">
+                        <view class="lineTop">
+                            <text class="line"></text>
+                            <text class="lineText">试题详解</text>
+                            <text class="line"></text>
+                        </view>
+                        <view class="content">
+                            <rich-text nodes="{{item.analysis}}"></rich-text>
+                        </view>
+                    </view>
+                    <view>考点</view>
+                    <text class="kaodain">{{item.kaodianId}}</text>
+                </view>
+                <view wx:else>
+                    <view class="question">{{util.deleteNum(item.question)}}</view>
+                    <button class="answer" hover-class="defaultTap">
+                        <text class="tag">A</text>
+                        <text>{{item.A}}</text>
+                    </button>
+                    <button class="answer" hover-class="defaultTap">
+                        <text class="tag">B</text>
+                        <text>{{item.B}}</text>
+                    </button>
+                    <button class="answer" wx:if="{{item.C}}" hover-class="defaultTap">
+                        <text class="tag">C</text>
+                        <text>{{item.C}}</text>
+                    </button>
+                    <button class="answer" wx:if="{{item.D}}" hover-class="defaultTap">
+                        <text class="tag">D</text>
+                        <text>{{item.D}}</text>
+                    </button>
+                    <button class="answer" wx:if="{{item.E}}" hover-class="defaultTap">
+                        <text class="tag">E</text>
+                        <text>{{item.E}}</text>
+                    </button>
+                    <view class="inspectAnalyse" bindtap="inspectAnalyse">
+                        查看解析
                     </view>
                 </view>
-                <view>考点</view>
-                <text class="kaodain">{{item.kaodianId}}</text>
             </swiper-item>
         </block>
     </swiper>

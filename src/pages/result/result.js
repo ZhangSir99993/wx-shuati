@@ -10,7 +10,9 @@ Page({
         url: ':9090/detail/',
         scale: 0,
         rightCount: 0,
-        itemList: []
+        itemList: [],
+        chooseList:[],
+        isFromRecord:false
     },
     /**
      * 生命周期函数--监听页面加载
@@ -29,9 +31,11 @@ Page({
         this.init(options);
     },
     init: function (options) {
-        if (options.currentAnswerList) {
+        if (options.exercise_record) {//从练习记录页进来的
+            var exercise_record = JSON.parse(options.exercise_record);
+            this.data.chooseList = exercise_record.chooseList;
             var rightCount = 0,
-                tempAnswerList = JSON.parse(options.currentAnswerList);
+                tempAnswerList = exercise_record.currentAnswerList;
             for (let index = 0; index < tempAnswerList.length; index++) {
                 if (tempAnswerList[index] == 1) {
                     rightCount++
@@ -40,14 +44,15 @@ Page({
             this.setData({
                 rightCount: rightCount,
                 scale: (rightCount / tempAnswerList.length) * 2,
-                itemList: tempAnswerList
+                itemList: tempAnswerList,
+                isFromRecord:true
             })
             this.drawCircle();
         } else {
-            var answer_List = wx.getStorageSync(this.options.albumid) || []; //获取当前章节的答题列表
+            var answer_List = wx.getStorageSync(options.albumId) || []; //获取当前章节的答题列表
             if (answer_List.length) {
                 var rightCount = 0,
-                    tempAnswerList = answer_List[answer_List.length - 1];
+                    tempAnswerList = answer_List[answer_List.length - 1].currentAnswerList;
                 for (let index = 0; index < tempAnswerList.length; index++) {
                     if (tempAnswerList[index] == 1) {
                         rightCount++
@@ -111,16 +116,29 @@ Page({
             ctx.stroke()
             ctx.draw()
         }
-
     },
+    //全部题目解析
     analyseClick: function () {
-        // wx.navigateTo({
-        //     url: `/pages/analysis/analysis?albumid=${this.options.albumid}`
-        // });
+        if (this.options.exercise_record) {
+            wx.navigateTo({
+                url: `/pages/analysis/analysis?exercise_record=${this.options.exercise_record}`
+            });
+        }else{
+            wx.navigateTo({
+                url: `/pages/analysis/analysis?albumId=${this.options.albumId}`
+            });
+        }
     },
+    //继续联系
     continueClick: function () {
         wx.navigateTo({
-            url: `/pages/detail/detail?albumid=${this.options.albumid}`
+            url: `/pages/detail/detail?albumId=${this.options.albumId}`
+        });
+    },
+    //错题解析
+    errAnalyseClick:function(){
+        wx.navigateTo({
+            url: `/pages/analysis/analysis?exercise_record=${this.options.exercise_record}&only_error=true`
         });
     },
     /**

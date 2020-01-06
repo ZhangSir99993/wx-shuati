@@ -92,7 +92,7 @@ Page({
     },
     detailClick: function (e) {
         wx.navigateTo({
-            url: `/pages/detail/detail?albumid=${e.currentTarget.dataset.albumid}`
+            url: `/pages/detail/detail?albumId=${e.currentTarget.dataset.albumid}`
         });
     },
     navTap: function (e) {

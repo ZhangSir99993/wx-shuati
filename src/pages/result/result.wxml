@@ -20,7 +20,11 @@
     </block>
     </view>
 </view>
-<view class="foot">
+<view class="foot" wx:if="{{isFromRecord}}">
+    <view class="analyse" bindtap="analyseClick">全部解析</view>
+    <view class="continue" bindtap="errAnalyseClick">错题解析</view>
+</view>
+<view class="foot" wx:else>
     <view class="analyse" bindtap="analyseClick">题目解析</view>
     <view class="continue" bindtap="continueClick">继续练习</view>
 </view>

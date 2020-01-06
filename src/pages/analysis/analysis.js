@@ -8,7 +8,10 @@ Page({
         itemList: [],
         chapters: '',
         currentAnswerList: [],
+        chooseList: [],
         showMarkView: false,
+        showCard:false,
+        showAnalyse:true,
         duration: 200,
         currentPage: 0
     },
@@ -17,45 +20,76 @@ Page({
      */
     onLoad: function (options) {
         var that = this
-        var error_subject = wx.getStorageSync("error_subject")||[]; //获取全部错题集(数组)
-        if (error_subject.length) {
-            this.setData({
-                itemList:error_subject.reverse(),
-                current:options.current
-            },function(){
-                that.setData({
-                    chapters:that.data.itemList[options.current].albumId
-                })
-            })
-        }
-        return;
-        var answer_List = wx.getStorageSync(this.options.albumid) || []; //获取当前章节的答题列表
-        if (answer_List.length) {
-            this.data.currentAnswerList = answer_List[answer_List.length - 1];
+        if (options.exercise_record) { //从练习记录页_的result报告页进来的
+            var exercise_record = JSON.parse(options.exercise_record);
+            this.data.currentAnswerList = exercise_record.currentAnswerList;
+            this.data.chooseList = exercise_record.chooseList;
             this.data.current = 0
-            this.data.currentPage = answer_List.length - 1;
+            this.data.currentPage = exercise_record.currentPage;
+            this.init(exercise_record.albumId)
+        } else if (options.albumId) { //从答题页_的result报告页进来的
+            var answer_List = wx.getStorageSync(options.albumId) || []; //获取当前章节的答题列表
+            if (answer_List.length) {
+                this.data.currentAnswerList = answer_List[answer_List.length - 1].currentAnswerList;
+                this.data.chooseList = answer_List[answer_List.length - 1].chooseList;
+                this.data.current = 0
+                this.data.currentPage = answer_List.length - 1;
+            }
+            this.init(options.albumId)
+        } else { //从错题列表中进来的
+            var error_subject = wx.getStorageSync("error_subject") || []; //获取全部错题集(数组)
+            if (error_subject.length) {
+                this.setData({
+                    itemList: error_subject.reverse(),
+                    current: options.current,
+                    showAnalyse:false
+                }, function () {
+                    that.setData({
+                        chapters: that.data.itemList[options.current].albumId
+                    })
+                })
+            }
         }
-        this.init(this.options.albumid)
     },
-    init: function (albumid) {
+    init: function (albumId) {
         var that = this
         wx.request({
             url: site.m + "detail/npdp",
             method: 'POST',
             data: {
-                albumId: albumid,
+                albumId: albumId,
                 currentPage: that.data.currentPage
             },
             dataType: 'json',
             success: function (res) {
                 if (res.data.code == 200) {
                     if (res.data.data && res.data.data.length) {
-                        that.setData({
-                            current: that.data.current,
-                            itemList: res.data.data,
-                            chapters: that.options.albumid,
-                            currentAnswerList: that.data.currentAnswerList
-                        })
+                        for (let index = 0; index < res.data.data.length; index++) {
+                            res.data.data[index].select = that.data.chooseList[index]
+                        }
+                        if (that.options.only_error) {//只展示错误的题目
+                            var temp_err = []
+                            for (let index = 0; index < that.data.currentAnswerList.length; index++) {
+                                const element = that.data.currentAnswerList[index];
+                                if (element == 2) {
+                                    temp_err.push(res.data.data[index])
+                                }
+                            }
+                            that.setData({
+                                showCard:false,
+                                current: that.data.current,
+                                itemList: temp_err,
+                                chapters: albumId
+                            })
+                        }else{
+                            that.setData({
+                                showCard:true,
+                                current: that.data.current,
+                                itemList: res.data.data,
+                                chapters: albumId,
+                                currentAnswerList: that.data.currentAnswerList
+                            })
+                        }
                     }
                 } else {
                     wx.showToast({
@@ -79,7 +113,7 @@ Page({
     bindchange: function (e) {
         this.setData({
             current: e.detail.current,
-            chapters:this.data.itemList[e.detail.current].albumId
+            chapters: this.data.itemList[e.detail.current].albumId
         })
     },
     markShowClick: function () {
@@ -135,6 +169,11 @@ Page({
             })
         })
         this.markHideClick();
+    },
+    inspectAnalyse:function(){
+        this.setData({
+            showAnalyse:true
+        })
     },
     /**
      * 生命周期函数--监听页面初次渲染完成

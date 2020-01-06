@@ -8,6 +8,7 @@ Page({
         itemList: [],
         chapters: '',
         currentAnswerList: [],
+        chooseList:[],
         showMarkView: false,
         duration: 200,
         currentPage: 0
@@ -16,9 +17,11 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function () {
-        var answer_List = wx.getStorageSync(this.options.albumid)||[];//获取当前章节的答题列表
+        var answer_List = wx.getStorageSync(this.options.albumId)||[];//获取当前章节的答题列表
         if (answer_List.length) {
-            this.data.currentAnswerList = answer_List[answer_List.length-1];
+            this.data.currentAnswerList = answer_List[answer_List.length-1].currentAnswerList;
+            this.data.chooseList = answer_List[answer_List.length-1].chooseList;
+
             for (let index = 0; index < this.data.currentAnswerList.length; index++) {
                 if (this.data.currentAnswerList[index]) {
                     this.data.current = index + 1
@@ -27,20 +30,21 @@ Page({
             if (this.data.current >= this.data.currentAnswerList.length) {
                 this.data.currentPage = answer_List.length;
                 this.data.currentAnswerList = []
+                this.data.chooseList = []
                 this.data.current = 0
             } else {
                 this.data.currentPage = answer_List.length-1;
             }
         }
-        this.init(this.options.albumid)
+        this.init(this.options.albumId)
     },
-    init: function (albumid) {
+    init: function (albumId) {
         var that = this
         wx.request({
             url: site.m + "detail/npdp",
             method: 'POST',
             data: {
-                albumId: albumid,
+                albumId: albumId,
                 currentPage: that.data.currentPage
             },
             dataType: 'json',
@@ -49,15 +53,18 @@ Page({
                     if (res.data.data && res.data.data.length) {
                         if (!that.data.currentAnswerList.length) {
                             that.data.currentAnswerList.length = res.data.data.length
+                            that.data.chooseList.length = res.data.data.length
                             for (let index = 0; index < that.data.currentAnswerList.length; index++) {
                                 that.data.currentAnswerList[index] = 0;
+                                that.data.chooseList[index] = '';
                             }
                         }
                         that.setData({
                             current: that.data.current,
                             itemList: res.data.data,
-                            chapters: that.options.albumid,
-                            currentAnswerList: that.data.currentAnswerList
+                            chapters: that.options.albumId,
+                            currentAnswerList: that.data.currentAnswerList,
+                            chooseList:that.data.chooseList
                         })
                     } else {
                         wx.showModal({
@@ -65,7 +72,7 @@ Page({
                             success(res) {
                                 if (res.confirm) {
                                     that.data.currentPage = 0
-                                    that.init(that.options.albumid)
+                                    that.init(that.options.albumId)
                                 } else if (res.cancel) {
                                     wx.navigateBack()
                                 }
@@ -102,10 +109,12 @@ Page({
         }
         var key = `currentAnswerList[${current}]`
         var item = `itemList[${current}].select`
+        var choose = `chooseList[${current}]`
         this.setData({
             current: current + 1,
             [key]: right,
-            [item]:answer
+            [item]:answer,
+            [choose]:answer
         })
         if (this.data.current >= this.data.itemList.length) {
             this.setData({
@@ -210,16 +219,18 @@ Page({
     resetClick: function () {
         for (let index = 0; index < this.data.currentAnswerList.length; index++) {
             this.data.currentAnswerList[index] = 0;
+            this.data.chooseList[index] = 0;
         }
         this.setData({
             current: 0,
-            currentAnswerList: this.data.currentAnswerList
+            currentAnswerList: this.data.currentAnswerList,
+            chooseList:this.data.chooseList
         })
         this.markHideClick();
     },
     submitClick: function () {
         wx.redirectTo({
-            url: `/pages/result/result?albumid=${this.options.albumid}`
+            url: `/pages/result/result?albumId=${this.options.albumId}`
         })
         this.markHideClick();
         this.saveData();
@@ -254,15 +265,27 @@ Page({
     saveData: function () {
         if (this.data.currentAnswerList.includes(1) || this.data.currentAnswerList.includes(2)) {
             try {
-                var tempKey = `${this.options.albumid}`;
+                var tempKey = `${this.options.albumId}`;
                 var answer_List = wx.getStorageSync(tempKey)||[];//获取当前章节的答题列表
                 if (this.data.currentPage==0) {
-                    wx.setStorageSync(tempKey, [this.data.currentAnswerList])
+                    var obj = {
+                        currentAnswerList:this.data.currentAnswerList,
+                        chooseList:this.data.chooseList
+                    }
+                    wx.setStorageSync(tempKey, [obj])
                 }else{
                     if (this.data.currentPage<answer_List.length) {
-                        answer_List[this.data.currentPage] = this.data.currentAnswerList;
+                        var obj = {
+                            currentAnswerList:this.data.currentAnswerList,
+                            chooseList:this.data.chooseList
+                        }
+                        answer_List[this.data.currentPage] = obj;
                     }else{
-                        answer_List.push(this.data.currentAnswerList)
+                        var obj = {
+                            currentAnswerList:this.data.currentAnswerList,
+                            chooseList:this.data.chooseList
+                        }
+                        answer_List.push(obj)
                     }
                     wx.setStorageSync(tempKey, answer_List)
                 }
@@ -291,7 +314,7 @@ Page({
                 wx.setStorageSync("error_subject", error_subject)
                 wx.setStorageSync("error_id", error_id)
                 //添加到练习记录
-                var exercise_record = wx.getStorageSync("exercise_record")||[];//获取全部练习记录(数组)
+                var exercise_record_list = wx.getStorageSync("exercise_record_list")||[];//获取全部练习记录(数组)
                 var rightCount = 0;
                 for (let index = 0; index < this.data.currentAnswerList.length; index++) {
                     if (this.data.currentAnswerList[index] == 1) {
@@ -299,13 +322,15 @@ Page({
                     }
                 }
                 var obj = {
-                    albumId:this.options.albumid,
+                    albumId:this.options.albumId,
                     currentAnswerList:this.data.currentAnswerList,
+                    chooseList:this.data.chooseList,
+                    currentPage:this.data.currentPage,
                     rightCount:rightCount,
                     time:new Date().toLocaleString().split(' ')[0]
                 }
-                exercise_record.push(obj);
-                wx.setStorageSync("exercise_record", exercise_record)
+                exercise_record_list.push(obj);
+                wx.setStorageSync("exercise_record_list", exercise_record_list)
             } catch (e) {}
         }
     },
