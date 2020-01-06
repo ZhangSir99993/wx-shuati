@@ -102,7 +102,9 @@ Page({
     goNav: function (e) {
         switch (e.currentTarget.dataset.index) {
             case 0:
-
+                wx.navigateTo({
+                    url: '/pages/record/record'
+                });
                 break;
             case 1:
                 wx.navigateTo({

@@ -1,11 +1,10 @@
 <view class="main">
-    <view class="item" wx:for="{{itemList}}" wx:key="index">
+    <view class="item" wx:for="{{itemList}}" wx:key="index" bindtap="recordClick" data-index="{{index}}">
         <view class="question">{{item.albumId}}</view>
-       
         <view class="albumId">
             <text>{{item.time}}</text>
-            <text>{{item.total}}</text>
-            <text>{{item.rightCount}}</text>
+            <text>共{{item.currentAnswerList.length}}道</text>
+            <text>做对{{item.rightCount}}道</text>
         </view>
     </view>
     <view class="item" wx:if="{{!itemList.length}}">

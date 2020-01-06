@@ -4,6 +4,8 @@
     "pages/detail/detail",
     "pages/result/result",
     "pages/errsubject/errsubject",
+    "pages/record/record",
+    "pages/analysis/analysis",
     "pages/demo/demo"
   ],
   "window": {

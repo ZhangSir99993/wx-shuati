@@ -15,7 +15,7 @@ Page({
     /**
      * 生命周期函数--监听页面加载
      */
-    onLoad: function () {
+    onLoad: function (options) {
         //创建并返回绘图上下文context对象。
         var cxt_arc = wx.createCanvasContext('canvasCircle');
         cxt_arc.setLineWidth(10);
@@ -26,26 +26,42 @@ Page({
         cxt_arc.arc(90, 90, 80, 0, 2 * Math.PI, false);
         cxt_arc.stroke();
         cxt_arc.draw();
-
-        this.init();
+        this.init(options);
     },
-    init: function () {
-        var temObj = wx.getStorageSync(this.options.albumid);
-        if (temObj && temObj.answerList) {
+    init: function (options) {
+        if (options.currentAnswerList) {
             var rightCount = 0,
-                temData = temObj.answerList;
-            for (let index = 0; index < temData.length; index++) {
-                if (temData[index] == 1) {
+                tempAnswerList = JSON.parse(options.currentAnswerList);
+            for (let index = 0; index < tempAnswerList.length; index++) {
+                if (tempAnswerList[index] == 1) {
                     rightCount++
                 }
             }
             this.setData({
                 rightCount: rightCount,
-                scale: (rightCount / temData.length) * 2,
-                itemList: temData
+                scale: (rightCount / tempAnswerList.length) * 2,
+                itemList: tempAnswerList
             })
             this.drawCircle();
+        } else {
+            var answer_List = wx.getStorageSync(this.options.albumid) || []; //获取当前章节的答题列表
+            if (answer_List.length) {
+                var rightCount = 0,
+                    tempAnswerList = answer_List[answer_List.length - 1];
+                for (let index = 0; index < tempAnswerList.length; index++) {
+                    if (tempAnswerList[index] == 1) {
+                        rightCount++
+                    }
+                }
+                this.setData({
+                    rightCount: rightCount,
+                    scale: (rightCount / tempAnswerList.length) * 2,
+                    itemList: tempAnswerList
+                })
+                this.drawCircle();
+            }
         }
+
     },
 
     drawCircle: function () {
@@ -97,11 +113,10 @@ Page({
         }
 
     },
-    analyseClick:function(){
-        wx.showToast({
-            title:'开发中，敬请期待',
-            icon:'none'
-        })
+    analyseClick: function () {
+        // wx.navigateTo({
+        //     url: `/pages/analysis/analysis?albumid=${this.options.albumid}`
+        // });
     },
     continueClick: function () {
         wx.navigateTo({
