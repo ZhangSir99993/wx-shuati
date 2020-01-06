@@ -10,8 +10,8 @@ Page({
         currentAnswerList: [],
         chooseList: [],
         showMarkView: false,
-        showCard:false,
-        showAnalyse:true,
+        showCard: false,
+        showAnalyse: true,
         duration: 200,
         currentPage: 0
     },
@@ -42,7 +42,7 @@ Page({
                 this.setData({
                     itemList: error_subject.reverse(),
                     current: options.current,
-                    showAnalyse:false
+                    showAnalyse: false
                 }, function () {
                     that.setData({
                         chapters: that.data.itemList[options.current].albumId
@@ -67,7 +67,7 @@ Page({
                         for (let index = 0; index < res.data.data.length; index++) {
                             res.data.data[index].select = that.data.chooseList[index]
                         }
-                        if (that.options.only_error) {//只展示错误的题目
+                        if (that.options.only_error) { //只展示错误的题目
                             var temp_err = []
                             for (let index = 0; index < that.data.currentAnswerList.length; index++) {
                                 const element = that.data.currentAnswerList[index];
@@ -76,14 +76,14 @@ Page({
                                 }
                             }
                             that.setData({
-                                showCard:false,
+                                showCard: false,
                                 current: that.data.current,
                                 itemList: temp_err,
                                 chapters: albumId
                             })
-                        }else{
+                        } else {
                             that.setData({
-                                showCard:true,
+                                showCard: true,
                                 current: that.data.current,
                                 itemList: res.data.data,
                                 chapters: albumId,
@@ -109,12 +109,26 @@ Page({
             complete: function () {}
         })
     },
-
     bindchange: function (e) {
         this.setData({
             current: e.detail.current,
             chapters: this.data.itemList[e.detail.current].albumId
         })
+    },
+    deleteClick: function () {
+        this.data.itemList.splice(this.data.current,1)
+        this.setData({
+            itemList:this.data.itemList
+        })
+        //删除错题集里的某个错题
+        var error_subject = wx.getStorageSync("error_subject") || []; //获取全部错题集(数组)
+        var error_id = wx.getStorageSync("error_id") || []; //获取全部错题集id(数组)
+        error_subject.splice(error_subject.length-this.data.current-1, 1)
+        console.log(error_subject);
+        error_id.splice(error_subject.length-this.data.current-1, 1)
+        console.log(error_id);
+        wx.setStorageSync("error_subject", error_subject)
+        wx.setStorageSync("error_id", error_id)
     },
     markShowClick: function () {
         var animation = wx.createAnimation({
@@ -170,10 +184,10 @@ Page({
         })
         this.markHideClick();
     },
-    inspectAnalyse:function(e){
+    inspectAnalyse: function (e) {
         var key = `itemList[${e.currentTarget.dataset.index}].showAnalyse`
         this.setData({
-            [key]:true
+            [key]: true
         })
     },
     /**

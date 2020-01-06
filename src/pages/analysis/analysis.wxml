@@ -3,6 +3,7 @@
     <view class="chapters">
         <text>{{chapters}}</text>
         <text wx:if="{{showCard}}" bindtap="markShowClick">  答题卡</text>
+        <text wx:if="{{!showAnalyse}}"  bindtap="deleteClick">删除</text>
         <view>
             <text class="current">{{util.toInt(current)+1}}</text>
             <text class="total">/{{itemList.length}}</text>
