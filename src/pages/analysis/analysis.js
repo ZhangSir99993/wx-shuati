@@ -170,9 +170,10 @@ Page({
         })
         this.markHideClick();
     },
-    inspectAnalyse:function(){
+    inspectAnalyse:function(e){
+        var key = `itemList[${e.currentTarget.dataset.index}].showAnalyse`
         this.setData({
-            showAnalyse:true
+            [key]:true
         })
     },
     /**

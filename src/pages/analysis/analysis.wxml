@@ -11,7 +11,7 @@
     <swiper class="items" current="{{current}}" duration="{{duration}}" bindchange="bindchange">
         <block wx:for="{{itemList}}" wx:key="index">
             <swiper-item class="item">
-                <view wx-if="{{showAnalyse}}">
+                <view wx-if="{{item.showAnalyse||showAnalyse}}">
                     <view class="question">{{util.deleteNum(item.question)}}</view>
                     <button class="answer {{item.correct=='A'?'correct':''}} {{item.select=='A'?'error':''}}" hover-class="defaultTap">
                         <text class="tag">A</text>
@@ -71,7 +71,7 @@
                         <text class="tag">E</text>
                         <text>{{item.E}}</text>
                     </button>
-                    <view class="inspectAnalyse" bindtap="inspectAnalyse">
+                    <view class="inspectAnalyse" bindtap="inspectAnalyse" data-index="{{index}}">
                         查看解析
                     </view>
                 </view>
@@ -91,7 +91,8 @@
         </view>
         <view class="mark_conter">
             <block wx:for="{{currentAnswerList}}" wx:key="index">
-                <text class="tag finish" wx:if="{{item}}" bindtap="tagClick" data-current="{{index}}">{{index+1}}</text>
+                <text class="tag right" wx:if="{{item==1}}" bindtap="tagClick" data-current="{{index}}">{{index+1}}</text>
+                <text class="tag error" wx:elif="{{item==2}}" bindtap="tagClick" data-current="{{index}}">{{index+1}}</text>
                 <text class="tag" wx:else bindtap="tagClick" data-current="{{index}}">{{index+1}}</text>
             </block>
         </view>
