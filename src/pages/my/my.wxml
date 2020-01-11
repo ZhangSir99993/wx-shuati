@@ -1,0 +1,21 @@
+<!--index.wxml-->
+<view class="container"> 
+  <view class="userinfo">
+    <button class="loginButton" wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 
+        <image class="userinfo-avatar" src="../../images/default_avatar.png"></image>
+        <text class="userinfo-nickname">点击登录</text>
+    </button>
+    <block wx:else>
+      <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="aspectFit"></image>
+      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+    </block>
+  </view>
+  <view class="mylist">
+        <view class="item" bindtap="getResources">
+            <text>领取资源</text>
+            <image src="../../images/arrowright.png"></image>
+        </view>
+    </view>
+</view>
+
+   

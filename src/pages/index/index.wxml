@@ -3,25 +3,30 @@
         <text class="{{currentTap==index ? 'active' : ''}}">{{item}}</text>
     </view>
 </scroll-view>
-<view class="main">
-    <view class="banner" id="nav0">
-        <swiper indicator-dots autoplay="{{autoplay}}" circular="{{circular}}">
-            <block wx:for="{{bannerAudioList}}" wx:key="">
+<view class="container">
+    <view class="main">
+        <view class="banner">
+            <swiper>
                 <swiper-item>
-                    <image src="https://www.beginlisten.com/{{item.image}}" bindtap="bannerDetailClick" data-tablename="{{item.detail}}"  data-index="{{index}}"/>
+                    <image src="../../images/banner.png" mode="aspectFit"></image>
                 </swiper-item>
-            </block>
-        </swiper>
-    </view>
-     <view class="nav_list">
-            <block wx:for="{{navList}}" wx:key="{{index}}">
-                <view class="nav_item"  data-name="{{item.name}}" data-index="{{index}}" bindtap="goNav">
-                    <image src="../../images/learnRecord.png" mode="aspectFill"></image>
-                    <view>{{item.name}}</view>
-                </view>
-            </block>
+            </swiper>
         </view>
-    <view class="titleView" wx:for="{{itemList}}"  wx:key="index" bindtap="detailClick" data-albumid="{{item.albumId}}">
-        {{item.albumId}}
+        <view class="nav_list">
+            <view class="nav_item" data-index="0" bindtap="goNav">
+                <image class="item_icon" src="../../images/learnRecord.png" mode="aspectFill"></image>
+                <view class="item_text">学习记录</view>
+            </view>
+            <view class="nav_item"  data-index="1" bindtap="goNav">
+                <image class="item_icon" src="../../images/errSubject.png" mode="aspectFill"></image>
+                <view class="item_text">错题本</view>
+            </view>
+        </view>
+        <view class="title_list">
+              <view class="title_item" wx:for="{{itemList}}"  wx:key="index" bindtap="detailClick" data-albumid="{{item.albumId}}">
+                <text>{{item.albumId}}</text>
+                <image src="../../images/arrowright.png"></image>
+            </view>
+        </view>
     </view>
 </view>

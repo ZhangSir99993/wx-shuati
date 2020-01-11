@@ -6,7 +6,7 @@
     "pages/errsubject/errsubject",
     "pages/record/record",
     "pages/analysis/analysis",
-    "pages/demo/demo"
+    "pages/my/my"
   ],
   "window": {
     "navigationBarTextStyle": "black",
@@ -15,20 +15,20 @@
     "backgroundColor": "#fbf9fe"
   },
   "tabBar": {
-    "color": "#dddddd",
-    "selectedColor": "#3cc51f",
+    "color": "#8a8a8a",
+    "selectedColor": "#1f90e6",
     "borderStyle": "black",
     "backgroundColor": "#ffffff",
     "list": [{
       "pagePath": "pages/index/index",
-      "iconPath": "images/wechat.png",
-      "selectedIconPath": "images/wechatHL.png",
-      "text": "组件"
+      "iconPath": "images/home_gray.png",
+      "selectedIconPath": "images/home_blue.png",
+      "text": "首页"
     }, {
-      "pagePath": "pages/demo/demo",
-      "iconPath": "images/wechat.png",
-      "selectedIconPath": "images/wechatHL.png",
-      "text": "接口"
+      "pagePath": "pages/my/my",
+      "iconPath": "images/mine_gray.png",
+      "selectedIconPath": "images/mine_blue.png",
+      "text": "我的"
     }]
   },
   "networkTimeout": {
