@@ -117,14 +117,14 @@ Page({
             ctx.draw()
         }
     },
-    tagClick:function(){
+    tagClick:function(e){
         if (this.options.exercise_record) {
             wx.navigateTo({
-                url: `/pages/analysis/analysis?exercise_record=${this.options.exercise_record}`
+                url: `/pages/analysis/analysis?exercise_record=${this.options.exercise_record}&current=${e.currentTarget.dataset.index}`
             });
         }else{
             wx.navigateTo({
-                url: `/pages/analysis/analysis?albumId=${this.options.albumId}`
+                url: `/pages/analysis/analysis?albumId=${this.options.albumId}&current=${e.currentTarget.dataset.index}`
             });
         }
     },

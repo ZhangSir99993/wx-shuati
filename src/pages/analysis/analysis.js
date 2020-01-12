@@ -24,7 +24,7 @@ Page({
             var exercise_record = JSON.parse(options.exercise_record);
             this.data.currentAnswerList = exercise_record.currentAnswerList;
             this.data.chooseList = exercise_record.chooseList;
-            this.data.current = 0
+            this.data.current = options.current||0
             this.data.currentPage = exercise_record.currentPage;
             this.init(exercise_record.albumId)
         } else if (options.albumId) { //从答题页_的result报告页进来的
@@ -32,7 +32,7 @@ Page({
             if (answer_List.length) {
                 this.data.currentAnswerList = answer_List[answer_List.length - 1].currentAnswerList;
                 this.data.chooseList = answer_List[answer_List.length - 1].chooseList;
-                this.data.current = 0
+                this.data.current = options.current||0
                 this.data.currentPage = answer_List.length - 1;
             }
             this.init(options.albumId)
