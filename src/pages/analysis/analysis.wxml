@@ -1,5 +1,5 @@
 <wxs src="../../utils/tool.wxs" module="util"></wxs>
-<view class="main">
+<view class="container">
     <view class="chapters">
         <text>{{chapters}}</text>
         <text wx:if="{{showCard}}" bindtap="markShowClick">  答题卡</text>

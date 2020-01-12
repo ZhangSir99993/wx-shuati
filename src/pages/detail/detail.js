@@ -233,7 +233,6 @@ Page({
             url: `/pages/result/result?albumId=${this.options.albumId}`
         })
         this.markHideClick();
-        this.saveData();
     },
     /**
      * 生命周期函数--监听页面初次渲染完成
@@ -253,14 +252,13 @@ Page({
      * 生命周期函数--监听页面隐藏
      */
     onHide: function () {
-        
     },
 
     /**
      * 生命周期函数--监听页面卸载
      */
     onUnload: function () {
-        
+        this.saveData();
     },
     saveData: function () {
         if (this.data.currentAnswerList.includes(1) || this.data.currentAnswerList.includes(2)) {

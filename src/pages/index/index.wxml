@@ -24,8 +24,17 @@
         </view>
         <view class="title_list">
               <view class="title_item" wx:for="{{itemList}}"  wx:key="index" bindtap="detailClick" data-albumid="{{item.albumId}}">
-                <text>{{item.albumId}}</text>
-                <image src="../../images/arrowright.png"></image>
+                <view class="left_item">
+                    <text>{{item.albumId}}</text>
+                    <view class="progressView">
+                        <progress percent="{{item.progress||0}}" stroke-width="1" color="#10AEFF" />
+                        <text>{{item.finishCount||0}}/{{item.count}}</text>
+                    </view>
+                </view>
+                <view class="right_item">
+                    <text wx:if="{{item.continue}}" class="blue">继续上次</text>
+                    <image src="../../images/arrowright.png"></image>  
+                </view>
             </view>
         </view>
     </view>

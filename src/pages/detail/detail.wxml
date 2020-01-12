@@ -1,5 +1,5 @@
 <wxs src="../../utils/tool.wxs" module="util"></wxs>
-<view class="main">
+<view class="container">
     <view class="chapters">
         <text>{{chapters}}</text>
         <text bindtap="markShowClick">  答题卡</text>
@@ -32,21 +32,6 @@
                     <text class="tag">E</text>
                     <text>{{item.E}}</text>
                 </button>
-                <!--
-                <view class="correct">
-                    答案 {{item.correct}}
-                </view>
-                <view class="analysis" wx:if="{{item.analysis}}">
-                    <view class="lineTop">
-                        <text class="line"></text>
-                        <text class="lineText">试题详解</text>
-                        <text class="line"></text>
-                    </view>
-                    <view class="content">
-                        <rich-text nodes="{{item.analysis}}"></rich-text>
-                    </view>
-                </view>
-                -->
             </swiper-item>
         </block>
     </swiper>

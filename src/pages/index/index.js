@@ -19,6 +19,17 @@ Page({
                 if (res.data.code == 200) {
                     that.setData({
                         itemList: res.data.data
+                    }, function () {
+                        that.data.itemList.forEach(element => {
+                            element.continue = that.getCurrent(element.albumId)
+                            element.finishCount = that.getProgress(element.albumId)
+                            if (element.finishCount) {
+                                element.progress = (element.finishCount/element.count)*100
+                            }
+                        });
+                        that.setData({
+                            itemList: that.data.itemList
+                        })
                     })
                 } else {
                     wx.showToast({
@@ -38,12 +49,57 @@ Page({
             complete: function () {}
         })
     },
+    getCurrent: function (albumId) {
+        var answer_List = wx.getStorageSync(albumId) || []; //获取当前章节的答题列表
+        if (answer_List.length) {
+            var current;
+            var currentAnswerList = answer_List[answer_List.length - 1].currentAnswerList;
+            for (let index = 0; index < currentAnswerList.length; index++) {
+                if (currentAnswerList[index]) {
+                    current = index + 1
+                }
+            }
+            if (current >= currentAnswerList.length) {
+                current = 0
+            }
+            return current;
+        } else {
+            return null;
+        }
+    },
+    getProgress: function (albumId,count) {
+        var answer_List = wx.getStorageSync(albumId) || []; //获取当前章节的答题列表
+        if (answer_List.length) {
+            var finishCurrent = 0;
+            answer_List.forEach(element => {
+                var currentAnswerList = element.currentAnswerList;
+                for (let index = 0; index < currentAnswerList.length; index++) {
+                    if (currentAnswerList[index]) {
+                        finishCurrent++;
+                    }
+                }
+            });
+            return finishCurrent;
+        } else {
+            return null;
+        }
+    },
     onShow: function () {
-        console.log("onShow");
+        var that = this
+        if (that.data.itemList.length) {
+            that.data.itemList.forEach(element => {
+                element.continue = that.getCurrent(element.albumId)
+                element.finishCount = that.getProgress(element.albumId)
+                if (element.finishCount) {
+                    element.progress = (element.finishCount/element.count)*100
+                }
+            });
+            that.setData({
+                itemList: that.data.itemList
+            })
+        }
     },
-    onHide: function () {
-        console.log("onHide");
-    },
+    onHide: function () {},
     onPageScroll: function (params) {
         // console.log(params.scrollTop)
     },
@@ -53,7 +109,7 @@ Page({
         });
     },
     navTap: function (e) {
-       
+
     },
     goNav: function (e) {
         switch (e.currentTarget.dataset.index) {

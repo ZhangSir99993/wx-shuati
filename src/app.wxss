@@ -6,8 +6,9 @@ page {
   display: flex;
   flex-direction: column;
   min-height: 100%;
-  padding: 30rpx;
+  padding: 0 30rpx;
   background: #f9f9f9;
+  font-size: 34rpx;
 }
 .page-header {
   display: flex;

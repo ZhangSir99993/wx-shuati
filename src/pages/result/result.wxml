@@ -1,30 +1,32 @@
-<view class="result">
-    <view class="circle-box">
-        <canvas class="circle" canvas-id="canvasCircle">
-        </canvas>
-        <canvas class="circle" canvas-id="canvasArcCir">
-        </canvas>
-        <view class="circle_content">
-        <text class="top_content">答对</text>
-        <view>
-            <text class="right_count">{{rightCount}}</text>
-            <text class="total_count">/{{itemList.length}}</text>
+<view class="container">
+    <view class="result">
+        <view class="circle-box">
+            <canvas class="circle" canvas-id="canvasCircle">
+            </canvas>
+            <canvas class="circle" canvas-id="canvasArcCir">
+            </canvas>
+            <view class="circle_content">
+            <text class="top_content">答对</text>
+            <view>
+                <text class="right_count">{{rightCount}}</text>
+                <text class="total_count">/{{itemList.length}}</text>
+            </view>
+            </view>
         </view>
+        <view class="mark_conter">
+        <block wx:for="{{itemList}}" wx:key="index">
+            <text class="tag right" wx:if="{{item==1}}" bindtap="tagClick" data-index="{{index}}">{{index+1}}</text>
+            <text class="tag error" wx:elif="{{item==2}}" bindtap="tagClick" data-index="{{index}}">{{index+1}}</text>
+            <text class="tag" wx:else bindtap="tagClick" data-index="{{index}}">{{index+1}}</text>
+        </block>
         </view>
     </view>
-    <view class="mark_conter">
-    <block wx:for="{{itemList}}" wx:key="index">
-        <text class="tag right" wx:if="{{item==1}}">{{index+1}}</text>
-        <text class="tag error" wx:elif="{{item==2}}">{{index+1}}</text>
-        <text class="tag" wx:else>{{index+1}}</text>
-    </block>
+    <view class="foot" wx:if="{{isFromRecord}}">
+        <view class="analyse" bindtap="analyseClick">全部解析</view>
+        <view class="continue" bindtap="errAnalyseClick">错题解析</view>
     </view>
-</view>
-<view class="foot" wx:if="{{isFromRecord}}">
-    <view class="analyse" bindtap="analyseClick">全部解析</view>
-    <view class="continue" bindtap="errAnalyseClick">错题解析</view>
-</view>
-<view class="foot" wx:else>
-    <view class="analyse" bindtap="analyseClick">题目解析</view>
-    <view class="continue" bindtap="continueClick">继续练习</view>
+    <view class="foot" wx:else>
+        <view class="analyse" bindtap="analyseClick">题目解析</view>
+        <view class="continue" bindtap="continueClick">继续练习</view>
+    </view>
 </view>

@@ -1,7 +1,7 @@
 .topNav {
   width: 100vw;
   height: 88rpx;
-  font-size: 30rpx;
+  font-size: 32rpx;
   display: flex;
   flex-direction: row;
   white-space: nowrap;
@@ -10,7 +10,7 @@
   top: 0;
   z-index: 99999;
   padding: 0 30rpx;
-  
+
   view {
     display: inline-flex;
     height: 80rpx;
@@ -36,6 +36,7 @@
   .banner {
     display: flex;
     align-items: center;
+    margin-top: 30rpx;
 
     swiper {
       width: 700rpx;
@@ -69,19 +70,17 @@
     .nav_item {
       display: flex;
       flex-direction: column;
+      align-items: center;
+      font-size: 30rpx;
 
       .item_icon {
         display: flex;
-        width: 88rpx;
-        height: 88rpx;
+        width: 70rpx;
+        height: 70rpx;
       }
 
       .item_text {
         margin-top: 10rpx;
-        width: 88rpx;
-        height: 30rpx;
-        line-height: 30rpx;
-        font-size: 22rpx;
         color: #666666;
         text-align: center;
         overflow: hidden;
@@ -93,24 +92,53 @@
     background: white;
     border-radius: 20rpx;
     box-shadow: 2rpx 2rpx 16rpx 0 #f1f1f1;
-    padding-bottom: 80rpx;
-
+    padding-bottom: 20rpx;
     .title_item {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      font-size: 30rpx;
       color: #2b2a2a;
       height: 160rpx;
-      line-height: 160rpx;
+      line-height: 140rpx;
       margin: 0 30rpx;
-      border-bottom: 1rpx solid #f5f5f5;
-
-      image {
+      // border-bottom: 1rpx solid #f5f5f5;
+      .left_item{
         display: flex;
-        width: 24rpx;
-        height: 24rpx;
+        flex-direction: column;
+        height:160rpx;
+        flex: 3;
+        .progressView{
+          height: 20rpx;
+          display: flex;
+          flex-direction: row;
+          justify-content: flex-end;
+
+          progress{
+            width: 100%;
+          }
+          text{
+            height: 20rpx;
+            line-height: 20rpx;
+            font-size: 24rpx;
+          }
+        }
       }
+
+      .right_item {
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        flex: 1;
+        height:160rpx;
+        justify-content: flex-end;
+        font-size: 26rpx;
+
+        image {
+          width: 24rpx;
+          height: 24rpx;
+        }
+      }
+
     }
   }
 }

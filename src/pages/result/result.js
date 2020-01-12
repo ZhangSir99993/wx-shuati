@@ -117,6 +117,17 @@ Page({
             ctx.draw()
         }
     },
+    tagClick:function(){
+        if (this.options.exercise_record) {
+            wx.navigateTo({
+                url: `/pages/analysis/analysis?exercise_record=${this.options.exercise_record}`
+            });
+        }else{
+            wx.navigateTo({
+                url: `/pages/analysis/analysis?albumId=${this.options.albumId}`
+            });
+        }
+    },
     //全部题目解析
     analyseClick: function () {
         if (this.options.exercise_record) {

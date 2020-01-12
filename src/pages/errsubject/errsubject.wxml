@@ -1,5 +1,5 @@
 <wxs src="../../utils/tool.wxs" module="util"></wxs>
-<view class="main">
+<view class="container">
     <view class="item" wx:for="{{itemList}}" wx:key="index" bindtap="itemClick" data-index="{{index}}">
         <view class="question">{{util.deleteNum(item.question)}}</view>
         <view class="answer" wx:if="{{item.A}}">
