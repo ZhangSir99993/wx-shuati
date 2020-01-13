@@ -1,3 +1,5 @@
+//获取应用实例
+const app = getApp()
 const site = require('../../api/site.js').site;
 Page({
     /**
@@ -26,7 +28,7 @@ Page({
             this.data.chooseList = exercise_record.chooseList;
             this.data.current = options.current||0
             this.data.currentPage = exercise_record.currentPage;
-            this.init(exercise_record.albumId)
+            this.init(exercise_record.albumId,exercise_record.tablename)
         } else if (options.albumId) { //从答题页_的result报告页进来的
             var answer_List = wx.getStorageSync(options.albumId) || []; //获取当前章节的答题列表
             if (answer_List.length) {
@@ -35,7 +37,7 @@ Page({
                 this.data.current = options.current||0
                 this.data.currentPage = answer_List.length - 1;
             }
-            this.init(options.albumId)
+            this.init(options.albumId,app.globalData.tablename)
         } else { //从错题列表中进来的
             var error_subject = wx.getStorageSync("error_subject") || []; //获取全部错题集(数组)
             if (error_subject.length) {
@@ -51,10 +53,10 @@ Page({
             }
         }
     },
-    init: function (albumId) {
+    init: function (albumId,tablename) {
         var that = this
         wx.request({
-            url: site.m + "detail/npdp",
+            url: site.m + "detail/"+tablename,
             method: 'POST',
             data: {
                 albumId: albumId,

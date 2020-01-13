@@ -1,3 +1,5 @@
+//获取应用实例
+const app = getApp()
 const site = require('../../api/site.js').site;
 Page({
     /**
@@ -41,7 +43,7 @@ Page({
     init: function (albumId) {
         var that = this
         wx.request({
-            url: site.m + "detail/npdp",
+            url: site.m + "detail/"+app.globalData.tablename,
             method: 'POST',
             data: {
                 albumId: albumId,
@@ -320,6 +322,7 @@ Page({
                     }
                 }
                 var obj = {
+                    tablename:app.globalData.tablename,
                     albumId:this.options.albumId,
                     currentAnswerList:this.data.currentAnswerList,
                     chooseList:this.data.chooseList,

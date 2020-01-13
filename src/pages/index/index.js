@@ -1,18 +1,26 @@
+//获取应用实例
+const app = getApp()
 //api.js
 const site = require('../../api/site.js').site;
 Page({
     data: {
         itemList: [],
-        navArr: ["NPDP"],
+        navArr: [{
+            title:"NPDP",
+            tablename:'npdp'
+        },{
+            title:"PMP",
+            tablename:'pmp'
+        }],
         currentTap: 0
     },
     onLoad: function () {
-        this.init()
+        this.init(app.globalData.tablename)
     },
     init: function () {
         var that = this
         wx.request({
-            url: site.m + 'list',
+            url: site.m + 'list/'+app.globalData.tablename,
             method: 'GET',
             dataType: 'json',
             success: function (res) {
@@ -109,7 +117,15 @@ Page({
         });
     },
     navTap: function (e) {
-
+        if (e.currentTarget.dataset.tablename) {
+            app.globalData.tablename = e.currentTarget.dataset.tablename
+            this.init();     
+            console.log(e);
+            
+            this.setData({
+                currentTap:e.currentTarget.dataset.index
+            })     
+        }
     },
     goNav: function (e) {
         switch (e.currentTarget.dataset.index) {

@@ -35,6 +35,7 @@ App({
   },
   globalData: {
     hasLogin: false,
-    userInfo: null
+    userInfo: null,
+    tablename:'npdp'
   }
 })
