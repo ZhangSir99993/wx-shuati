@@ -15,6 +15,10 @@
             <text>领取资源</text>
             <image src="../../images/arrowright.png"></image>
         </view>
+        <button class="item" open-type="contact">
+          <text>联系客服</text>
+          <image src="../../images/arrowright.png"></image>
+        </button>
     </view>
 </view>
 
