@@ -34,7 +34,7 @@ var ceil = function(t){
 }
 //去除题目前面的序号
 var deleteNum = function(str){
-  var reg=getRegExp('\d+\.');
+  var reg=getRegExp('\d+(\.|、)');
   return str.replace(reg,'')
 }
 

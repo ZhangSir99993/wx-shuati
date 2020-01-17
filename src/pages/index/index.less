@@ -92,36 +92,22 @@
     background: white;
     border-radius: 20rpx;
     box-shadow: 2rpx 2rpx 16rpx 0 #f1f1f1;
-    padding-bottom: 20rpx;
+    padding: 0 30rpx 20rpx;
     .title_item {
       display: flex;
       align-items: center;
       justify-content: space-between;
       color: #2b2a2a;
       height: 160rpx;
-      line-height: 140rpx;
-      margin: 0 30rpx;
+      line-height: 160rpx;
+
       // border-bottom: 1rpx solid #f5f5f5;
-      .left_item{
+      .left_item {
         display: flex;
         flex-direction: column;
-        height:160rpx;
+        height: 160rpx;
         flex: 3;
-        .progressView{
-          height: 20rpx;
-          display: flex;
-          flex-direction: row;
-          justify-content: flex-end;
 
-          progress{
-            width: 100%;
-          }
-          text{
-            height: 20rpx;
-            line-height: 20rpx;
-            font-size: 24rpx;
-          }
-        }
       }
 
       .right_item {
@@ -129,7 +115,7 @@
         align-items: center;
         flex-direction: row;
         flex: 1;
-        height:160rpx;
+        height: 160rpx;
         justify-content: flex-end;
         font-size: 26rpx;
 
@@ -138,7 +124,43 @@
           height: 24rpx;
         }
       }
-
     }
+    .progressView {
+      height: 20rpx;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      
+      progress {
+        width: 100%;
+      }
+
+      text {
+        margin-left: 20rpx;
+        height: 20rpx;
+        line-height: 20rpx;
+        font-size: 24rpx;
+        color: rgba(166, 166, 166, 1);
+      }
+    }
+  }
+}
+
+.playButton{
+  position: fixed;
+  bottom: 40rpx;
+  right: 30rpx;
+  width: 90rpx;
+  height: 90rpx;
+  border-radius:50%;
+  // background-color: #07bc9b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  image{
+    width: 60rpx;
+    height: 60rpx;
   }
 }

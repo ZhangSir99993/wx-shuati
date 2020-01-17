@@ -39,7 +39,7 @@ Page({
             }
             this.init(options.albumId,app.globalData.tablename)
         } else { //从错题列表中进来的
-            var error_subject = wx.getStorageSync("error_subject") || []; //获取全部错题集(数组)
+            var error_subject = wx.getStorageSync("error_subject_"+app.globalData.tablename) || []; //获取全部错题集(数组)
             if (error_subject.length) {
                 this.setData({
                     itemList: error_subject.reverse(),
@@ -123,12 +123,12 @@ Page({
             itemList:this.data.itemList
         })
         //删除错题集里的某个错题
-        var error_subject = wx.getStorageSync("error_subject") || []; //获取全部错题集(数组)
-        var error_id = wx.getStorageSync("error_id") || []; //获取全部错题集id(数组)
+        var error_subject = wx.getStorageSync("error_subject_"+app.globalData.tablename) || []; //获取全部错题集(数组)
+        var error_id = wx.getStorageSync("error_id_"+app.globalData.tablename) || []; //获取全部错题集id(数组)
         error_subject.splice(error_subject.length-this.data.current-1, 1)
         error_id.splice(error_subject.length-this.data.current-1, 1)
-        wx.setStorageSync("error_subject", error_subject)
-        wx.setStorageSync("error_id", error_id)
+        wx.setStorageSync("error_subject_"+app.globalData.tablename, error_subject)
+        wx.setStorageSync("error_id_"+app.globalData.tablename, error_id)
     },
     markShowClick: function () {
         var animation = wx.createAnimation({

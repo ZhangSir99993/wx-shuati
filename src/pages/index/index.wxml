@@ -23,19 +23,24 @@
             </view>
         </view>
         <view class="title_list">
-              <view class="title_item" wx:for="{{itemList}}"  wx:key="index" bindtap="detailClick" data-albumid="{{item.albumId}}">
+            <block wx:for="{{itemList}}"  wx:key="index">
+            <view class="title_item" bindtap="detailClick" data-albumid="{{item.albumId}}">
                 <view class="left_item">
                     <text>{{item.albumId}}</text>
-                    <view class="progressView">
-                        <progress percent="{{item.progress||0}}" stroke-width="1" color="#10AEFF" />
-                        <text>{{item.finishCount||0}}/{{item.count}}</text>
-                    </view>
                 </view>
                 <view class="right_item">
                     <text wx:if="{{item.continue}}" class="blue">继续上次</text>
                     <image src="../../images/arrowright.png"></image>  
                 </view>
             </view>
+            <view class="progressView">
+                <progress percent="{{item.progress||0}}" stroke-width="1" color="#999999" />
+                <text>{{item.finishCount||0}}/{{item.count}}</text>
+            </view>
+            </block>
         </view>
     </view>
+    <button class="playButton bc_blue"  open-type="contact">
+        <image src="../../images/customer_service.png" mode="aspectFill"/>
+    </button>
 </view>

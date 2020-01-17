@@ -1,3 +1,6 @@
+.container{
+  padding: 0;
+}
 .chapters {
   height: 94rpx;
   line-height: 94rpx;
@@ -5,6 +8,7 @@
   color: #111111;
   display: flex;
   justify-content: space-between;
+  padding: 0 30rpx;
 
   .current {
     font-weight: bolder;
@@ -19,6 +23,11 @@
 
 .items {
   height: 90vh;
+  .item{
+    overflow: auto;
+    padding: 0 30rpx;
+    box-sizing: border-box;
+  }
 }
 
 .question {

@@ -132,13 +132,13 @@ Page({
                 wx.showModal({
                     title: '提交答案',
                     content: `共${this.data.itemList.length}道题，还有${temCount}道未作答`,
-                    cancelText:'答题卡',
+                    cancelText:'取消',
                     confirmText:'提交',
                     success(res) {
                         if (res.confirm) {
                             that.submitClick();
                         } else if (res.cancel) {
-                            that.markShowClick();
+                            // that.markShowClick();
                         }
                     }
                 })
@@ -146,13 +146,13 @@ Page({
                 wx.showModal({
                     title: '提交答案',
                     content: `共${this.data.itemList.length}道题，您已全部作答`,
-                    cancelText:'答题卡',
+                    cancelText:'取消',
                     confirmText:'提交',
                     success(res) {
                         if (res.confirm) {
                             that.submitClick();
                         } else if (res.cancel) {
-                            that.markShowClick();
+                            // that.markShowClick();
                         }
                     }
                 })
@@ -290,8 +290,8 @@ Page({
                     wx.setStorageSync(tempKey, answer_List)
                 }
                 //添加错题到错题集
-                var error_subject = wx.getStorageSync("error_subject")||[];//获取全部错题集(数组)
-                var error_id = wx.getStorageSync("error_id")||[];//获取全部错题集id(数组)
+                var error_subject = wx.getStorageSync("error_subject_"+app.globalData.tablename)||[];//获取全部错题集(数组)
+                var error_id = wx.getStorageSync("error_id_"+app.globalData.tablename)||[];//获取全部错题集id(数组)
                 for (let index = 0; index < this.data.itemList.length; index++) {
                     const element = this.data.itemList[index];
                     //如果存在错题
@@ -311,10 +311,10 @@ Page({
                         }
                     }
                 }
-                wx.setStorageSync("error_subject", error_subject)
-                wx.setStorageSync("error_id", error_id)
+                wx.setStorageSync("error_subject_"+app.globalData.tablename, error_subject)
+                wx.setStorageSync("error_id_"+app.globalData.tablename, error_id)
                 //添加到练习记录
-                var exercise_record_list = wx.getStorageSync("exercise_record_list")||[];//获取全部练习记录(数组)
+                var exercise_record_list = wx.getStorageSync("exercise_record_list_"+app.globalData.tablename)||[];//获取全部练习记录(数组)
                 var rightCount = 0;
                 for (let index = 0; index < this.data.currentAnswerList.length; index++) {
                     if (this.data.currentAnswerList[index] == 1) {
@@ -331,7 +331,7 @@ Page({
                     time:new Date().toLocaleString().split(' ')[0]
                 }
                 exercise_record_list.push(obj);
-                wx.setStorageSync("exercise_record_list", exercise_record_list)
+                wx.setStorageSync("exercise_record_list_"+app.globalData.tablename, exercise_record_list)
             } catch (e) {}
         }
     },

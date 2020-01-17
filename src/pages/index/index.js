@@ -120,8 +120,6 @@ Page({
         if (e.currentTarget.dataset.tablename) {
             app.globalData.tablename = e.currentTarget.dataset.tablename
             this.init();     
-            console.log(e);
-            
             this.setData({
                 currentTap:e.currentTarget.dataset.index
             })     

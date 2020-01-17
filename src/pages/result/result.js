@@ -1,4 +1,6 @@
 // pages/demo/demo.js
+//获取应用实例
+const app = getApp()
 var varName;
 Page({
 

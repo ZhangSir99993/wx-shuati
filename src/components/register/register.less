@@ -1,0 +1,182 @@
+// wxAuthor_box
+.wxAuthor_box {
+    position: fixed;
+    left: 0;
+    top: 100rpx;
+    width: 100%;
+    height: 100%;
+    z-index: 100001;
+    button {
+      position: absolute;
+      left: 50%;
+      top: 40%;
+      width: 500rpx;
+      height: 92rpx;
+      margin-left: -250rpx;
+      margin-top: 46rpx;
+      line-height: 92rpx;
+      background: #44BB2F;
+      border: 2rpx solid rgba(5,5,5,0.08);
+      border-radius: 16rpx;
+      text-align: center;
+      font-size: 36rpx;
+      color: #FFFFFF;
+    }
+  }
+  
+  // get_author
+  .get_author_box {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100002;
+    .mark {
+      width: 100%;
+      height: 100%;
+      background: #000;
+      opacity:0.5;
+    }
+    .get_author {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 560rpx;
+      height: 291rpx;
+      margin-top: -145rpx;
+      margin-left: -280rpx;
+      z-index: 1;
+      background: #fff;
+      .top {
+        width: 100%;
+        height: 190rpx;
+        line-height: 200rpx;
+        text-align: center;
+        font-size: 36rpx;
+        color: #000000;
+        border-bottom: 1rpx solid #f0f0f0;
+      }
+      .bottom {
+        width: 100%;
+        height: 100rpx;
+        line-height: 100rpx;
+        text-align: center;
+        font-size: 34rpx;
+        color: #00c300;
+        button {
+          color: #00c300;
+          background: #fff;
+        }
+        button::after{
+          border: none;
+        }
+      }
+    }
+  }
+  // mobileCode
+  .mobileCode {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100002;
+    .mobileCode_mark {
+      width: 100%;
+      height: 100%;
+      background: #000;
+      opacity: 0.5;
+    }
+    .mobileCode_box {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 560rpx;
+      height: 500rpx;
+      transform: translate(-280rpx,-250rpx);
+      -webkit-transform: translate(-280rpx,-250rpx);
+      background: #fff;
+      border-radius: 8rpx;
+      z-index: 2;
+      .close {
+        width: 30rpx;
+        height: 30rpx;
+        line-height: 30rpx;
+        padding-left: 30rpx;
+        padding-right: 30rpx;
+        padding-top: 30rpx;
+        image {
+          width: 30rpx;
+          height: 30rpx;
+        }
+      }
+      .title {
+        font-size: 36rpx;
+        color: #000000;
+        text-align: center;
+      }
+      .phone {
+        font-size: 28rpx;
+        color: #888888;
+        text-align: center;
+        margin-top: 20rpx;
+        text:nth-child(2){
+          color: #000000;
+        }
+      }
+      .err {
+        font-size: 24rpx;
+        color: #E64340;
+        text-align: center;
+        margin-top: 10rpx;
+        height: 33rpx;
+      }
+      .val {
+        width: 460rpx;
+        height: 74rpx;
+        margin: 0 auto;
+        margin-top: 7rpx;
+        view {
+          width: 280rpx;
+          height: 72rpx;
+          border-bottom: 2rpx solid #B2B2B2;
+          text-align: center;
+          margin: 0 auto;
+        }
+        input {
+          width: 100%;
+          height: 50rpx;
+          padding: 10rpx 0rpx;
+          font-size: 50rpx;
+        }
+      }
+      .time {
+        text-align: center;
+        font-size: 24rpx;
+        color: #C7C7C7;
+        margin-top: 40rpx;
+        margin-bottom: 40rpx;
+      }
+      .reSend {
+        text-align: center;
+        font-size: 24rpx;
+        color: #262626;
+        margin-top: 40rpx;
+        margin-bottom: 40rpx;
+      }
+      .mobileCode_line {
+        width: 100%;
+        border-bottom: 1rpx solid #E5E5E5;
+      }
+      .btn {
+        width: 100%;
+        height: 94rpx;
+        line-height: 94rpx;
+        text-align: center;
+        font-size: 36rpx;
+        color: #02BB00;
+      }
+    }
+  }
+  
