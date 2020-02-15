@@ -47,7 +47,7 @@
                             <rich-text nodes="{{item.analysis}}"></rich-text>
                         </view>
                     </view>
-                    <view>考点</view>
+                    <view class="kaodainView">考点</view>
                     <text class="kaodain">{{item.kaodianId}}</text>
                 </view>
                 <view wx:else>

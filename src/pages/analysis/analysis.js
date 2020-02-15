@@ -26,20 +26,20 @@ Page({
             var exercise_record = JSON.parse(options.exercise_record);
             this.data.currentAnswerList = exercise_record.currentAnswerList;
             this.data.chooseList = exercise_record.chooseList;
-            this.data.current = options.current||0
+            this.data.current = options.current || 0
             this.data.currentPage = exercise_record.currentPage;
-            this.init(exercise_record.albumId,exercise_record.tablename)
+            this.init(exercise_record.albumId, exercise_record.tablename)
         } else if (options.albumId) { //从答题页_的result报告页进来的
             var answer_List = wx.getStorageSync(options.albumId) || []; //获取当前章节的答题列表
             if (answer_List.length) {
                 this.data.currentAnswerList = answer_List[answer_List.length - 1].currentAnswerList;
                 this.data.chooseList = answer_List[answer_List.length - 1].chooseList;
-                this.data.current = options.current||0
+                this.data.current = options.current || 0
                 this.data.currentPage = answer_List.length - 1;
             }
-            this.init(options.albumId,app.globalData.tablename)
+            this.init(options.albumId, app.globalData.tablename)
         } else { //从错题列表中进来的
-            var error_subject = wx.getStorageSync("error_subject_"+app.globalData.tablename) || []; //获取全部错题集(数组)
+            var error_subject = wx.getStorageSync("error_subject_" + app.globalData.tablename) || []; //获取全部错题集(数组)
             if (error_subject.length) {
                 this.setData({
                     itemList: error_subject.reverse(),
@@ -53,10 +53,10 @@ Page({
             }
         }
     },
-    init: function (albumId,tablename) {
+    init: function (albumId, tablename) {
         var that = this
         wx.request({
-            url: site.m + "detail/"+tablename,
+            url: site.m + "detail/" + tablename,
             method: 'POST',
             data: {
                 albumId: albumId,
@@ -118,17 +118,17 @@ Page({
         })
     },
     deleteClick: function () {
-        this.data.itemList.splice(this.data.current,1)
+        this.data.itemList.splice(this.data.current, 1)
         this.setData({
-            itemList:this.data.itemList
+            itemList: this.data.itemList
         })
         //删除错题集里的某个错题
-        var error_subject = wx.getStorageSync("error_subject_"+app.globalData.tablename) || []; //获取全部错题集(数组)
-        var error_id = wx.getStorageSync("error_id_"+app.globalData.tablename) || []; //获取全部错题集id(数组)
-        error_subject.splice(error_subject.length-this.data.current-1, 1)
-        error_id.splice(error_subject.length-this.data.current-1, 1)
-        wx.setStorageSync("error_subject_"+app.globalData.tablename, error_subject)
-        wx.setStorageSync("error_id_"+app.globalData.tablename, error_id)
+        var error_subject = wx.getStorageSync("error_subject_" + app.globalData.tablename) || []; //获取全部错题集(数组)
+        var error_id = wx.getStorageSync("error_id_" + app.globalData.tablename) || []; //获取全部错题集id(数组)
+        error_subject.splice(error_subject.length - this.data.current - 1, 1)
+        error_id.splice(error_subject.length - this.data.current - 1, 1)
+        wx.setStorageSync("error_subject_" + app.globalData.tablename, error_subject)
+        wx.setStorageSync("error_id_" + app.globalData.tablename, error_id)
     },
     markShowClick: function () {
         var animation = wx.createAnimation({
@@ -230,11 +230,13 @@ Page({
     onReachBottom: function () {
 
     },
-
     /**
      * 用户点击右上角分享
      */
     onShareAppMessage: function () {
-
+        return {
+            title: "刷题100",
+            path: "/pages/index/index"
+        }
     }
 })

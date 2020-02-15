@@ -146,5 +146,14 @@ Page({
             default:
                 break;
         }
+    },
+    /**
+     * 用户点击右上角分享
+     */
+    onShareAppMessage: function () {
+        return {
+            title: "刷题100",
+            path: "/pages/index/index"
+        }
     }
 })

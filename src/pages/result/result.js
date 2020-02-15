@@ -13,8 +13,8 @@ Page({
         scale: 0,
         rightCount: 0,
         itemList: [],
-        chooseList:[],
-        isFromRecord:false
+        chooseList: [],
+        isFromRecord: false
     },
     /**
      * 生命周期函数--监听页面加载
@@ -33,7 +33,7 @@ Page({
         this.init(options);
     },
     init: function (options) {
-        if (options.exercise_record) {//从练习记录页进来的
+        if (options.exercise_record) { //从练习记录页进来的
             var exercise_record = JSON.parse(options.exercise_record);
             this.data.chooseList = exercise_record.chooseList;
             var rightCount = 0,
@@ -47,7 +47,7 @@ Page({
                 rightCount: rightCount,
                 scale: (rightCount / tempAnswerList.length) * 2,
                 itemList: tempAnswerList,
-                isFromRecord:true
+                isFromRecord: true
             })
             this.drawCircle();
         } else {
@@ -119,12 +119,12 @@ Page({
             ctx.draw()
         }
     },
-    tagClick:function(e){
+    tagClick: function (e) {
         if (this.options.exercise_record) {
             wx.navigateTo({
                 url: `/pages/analysis/analysis?exercise_record=${this.options.exercise_record}&current=${e.currentTarget.dataset.index}`
             });
-        }else{
+        } else {
             wx.navigateTo({
                 url: `/pages/analysis/analysis?albumId=${this.options.albumId}&current=${e.currentTarget.dataset.index}`
             });
@@ -136,7 +136,7 @@ Page({
             wx.navigateTo({
                 url: `/pages/analysis/analysis?exercise_record=${this.options.exercise_record}`
             });
-        }else{
+        } else {
             wx.navigateTo({
                 url: `/pages/analysis/analysis?albumId=${this.options.albumId}`
             });
@@ -149,7 +149,7 @@ Page({
         });
     },
     //错题解析
-    errAnalyseClick:function(){
+    errAnalyseClick: function () {
         wx.navigateTo({
             url: `/pages/analysis/analysis?exercise_record=${this.options.exercise_record}&only_error=true`
         });
@@ -194,11 +194,13 @@ Page({
     onReachBottom: function () {
 
     },
-
     /**
      * 用户点击右上角分享
      */
     onShareAppMessage: function () {
-
+        return {
+            title: "刷题100",
+            path: "/pages/index/index"
+        }
     }
 })

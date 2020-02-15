@@ -6,6 +6,7 @@
     "pages/errsubject/errsubject",
     "pages/record/record",
     "pages/analysis/analysis",
+    "pages/study/study",
     "pages/my/my"
   ],
   "window": {
@@ -23,7 +24,12 @@
       "pagePath": "pages/index/index",
       "iconPath": "images/home_gray.png",
       "selectedIconPath": "images/home_blue.png",
-      "text": "首页"
+      "text": "练习"
+    },{
+      "pagePath": "pages/study/study",
+      "iconPath": "images/home_gray.png",
+      "selectedIconPath": "images/home_blue.png",
+      "text": "学习"
     }, {
       "pagePath": "pages/my/my",
       "iconPath": "images/mine_gray.png",
