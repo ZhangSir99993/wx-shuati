@@ -6,6 +6,9 @@
     "pages/errsubject/errsubject",
     "pages/record/record",
     "pages/analysis/analysis",
+    "pages/realsubject/realsubject",
+    "pages/openvip/openvip",
+    "pages/vipresult/vipresult",
     "pages/study/study",
     "pages/my/my"
   ],

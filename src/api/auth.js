@@ -3,13 +3,14 @@ const app = getApp();
 //api.js
 const site = require('./site.js').site;
 // checkSession
-const wxCheckSession = (that,fn) => {
+const wxCheckSession = (that, fn) => {
     wx.checkSession({
-        success: function(){
-            checkUserInfo(that,function(){
-                var sessionId = wx.getStorageSync("sessionId");
+        success: function () {
+            checkUserInfo(that, function () {
+                /*
+                var session_key = wx.getStorageSync("session_key");
                 var t = setTimeout(() => {
-                    if(!sessionId){
+                    if(session_key){
                         wxLogin(that,fn);
                         clearTimeout(t);
                         return;
@@ -19,84 +20,84 @@ const wxCheckSession = (that,fn) => {
                         fn();
                     }
                 }, 100)
-            },fn);
+                */
+                if (fn) {
+                    fn();
+                }
+            }, fn);
         },
-        fail: function(){
+        fail: function () {
+            console.log("fail");
             // session_key 已经失效，需要重新执行登录流程
-            wxLogin(that,fn);
+            wxLogin(that, fn);
         }
     })
 }
 //获取code
-const wxLogin = (that,fn) => {
+const wxLogin = (that, fn) => {
     wx.login({
         success: function (res) {
             if (res.code) {
                 //发起网络请求
-                loginOAuth(that,res.code,fn);
-            }else {
+                loginOAuth(that, res.code, fn);
+            } else {
                 console.log('获取用户登录态失败！' + res.errMsg)
             }
         },
-        fail:function (err){
+        fail: function (err) {
             wx.hideLoading()
-            if(err.errMsg.indexOf('login:fail') != -1){
-                if(that.nosignal){
+            if (err.errMsg.indexOf('login:fail') != -1) {
+                if (that.nosignal) {
                     that.nosignal.showSignal();
                 }
                 that.setData({
-                    isHaveNetWorking:false
+                    isHaveNetWorking: false
                 })
-            }else {
-                if(that.nosignal){
+            } else {
+                if (that.nosignal) {
                     that.nosignal.hideSignal();
                 }
                 that.setData({
-                    isHaveNetWorking:true
+                    isHaveNetWorking: true
                 })
             }
         }
     });
 }
-// loginOAuth
-const loginOAuth = (that,code,fn) => {
-    //wx.clearStorageSync();
+const loginOAuth = (that, code, fn) => {
     wx.request({
-        url: site.login + 'Miniprogram/Openminiprogram/loginOAuth2',
-        method:'GET',
+        url: site.m + 'miniprogram/login',
+        method: 'POST',
+        // header: setHeader(),
         data: {
-            code: code,
-            type:'shop'
+            code: code
         },
-        dataType:'json',
-        success:function(res){
-            if(res.statusCode == 200){
-                if(res.data && res.data.status){
-                    if(res.data.result && res.data.result.sessionId){
-                        wx.setStorageSync('sessionId', res.data.result.sessionId);
-                        wx.setStorageSync('openid', res.data.requestInfo.openId);
-                        wx.setStorageSync('userId', res.data.result.userInfo.userId);
+        dataType: 'json',
+        success: function (res) {
+            if (res.data.code == 200) {
+                if (res.data.data && res.data.data.openid) {
+                    if (res.data.data.session_key) { //未登录，需要注册登录
+                        wx.setStorageSync('openid', res.data.data.openid);
+                        wx.setStorageSync('session_key', res.data.data.session_key);
+                        if (fn) {
+                            fn(res.data.data.session_key);
+                        }
+                    } else { //已登录
+                        wx.setStorageSync('openid', res.data.data.openid);
                         wx.removeStorageSync('session_key');
-                        if(fn){
+                        if (fn) {
                             fn();
                         }
-                    }else {
-                        wx.setStorageSync('session_key', res.data.result.session_key);
-                        wx.setStorageSync('openid', res.data.result.openid);
-                        wx.setStorageSync('unionid', res.data.result.unionid);
-                        if(fn){
-                            fn(res.data.result.session_key);
-                        }
                     }
-                }else {
+                } else {
                     wx.showModal({
                         title: '提示',
                         showCancel: false,
                         content: res.data.errInfo,
-                        success: function (res) { }
+                        success: function (res) {}
                     })
                 }
-            }else {
+            } else {
                 wx.showToast({
                     title: '服务器出了点问题，请稍候重试',
                     icon: 'none',
@@ -104,13 +105,88 @@ const loginOAuth = (that,code,fn) => {
                 })
             }
         },
-        fail: function(err){
-            if(fn){
+        fail: function (err) {
+            if (fn) {
                 fn();
             }
-            console.log(err);
         },
-        complete: function(){
+        complete: function () {
+
+        }
+    })
+}
+//注册
+const wxRegister = (that, fn) => {
+    let openid = wx.getStorageSync("openid")
+    wx.request({
+        url: site.m + 'miniprogram/register',
+        method: 'POST',
+        header: setHeader(),
+        data: {
+            openid: openid
+        },
+        dataType: 'json',
+        success: function (res) {
+            if (res.data.code == 200) {
+                if (res.data.data && res.data.data.status) {
+                    //登录成功
+                    wx.removeStorageSync('session_key');
+                    if (fn) {
+                        fn();
+                    }
+                } else {
+                    wx.showModal({
+                        title: '提示',
+                        showCancel: false,
+                        content: res.data.data.message,
+                        success: function (res) {}
+                    })
+                }
+            } else {
+                wx.showToast({
+                    title: '服务器出了点问题，请稍候重试',
+                    icon: 'none',
+                    duration: 2000
+                })
+            }
+        },
+        fail: function (err) {
+            wx.showToast({
+                title: JSON.stringify(err),
+                icon: 'none',
+                duration: 2000
+            })
+        },
+        complete: function () {
+
+        }
+    })
+}
+//检测服务端sessionId是否过期
+const checkUserInfo = (that, callback, fn) => {
+    wx.request({
+        url: site.m + 'miniprogram/getUserInfo/',
+        method: 'GET',
+        header: setHeader(),
+        dataType: 'json',
+        success: function (res) {
+            if (res.data.code == 200) {
+                if (res.data.data && res.data.data.status) {
+                    app.globalData.vipInfo = res.data.data.result[0]
+                    if (callback) {
+                        callback();
+                    }
+                } else {
+                    wxLogin(that, fn);
+                }
+            } else {
+                wxLogin(that, fn);
+            }
+        },
+        fail: function (err) {
+            wxLogin(that, fn);
+        },
+        complete: function () {
 
         }
     })
@@ -118,53 +194,25 @@ const loginOAuth = (that,code,fn) => {
 //设置header
 const setHeader = () => {
     var header = {},
-        uuid   = wx.getStorageSync("openid"),
-        utmSource = app.globalData.utmSource,
-        sessionId = wx.getStorageSync("sessionId");
-    if (sessionId) {
+    openid = wx.getStorageSync("openid"),
+        session_key = wx.getStorageSync("session_key");
+    if (session_key) { //未登录
         header = {
             'content-type': 'application/x-www-form-urlencoded',
-            'cookie': 'PHPSESSID=' + sessionId + ';client=miniprogram;utm_source=' + utmSource + ';kfz_uuid=' + uuid +';' //读取cookie
+            'cookie': 'client=miniprogram;'
         };
-    }else {
+    } else { //已登录
         header = {
             'content-type': 'application/x-www-form-urlencoded',
-            'cookie': 'client=miniprogram;utmSource=' + utmSource + ';uuid=' + uuid +';'
+            'cookie': 'openid=' + openid + ';client=miniprogram;' //读取cookie
         };
+
     }
     return header;
 }
-//检测服务端sessionId是否过期
-const checkUserInfo = (that,callback,fn) => {
-    const header = setHeader();
-    wx.request({
-        url: site.login + 'api-user/User/Index/getUserInfo/',
-        method:'GET',
-        header: header,
-        dataType:'json',
-        success:function(res){
-            if(res.statusCode == 200){
-                if(res.data.status && res.data.data){
-                    if(callback){
-                        callback();
-                    }
-                }else {
-                    wxLogin(that,fn);
-                }
-            }else {
-                wxLogin(that,fn);
-            }
-        },
-        fail: function(err){
-            wxLogin(that,fn);
-        },
-        complete: function(){
-
-        }
-    })
-}
 module.exports = {
-    wxCheckSession:wxCheckSession,
-    wxLogin:wxLogin,
-    setHeader:setHeader
+    wxCheckSession: wxCheckSession,
+    wxLogin: wxLogin,
+    wxRegister: wxRegister,
+    setHeader: setHeader
 }

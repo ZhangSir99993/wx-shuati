@@ -1,0 +1,33 @@
+<view class="container">
+    <view class="item">
+        <view class="title">
+            开通VIP 解锁所有权限
+        </view>
+         <button class="openButton bc_blue" wx:if="{{isAuthorize && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 
+            点击开通
+        </button>
+        <view class="openButton bc_blue" wx:else bindtap="openVipClick">
+            点击开通
+        </view>
+    </view>
+    <view class="item" wx:for="{{itemList}}" wx:key="index" bindtap="itemClick" data-index="{{index}}">
+        <view class="title">{{item.title}}</view>
+        <view class="dataView">
+            <view class="data">
+                <view class="name">已做</view>
+                <view class="number">{{item.finish}}/{{item.total}}</view>
+            </view>
+            <view class="data">
+                <view class="name">正确</view>
+                <view class="number">{{item.right}}</view>
+            </view>
+            <view class="data">
+                <view class="name">错误</view>
+                <view class="number">{{item.error}}</view>
+            </view>
+        </view>
+    </view>
+    <view class="item" wx:if="{{!itemList.length}}">
+        <view class="question">暂无错题</view>
+    </view>
+</view>

@@ -1,7 +1,7 @@
 <!--index.wxml-->
 <view class="container"> 
   <view class="userinfo">
-    <button class="loginButton" wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 
+    <button class="loginButton" wx:if="{{isAuthorize && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 
         <image class="userinfo-avatar" src="../../images/default_avatar.png"></image>
         <text class="userinfo-nickname">点击登录</text>
     </button>

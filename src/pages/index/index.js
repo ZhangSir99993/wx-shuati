@@ -138,7 +138,9 @@ Page({
                 });
                 break;
             case '2':
-
+                wx.navigateTo({
+                    url: '/pages/realsubject/realsubject'
+                });
                 break;
             case '3':
 

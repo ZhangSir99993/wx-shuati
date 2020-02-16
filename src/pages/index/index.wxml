@@ -21,6 +21,10 @@
                 <image class="item_icon" src="../../images/errSubject.png" mode="aspectFill"></image>
                 <view class="item_text">错题本</view>
             </view>
+            <view class="nav_item"  data-index="2" bindtap="goNav">
+                <image class="item_icon" src="../../images/errSubject.png" mode="aspectFill"></image>
+                <view class="item_text">真题模拟</view>
+            </view>
         </view>
         <view class="title_list">
             <block wx:for="{{itemList}}"  wx:key="index">

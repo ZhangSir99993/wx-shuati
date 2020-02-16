@@ -1,30 +1,52 @@
 // pages/my/my.js
 //获取应用实例
 const app = getApp()
-
+//auth.js
+const auth = require('../../api/auth.js');
+//api.js
+const site = require('../../api/site.js').site;
 Page({
   /**
    * 页面的初始数据
    */
   data: {
     userInfo: {},
-    hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo')
+    canIUse: wx.canIUse('button.open-type.getUserInfo'),
+    isAuthorize: true
+
   },
   onLoad: function () {
+    //登录授权检测
+    this.checkAuthorized();
+  },
+  checkAuthorized: function () {
+    var that = this;
+    auth.wxCheckSession(this, function (session_key) {
+      let sessionKey = session_key ? session_key : wx.getStorageSync("session_key");
+      if (sessionKey) {
+        that.setData({
+          isAuthorize: true //需要授权，注册登录
+        });
+      } else {
+        that.setData({
+          isAuthorize: false //不需要授权，已登录状态
+        });
+        //初始化页面信息
+        that.initInfo();
+      }
+    });
+  },
+  initInfo: function () {
     if (app.globalData.userInfo) {
-      console.log(app.globalData.userInfo);
       this.setData({
-        userInfo: app.globalData.userInfo,
-        hasUserInfo: true
+        userInfo: app.globalData.userInfo
       })
     } else if (this.data.canIUse) {
       // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
       // 所以此处加入 callback 以防止这种情况
       app.userInfoReadyCallback = res => {
         this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
+          userInfo: res.userInfo
         })
       }
     } else {
@@ -33,8 +55,7 @@ Page({
         success: res => {
           app.globalData.userInfo = res.userInfo
           this.setData({
-            userInfo: res.userInfo,
-            hasUserInfo: true
+            userInfo: res.userInfo
           })
         }
       })
@@ -44,10 +65,13 @@ Page({
     if (e.detail.errMsg == 'getUserInfo:fail auth deny') {
       return;
     }
-    app.globalData.userInfo = e.detail.userInfo
-    this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
+    var that = this
+    auth.wxRegister(this, function () {
+      app.globalData.userInfo = e.detail.userInfo
+      that.setData({
+        isAuthorize: false,
+        userInfo: e.detail.userInfo
+      })
     })
   },
   getResources: function () {
