@@ -27,7 +27,6 @@ const wxCheckSession = (that, fn) => {
             }, fn);
         },
         fail: function () {
-            console.log("fail");
             // session_key 已经失效，需要重新执行登录流程
             wxLogin(that, fn);
         }
@@ -123,7 +122,8 @@ const wxRegister = (that, fn) => {
         method: 'POST',
         header: setHeader(),
         data: {
-            openid: openid
+            openid: openid,
+            userInfo:JSON.stringify(app.globalData.userInfo)
         },
         dataType: 'json',
         success: function (res) {
@@ -172,7 +172,7 @@ const checkUserInfo = (that, callback, fn) => {
         success: function (res) {
             if (res.data.code == 200) {
                 if (res.data.data && res.data.data.status) {
-                    app.globalData.vipInfo = res.data.data.result[0]
+                    app.globalData.userInfo = res.data.data.result[0]
                     if (callback) {
                         callback();
                     }

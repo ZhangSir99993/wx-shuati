@@ -66,8 +66,8 @@ Page({
       return;
     }
     var that = this
+    app.globalData.userInfo = e.detail.userInfo
     auth.wxRegister(this, function () {
-      app.globalData.userInfo = e.detail.userInfo
       that.setData({
         isAuthorize: false,
         userInfo: e.detail.userInfo

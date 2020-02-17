@@ -46,7 +46,24 @@ Page({
         }]
     },
     onLoad: function () {
-        this.initInfo();
+        //登录授权检测
+        this.checkAuthorized();
+    },
+    checkAuthorized: function () {
+        var that = this;
+        auth.wxCheckSession(this, function (session_key) {
+            let sessionKey = session_key ? session_key : wx.getStorageSync("session_key");
+            if (sessionKey) {
+                that.setData({
+                    isAuthorize: true //需要授权，注册登录
+                });
+            } else {
+                that.setData({
+                    isAuthorize: false //不需要授权，已登录状态
+                });
+                that.initInfo();
+            }
+        });
     },
     initInfo: function () {
         if (app.globalData.userInfo) {
@@ -77,25 +94,27 @@ Page({
         this.data.keyword = e.detail.value
     },
     openVipClick: function () {
-        console.log("keyword=", this.data.keyword);
         if (this.data.keyword) {
-            if (this.data.keyword.length >= 15&&this.data.keyword.length <= 18) {
+            if (this.data.keyword.length >= 15 && this.data.keyword.length <= 18) {
+                wx.showLoading({
+                    title:'正在开通...'
+                })
                 wx.request({
                     url: site.m + 'miniprogram/openvip',
-                    method:'POST',
-                    header:auth.setHeader(),
-                    data:{
-                       code: this.data.keyword||'npd1jPkQAbjFIL0'
-                    },  
-                    dataType:'json',
-                    success:function(res){
-                        console.log(res);
+                    method: 'POST',
+                    header: auth.setHeader(),
+                    data: {
+                        code: this.data.keyword,
+                        userInfo:JSON.stringify(this.data.userInfo)
+                    },
+                    dataType: 'json',
+                    success: function (res) {
                         if (res.data.code == 200) {
                             if (res.data.data.result) {
-                                wx.navigateTo({
+                                wx.redirectTo({
                                     url: '/pages/vipresult/vipresult'
                                 })
-                            }else{
+                            } else {
                                 wx.showModal({
                                     title: '提示',
                                     showCancel: false,
@@ -103,7 +122,7 @@ Page({
                                     success: function (res) {}
                                 })
                             }
-                        }else{
+                        } else {
                             wx.showToast({
                                 title: '服务器出了点问题，请稍候重试',
                                 icon: 'none',
@@ -111,15 +130,15 @@ Page({
                             })
                         }
                     },
-                    fail:function(err){
+                    fail: function (err) {
                         wx.showToast({
                             title: JSON.stringify(err),
                             icon: 'none',
                             duration: 2000
                         })
                     },
-                    complete:function(){
-                        
+                    complete: function () {
+                        wx.hideLoading();
                     }
                 })
             } else {

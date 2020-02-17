@@ -7,14 +7,14 @@
     </view>
     <view class="item">
         <text>开通课程</text>
-        <text>{{vipInfo.subject}}</text>
+        <text>{{userInfo.tablename}}</text>
     </view>
     <view class="item">
         <text>会员时长</text>
-        <text>{{vipInfo.time}}</text>
+        <text>{{userInfo.validTime}}天</text>
     </view>
     <view class="item">
         <text>会员价格</text>
-        <text>{{vipInfo.realPrice}}</text>
+        <text>￥{{userInfo.price}}</text>
     </view>
 </view>
