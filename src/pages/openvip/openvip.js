@@ -138,6 +138,7 @@ Page({
                     success: function (res) {
                         if (res.data.code == 200) {
                             if (res.data.data.result) {
+                                app.globalData.userInfo = res.data.data.result
                                 wx.redirectTo({
                                     url: '/pages/vipresult/vipresult'
                                 })
