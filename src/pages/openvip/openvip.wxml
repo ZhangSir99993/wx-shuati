@@ -4,17 +4,17 @@
         <view class="vipInfo">
             <view class="nickname">{{userInfo.nickName}}</view> 
             <view class="subject">
-                开通科目：{{userInfo.tablename||'未开通'}}
+                开通科目：{{vipInfo.tablename||'未开通'}}
             </view>
-            <view class="subject" wx:if="{{userInfo.validTime}}">
-                有效日期：{{userInfo.validTime}}天
+            <view class="subject" wx:if="{{vipInfo.validTime}}">
+                有效日期：{{vipInfo.validTime}}天
             </view>
             <view class="subject" wx:else>
                 有效日期：未开通
             </view>
         </view>
-        <view class="vipStatus {{userInfo.vip?'bc_red':'bc_gray'}}">
-            {{userInfo.vip?'VIP会员':'未开通会员'}}
+        <view class="vipStatus {{vipInfo.vip?'bc_red':'bc_gray'}}">
+            {{vipInfo.vip?'VIP会员':'未开通会员'}}
         </view>
     </view>
     <view class="openVip">

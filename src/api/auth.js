@@ -172,7 +172,7 @@ const checkUserInfo = (that, callback, fn) => {
         success: function (res) {
             if (res.data.code == 200) {
                 if (res.data.data && res.data.data.status) {
-                    app.globalData.userInfo = res.data.data.result[0]
+                    app.globalData.userInfo = res.data.data.result
                     if (callback) {
                         callback();
                     }

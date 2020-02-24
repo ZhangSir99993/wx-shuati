@@ -1,5 +1,17 @@
-<view class="container">
-    <view class="item">
+<view class="loading" wx:if="{{!loadingfinish}}">
+    <text></text>
+</view>
+
+<view class="container" wx:else>
+    <view class="item" wx:if="{{isVip}}">
+        <view class="title">
+            尊敬的VIP用户 您好
+        </view>
+        <view class="validTime">
+            有效期剩余：{{validTime}}天
+        </view>
+    </view>
+    <view class="item" wx:else>
         <view class="title">
             开通VIP 解锁所有权限
         </view>
@@ -11,6 +23,7 @@
         </view>
     </view>
     <view class="item" wx:for="{{itemList}}" wx:key="index" bindtap="itemClick" data-index="{{index}}">
+        <view class="vipTag bc_red" wx:if="{{!isVip}}">vip</view>
         <view class="title">{{item.title}}</view>
         <view class="dataView">
             <view class="data">
