@@ -7,6 +7,7 @@ const auth = require('../../api/auth.js');
 Page({
     data: {
         userInfo: {},
+        tablename:"",
         canIUse: wx.canIUse('button.open-type.getUserInfo'),
         keyword: '',
         priceItems: [{
@@ -112,7 +113,8 @@ Page({
         }
         this.setData({
             userInfo: userInfo,
-            vipInfo:vipInfo
+            vipInfo:vipInfo,
+            tablename:app.globalData.tablename
         })
     },
     bindblur: function (e) {

@@ -4,7 +4,7 @@
         <view class="vipInfo">
             <view class="nickname">{{userInfo.nickName}}</view> 
             <view class="subject">
-                开通科目：{{vipInfo.tablename||'未开通'}}
+                开通科目：{{tablename}}
             </view>
             <view class="subject" wx:if="{{vipInfo.validTime}}">
                 有效日期：{{vipInfo.validTime}}天

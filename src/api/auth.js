@@ -82,6 +82,7 @@ const loginOAuth = (that, code, fn) => {
                             fn(res.data.data.session_key);
                         }
                     } else { //已登录
+                        app.globalData.userInfo = res.data.data.result
                         wx.setStorageSync('openid', res.data.data.openid);
                         wx.removeStorageSync('session_key');
                         if (fn) {
