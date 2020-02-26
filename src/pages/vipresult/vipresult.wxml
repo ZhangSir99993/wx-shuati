@@ -10,7 +10,7 @@
         <text>{{vipInfo.tablename}}</text>
     </view>
     <view class="item">
-        <text>会员时长</text>
-        <text>{{vipInfo.validTime}}天</text>
+        <text>会员有效期至：</text>
+        <text>{{vipInfo.validTime}}</text>
     </view>
 </view>

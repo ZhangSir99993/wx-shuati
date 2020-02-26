@@ -10,7 +10,8 @@
     "pages/openvip/openvip",
     "pages/vipresult/vipresult",
     "pages/study/study",
-    "pages/my/my"
+    "pages/my/my",
+    "pages/myvip/myvip"
   ],
   "window": {
     "navigationBarTextStyle": "black",

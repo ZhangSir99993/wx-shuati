@@ -19,6 +19,10 @@
           <text>联系客服</text>
           <image src="../../images/arrowright.png"></image>
         </button>
+        <view class="item" bindtap="gotomyvip">
+            <text>我的会员</text>
+            <image src="../../images/arrowright.png"></image>
+        </view>
     </view>
 </view>
 

@@ -8,7 +8,7 @@
             尊敬的VIP用户 您好
         </view>
         <view class="validTime">
-            有效期剩余：{{validTime}}天
+            有效期至：{{validTime}}
         </view>
     </view>
     <view class="item" wx:else>
@@ -25,18 +25,21 @@
     <view class="item" wx:for="{{itemList}}" wx:key="index" bindtap="detailClick" data-albumid="{{item.albumId}}">
         <view class="vipTag bc_red" wx:if="{{!isVip}}">vip</view>
         <view class="title">{{item.albumId}}</view>
+        <view class="continueTage">
+            <text wx:if="{{item.isContinue}}" class="blue">继续上次</text>
+        </view>
         <view class="dataView">
             <view class="data">
                 <view class="name">已做</view>
-                <view class="number">{{item.finish||0}}/{{item.count}}</view>
+                <view class="number">{{item.finishCount}}/{{item.count}}</view>
             </view>
             <view class="data">
                 <view class="name">正确</view>
-                <view class="number">{{item.right||0}}</view>
+                <view class="number">{{item.rightCount}}</view>
             </view>
             <view class="data">
                 <view class="name">错误</view>
-                <view class="number">{{item.error||0}}</view>
+                <view class="number">{{item.errorCount}}</view>
             </view>
         </view>
     </view>
