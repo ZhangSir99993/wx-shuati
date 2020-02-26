@@ -145,9 +145,7 @@ Page({
     handleVipInfp:function(validTime,tablename){
         var that = this
         var ms = parseInt(validTime) - new Date().getTime()
-        var day = ms / (1000 * 60 * 60 * 24)
-        console.log(day);
-        
+        var day = ms / (1000 * 60 * 60 * 24)        
         if (day > 0) {
             if (day < 3) {
                 wx.showModal({
