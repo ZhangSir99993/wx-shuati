@@ -74,33 +74,44 @@ Page({
       })
     })
   },
-  getResources: function () {
-    wx.showModal({
-      content: '领取PMP NPDP ACP PBA 软考等资料，请添加微信：xiaobaiyi68',
-      confirmText: '复制微信',
-      showCancel: false,
-      success(res) {
-        if (res.confirm) {
-          wx.setClipboardData({
-            data: 'xiaobaiyi68',
-            success: function (res) {
-              wx.getClipboardData({
+  buttonClick: function (e) {
+    switch (e.currentTarget.dataset.index) {
+      case '0':
+        wx.navigateTo({
+          url: '/pages/myvip/myvip'
+        });
+        break;
+      case '1':
+        wx.showModal({
+          content: '领取PMP NPDP ACP PBA 软考等资料，请添加微信：xiaobaiyi68',
+          confirmText: '复制微信',
+          showCancel: false,
+          success(res) {
+            if (res.confirm) {
+              wx.setClipboardData({
+                data: 'xiaobaiyi68',
                 success: function (res) {
-                  wx.showToast({
-                    title: '微信号已复制',
-                  });
+                  wx.getClipboardData({
+                    success: function (res) {
+                      wx.showToast({
+                        title: '微信号已复制',
+                      });
+                    }
+                  })
                 }
               })
             }
-          })
-        }
-      }
-    })
-  },
-  gotomyvip:function(){
-      wx.navigateTo({
-        url:'/pages/myvip/myvip'
-      })
+          }
+        })
+        break;
+      case '2':
+        break;
+      case '3':
+
+        break;
+      default:
+        break;
+    }
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

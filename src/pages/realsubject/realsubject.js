@@ -23,6 +23,13 @@ Page({
         //登录授权检测
         this.checkAuthorized();
     },
+    onShow: function () {
+        if (app.globalData.refreshVip) {
+            app.globalData.refreshVip = false
+            //登录授权检测
+            this.checkAuthorized();
+        }
+    },
     checkAuthorized: function () {
         var that = this;
         auth.wxCheckSession(this, function (session_key) {
@@ -118,23 +125,22 @@ Page({
             errorCount: errorCount
         };
     },
-
     vipInfo: function () {
         var userInfo = app.globalData.userInfo
         switch (app.globalData.tablename) {
             case 'npdp':
                 if (userInfo.npdpVip) {
-                    this.handleVipInfp(userInfo.npdpValidTime,'npdp')
+                    this.handleVipInfp(userInfo.npdpValidTime, 'npdp')
                 }
                 break;
             case 'pmp':
                 if (userInfo.pmpVip) {
-                    this.handleVipInfp(userInfo.pmpValidTime,'pmp')
+                    this.handleVipInfp(userInfo.pmpValidTime, 'pmp')
                 }
                 break;
             case 'acp':
                 if (userInfo.acpVip) {
-                    this.handleVipInfp(userInfo.acpValidTime,'acp')
+                    this.handleVipInfp(userInfo.acpValidTime, 'acp')
                 }
                 break;
             default:
@@ -142,17 +148,17 @@ Page({
         }
     },
     //处理vip用户信息
-    handleVipInfp:function(validTime,tablename){
+    handleVipInfp: function (validTime, tablename) {
         var that = this
         var ms = parseInt(validTime) - new Date().getTime()
-        var day = ms / (1000 * 60 * 60 * 24)        
+        var day = ms / (1000 * 60 * 60 * 24)
         if (day > 0) {
             if (day < 3) {
                 wx.showModal({
-                    title:'您的VIP即将过期。',
+                    title: '您的VIP即将过期。',
                     content: '您的npdp VIP有效期不足3天，到期未续期将影响您相关业务的正常使用。',
-                    confirmText:'立刻续期',
-                    success(res){
+                    confirmText: '立刻续期',
+                    success(res) {
                         if (res.confirm) {
                             that.openVipClick()
                         }
@@ -161,7 +167,7 @@ Page({
             } else {
                 this.setData({
                     isVip: true,
-                    validTime: util.formatDateTime(userInfo.npdpValidTime, 'yyyy-MM-dd')
+                    validTime: util.formatDateTime(validTime, 'yyyy-MM-dd')
                 })
             }
         } else {
@@ -201,8 +207,7 @@ Page({
                         duration: 2000
                     })
                 },
-                complete: function () {
-                }
+                complete: function () {}
             })
         }
     },

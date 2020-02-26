@@ -29,6 +29,7 @@ App({
   globalData: {
     hasLogin: false,
     userInfo: null,
-    tablename:'npdp'
+    tablename:'npdp',
+    refreshVip:false
   }
 })

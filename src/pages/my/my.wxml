@@ -1,29 +1,55 @@
 <!--index.wxml-->
-<view class="container"> 
-  <view class="userinfo">
-    <button class="loginButton" wx:if="{{isAuthorize && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 
-        <image class="userinfo-avatar" src="../../images/default_avatar.png"></image>
-        <text class="userinfo-nickname">点击登录</text>
-    </button>
-    <block wx:else>
-      <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="aspectFit"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
+<view class="container">
+  <view class="header_box">
+        <block wx:if="{{isAuthorize && canIUse}}">
+            <button class="none_style user_info_box" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
+                <image class="user_pic" src="../../images/default_avatar.png" mode="aspectFit"></image>
+                <view class="user_info">
+                    <view class="user_name">点击登录</view>
+                </view>
+            </button>
+        </block>
+        <block wx:else>
+            <button class="none_style user_info_box">
+                <image class="user_pic" src="{{userInfo.avatarUrl}}" mode="aspectFit"></image>
+                <view class="user_info">
+                    <view class="user_name">{{userInfo.nickName}}</view>
+                    <block wx:if="{{userInfo.review}}">
+                        <view class="user_xinyu">
+                            <text>买家好评率 {{userInfo.rate}}</text>
+                            <text class="line_gray"></text>
+                            <text>买家信誉 {{userInfo.review}}</text>
+                        </view>
+                    </block>
+                </view>
+            </button>
+        </block>
+  </view> 
+  <view class="section">
+      <view class="section_title_box">
+          <view class="section_title">相关服务</view>
+      </view>
+      <view class="section_service_list">
+          <button class="none_style section_item" data-index="0" bindtap="buttonClick" hover-class="defaultTap">
+              <image class="section_item_img" src="../../images/member.png" mode="aspectFit"></image>
+              <view class="section_item_name">我的会员</view>
+          </button>
+          <button class="none_style section_item" data-index="1" bindtap="buttonClick" hover-class="defaultTap">
+              <image class="section_item_img" src="../../images/feedback.png" mode="aspectFit"></image>
+              <view class="section_item_name">领取资源</view>
+          </button>
+          <button class="none_style section_item" open-type="contact" hover-class="defaultTap">
+            <image class="section_item_img" src="../../images/serve_icon.png" mode="aspectFill"></image>
+            <view class="section_item_name">联系客服</view>
+          </button>
+          <!--
+          <button class="none_style section_item" data-index="3" bindtap="buttonClick" hover-class="defaultTap">
+              <image class="section_item_img" src="../../images/aboutUs.png" mode="aspectFit"></image>
+              <view class="section_item_name">关于我们</view>
+          </button>
+          -->
+      </view>
   </view>
-  <view class="mylist">
-        <view class="item" bindtap="getResources">
-            <text>领取资源</text>
-            <image src="../../images/arrowright.png"></image>
-        </view>
-        <button class="item" open-type="contact">
-          <text>联系客服</text>
-          <image src="../../images/arrowright.png"></image>
-        </button>
-        <view class="item" bindtap="gotomyvip">
-            <text>我的会员</text>
-            <image src="../../images/arrowright.png"></image>
-        </view>
-    </view>
 </view>
 
    

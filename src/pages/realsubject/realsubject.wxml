@@ -24,7 +24,7 @@
     </view>
     <view class="item" wx:for="{{itemList}}" wx:key="index" bindtap="detailClick" data-albumid="{{item.albumId}}">
         <view class="vipTag bc_red" wx:if="{{!isVip}}">vip</view>
-        <view class="title">{{item.albumId}}</view>
+        <view class="title">2020{{item.albumId}}</view>
         <view class="continueTage">
             <text wx:if="{{item.isContinue}}" class="blue">继续上次</text>
         </view>
