@@ -15,9 +15,17 @@ Page({
     recordClick: function (e) {
         var index = e.currentTarget.dataset.index;
         var exercise_record = this.data.itemList[index];
-        wx.navigateTo({
-            url: `/pages/result/result?exercise_record=${JSON.stringify(exercise_record)}`
-        });
+
+        if (exercise_record.tablename.includes('vip')) {
+            wx.navigateTo({
+                url: `/pages/result/result?exercise_record=${JSON.stringify(exercise_record)}&isVip=true`
+            });
+        }else{
+            wx.navigateTo({
+                url: `/pages/result/result?exercise_record=${JSON.stringify(exercise_record)}`
+            });
+        }
+        
     },
     /**
      * 用户点击右上角分享

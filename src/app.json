@@ -28,11 +28,6 @@
       "iconPath": "images/home_gray.png",
       "selectedIconPath": "images/home_blue.png",
       "text": "练习"
-    },{
-      "pagePath": "pages/study/study",
-      "iconPath": "images/home_gray.png",
-      "selectedIconPath": "images/home_blue.png",
-      "text": "学习"
     }, {
       "pagePath": "pages/my/my",
       "iconPath": "images/mine_gray.png",

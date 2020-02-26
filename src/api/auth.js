@@ -118,6 +118,9 @@ const loginOAuth = (that, code, fn) => {
 //注册
 const wxRegister = (that, fn) => {
     let openid = wx.getStorageSync("openid")
+    wx.showLoading({
+        title:'正在注册...'
+    })
     wx.request({
         url: site.m + 'miniprogram/register',
         method: 'POST',
@@ -159,7 +162,7 @@ const wxRegister = (that, fn) => {
             })
         },
         complete: function () {
-
+            wx.hideLoading()
         }
     })
 }

@@ -11,14 +11,20 @@ Page({
         },{
             title:"PMP",
             tablename:'pmp'
+        },{
+            title:"ACP",
+            tablename:'acp'
         }],
         currentTap: 0
     },
     onLoad: function () {
-        this.init(app.globalData.tablename)
+        this.initData(app.globalData.tablename)
     },
-    init: function () {
+    initData: function () {
         var that = this
+        wx.showLoading({
+            title:'加载中...'
+        })
         wx.request({
             url: site.m + 'list/'+app.globalData.tablename,
             method: 'GET',
@@ -54,7 +60,9 @@ Page({
                     duration: 2000
                 })
             },
-            complete: function () {}
+            complete: function () {
+                wx.hideLoading()
+            }
         })
     },
     getCurrent: function (albumId) {
@@ -119,7 +127,7 @@ Page({
     navTap: function (e) {
         if (e.currentTarget.dataset.tablename) {
             app.globalData.tablename = e.currentTarget.dataset.tablename
-            this.init();     
+            this.initData();     
             this.setData({
                 currentTap:e.currentTarget.dataset.index
             })     

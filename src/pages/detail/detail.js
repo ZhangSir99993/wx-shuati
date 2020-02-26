@@ -38,16 +38,28 @@ Page({
                 this.data.currentPage = answer_List.length - 1;
             }
         }
-        this.init(this.options.albumId)
+        this.initData(this.options.albumId)
     },
-    init: function (albumId) {
-        var that = this
+    initData: function (albumId) {
+        var that = this,
+            url = site.m + "detail/" + app.globalData.tablename,
+            pageNum = 15;        
+        if (that.options.isVip && that.options.isVip != 'undefined') {
+            if (!url.includes('vip')) {
+                url += 'vip'
+            }
+            pageNum = 100
+        }
+        wx.showLoading({
+            title: '加载中...'
+        })
         wx.request({
-            url: site.m + "detail/" + app.globalData.tablename,
+            url: url,
             method: 'POST',
             data: {
                 albumId: albumId,
-                currentPage: that.data.currentPage
+                currentPage: that.data.currentPage,
+                pageNum: pageNum
             },
             dataType: 'json',
             success: function (res) {
@@ -61,20 +73,36 @@ Page({
                                 that.data.chooseList[index] = '';
                             }
                         }
-                        that.setData({
-                            current: that.data.current,
-                            itemList: res.data.data,
-                            chapters: that.options.albumId,
-                            currentAnswerList: that.data.currentAnswerList,
-                            chooseList: that.data.chooseList
-                        })
+                        if (that.options.isVip && that.options.isVip != 'undefined') {
+                            that.setData({
+                                current: that.data.current,
+                                chapters: that.options.albumId,
+                                itemList: res.data.data.slice(0,10)
+                            }, function () {
+                                that.setData({
+                                    itemList: res.data.data,
+                                    currentAnswerList: that.data.currentAnswerList,
+                                    chooseList: that.data.chooseList
+                                })
+                            })
+
+                        } else {
+                            that.setData({
+                                current: that.data.current,
+                                itemList: res.data.data,
+                                chapters: that.options.albumId,
+                                currentAnswerList: that.data.currentAnswerList,
+                                chooseList: that.data.chooseList
+                            })
+                        }
+
                     } else {
                         wx.showModal({
                             title: '本章节没有更多内容了,是否重新练习?',
                             success(res) {
                                 if (res.confirm) {
                                     that.data.currentPage = 0
-                                    that.init(that.options.albumId)
+                                    that.initData(that.options.albumId)
                                 } else if (res.cancel) {
                                     wx.navigateBack()
                                 }
@@ -96,7 +124,9 @@ Page({
                     duration: 2000
                 })
             },
-            complete: function () {}
+            complete: function () {
+                wx.hideLoading();
+            }
         })
     },
     answerClick: function (e) {
@@ -232,7 +262,7 @@ Page({
     },
     submitClick: function () {
         wx.redirectTo({
-            url: `/pages/result/result?albumId=${this.options.albumId}`
+            url: `/pages/result/result?albumId=${this.options.albumId}&isVip=${this.options.isVip}`
         })
         this.markHideClick();
     },
@@ -320,6 +350,7 @@ Page({
                         rightCount++
                     }
                 }
+
                 var obj = {
                     tablename: app.globalData.tablename,
                     albumId: this.options.albumId,
@@ -328,6 +359,11 @@ Page({
                     currentPage: this.data.currentPage,
                     rightCount: rightCount,
                     time: new Date().toLocaleString().split(' ')[0]
+                }
+                if (this.options.isVip && this.options.isVip != 'undefined') {
+                    if (!obj.tablename.includes('vip')) {
+                        obj.tablename = app.globalData.tablename + 'vip'
+                    }
                 }
                 exercise_record_list.push(obj);
                 wx.setStorageSync("exercise_record_list_" + app.globalData.tablename, exercise_record_list)

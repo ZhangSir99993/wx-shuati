@@ -15,7 +15,7 @@ Page({
     itemClick: function (e) {
         var index = e.currentTarget.dataset.index
         wx.navigateTo({
-            url: '/pages/analysis/analysis?current=' + index
+            url: `/pages/analysis/analysis?current=${index}`
         });
     },
     /**

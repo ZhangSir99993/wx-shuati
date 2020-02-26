@@ -22,21 +22,21 @@
             点击开通
         </view>
     </view>
-    <view class="item" wx:for="{{itemList}}" wx:key="index" bindtap="itemClick" data-index="{{index}}">
+    <view class="item" wx:for="{{itemList}}" wx:key="index" bindtap="detailClick" data-albumid="{{item.albumId}}">
         <view class="vipTag bc_red" wx:if="{{!isVip}}">vip</view>
-        <view class="title">{{item.title}}</view>
+        <view class="title">{{item.albumId}}</view>
         <view class="dataView">
             <view class="data">
                 <view class="name">已做</view>
-                <view class="number">{{item.finish}}/{{item.total}}</view>
+                <view class="number">{{item.finish||0}}/{{item.count}}</view>
             </view>
             <view class="data">
                 <view class="name">正确</view>
-                <view class="number">{{item.right}}</view>
+                <view class="number">{{item.right||0}}</view>
             </view>
             <view class="data">
                 <view class="name">错误</view>
-                <view class="number">{{item.error}}</view>
+                <view class="number">{{item.error||0}}</view>
             </view>
         </view>
     </view>

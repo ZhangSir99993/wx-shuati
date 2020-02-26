@@ -122,11 +122,11 @@ Page({
     tagClick: function (e) {
         if (this.options.exercise_record) {
             wx.navigateTo({
-                url: `/pages/analysis/analysis?exercise_record=${this.options.exercise_record}&current=${e.currentTarget.dataset.index}`
+                url: `/pages/analysis/analysis?exercise_record=${this.options.exercise_record}&current=${e.currentTarget.dataset.index}&isVip=${this.options.isVip}`
             });
         } else {
             wx.navigateTo({
-                url: `/pages/analysis/analysis?albumId=${this.options.albumId}&current=${e.currentTarget.dataset.index}`
+                url: `/pages/analysis/analysis?albumId=${this.options.albumId}&current=${e.currentTarget.dataset.index}&isVip=${this.options.isVip}`
             });
         }
     },
@@ -134,24 +134,24 @@ Page({
     analyseClick: function () {
         if (this.options.exercise_record) {
             wx.navigateTo({
-                url: `/pages/analysis/analysis?exercise_record=${this.options.exercise_record}`
+                url: `/pages/analysis/analysis?exercise_record=${this.options.exercise_record}&isVip=${this.options.isVip}`
             });
         } else {
             wx.navigateTo({
-                url: `/pages/analysis/analysis?albumId=${this.options.albumId}`
+                url: `/pages/analysis/analysis?albumId=${this.options.albumId}&isVip=${this.options.isVip}`
             });
         }
     },
     //继续联系
     continueClick: function () {
         wx.navigateTo({
-            url: `/pages/detail/detail?albumId=${this.options.albumId}`
+            url: `/pages/detail/detail?albumId=${this.options.albumId}&isVip=${this.options.isVip}`
         });
     },
     //错题解析
     errAnalyseClick: function () {
         wx.navigateTo({
-            url: `/pages/analysis/analysis?exercise_record=${this.options.exercise_record}&only_error=true`
+            url: `/pages/analysis/analysis?exercise_record=${this.options.exercise_record}&only_error=true&isVip=${this.options.isVip}`
         });
     },
     /**
