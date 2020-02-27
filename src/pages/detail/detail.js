@@ -261,6 +261,7 @@ Page({
         this.markHideClick();
     },
     submitClick: function () {
+        this.saveExerciseRecordData();
         wx.redirectTo({
             url: `/pages/result/result?albumId=${this.options.albumId}&isVip=${this.options.isVip}`
         })
@@ -318,6 +319,12 @@ Page({
                     }
                     wx.setStorageSync(tempKey, answer_List)
                 }
+            } catch (e) {}
+        }
+    },
+    saveExerciseRecordData:function(){
+        if (this.data.currentAnswerList.includes(1) || this.data.currentAnswerList.includes(2)) {
+            try {
                 //添加错题到错题集
                 var error_subject = wx.getStorageSync("error_subject_" + app.globalData.tablename) || []; //获取全部错题集(数组)
                 var error_id = wx.getStorageSync("error_id_" + app.globalData.tablename) || []; //获取全部错题集id(数组)

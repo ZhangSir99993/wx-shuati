@@ -46,7 +46,8 @@ Page({
         }, {
             name: '免费享有会员新增服务',
             desc: '我们会不断增加会员其他功能'
-        }]
+        }],
+        loadingStatus:false //防重复提交
     },
     onLoad: function () {
         //登录授权检测
@@ -125,6 +126,19 @@ Page({
     openVipClick: function () {
         if (this.data.keyword) {
             if (this.data.keyword.length >= 15 && this.data.keyword.length <= 18) {
+                var tablename = this.data.keyword.substr(0, 3)
+                if (tablename != this.data.tablename.substr(0,3)) {
+                    wx.showToast({
+                        title: '非该科目授权码',
+                        icon: 'none',
+                        duration: 2000
+                    })
+                    return;
+                }
+                if (this.data.loadingStatus) {
+                    return
+                }
+                this.data.loadingStatus = true
                 wx.showLoading({
                     title: '正在开通...'
                 })
@@ -169,6 +183,7 @@ Page({
                         })
                     },
                     complete: function () {
+                        this.data.loadingStatus = false
                         wx.hideLoading();
                     }
                 })

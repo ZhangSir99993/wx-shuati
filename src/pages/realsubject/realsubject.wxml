@@ -44,6 +44,6 @@
         </view>
     </view>
     <view class="item" wx:if="{{!itemList.length}}">
-        <view class="question">暂无错题</view>
+        <view class="question">网络出错了</view>
     </view>
 </view>

@@ -11,23 +11,30 @@ Page({
         canIUse: wx.canIUse('button.open-type.getUserInfo'),
         isAuthorize: true, //是否需要授权注册登录
         loadingfinish: false,
-        itemList: [{
-            albumId: '综合冲刺题一',
-            finish: 0,
-            count: 200,
-            right: 0,
-            error: 0
-        }]
+        itemList: []
     },
     onLoad: function () {
         //登录授权检测
         this.checkAuthorized();
     },
     onShow: function () {
+        var that = this
         if (app.globalData.refreshVip) {
             app.globalData.refreshVip = false
             //登录授权检测
-            this.checkAuthorized();
+            that.checkAuthorized();
+        }
+        if (that.data.itemList.length) {
+            that.data.itemList.forEach(element => {
+                var currentCount = that.getCurrent(element.albumId);
+                element.finishCount = currentCount.finishCount
+                element.rightCount = currentCount.rightCount
+                element.errorCount = currentCount.errorCount
+                element.isContinue = currentCount.isContinue
+            });
+            that.setData({
+                itemList: that.data.itemList
+            })
         }
     },
     checkAuthorized: function () {
