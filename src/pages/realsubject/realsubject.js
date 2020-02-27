@@ -45,6 +45,8 @@ Page({
                 that.setData({
                     isAuthorize: true //需要授权，注册登录
                 });
+                //初始化页面信息
+                that.initInfo();
             } else {
                 that.setData({
                     isAuthorize: false //不需要授权，已登录状态
