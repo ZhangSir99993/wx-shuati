@@ -167,7 +167,7 @@ Page({
      */
     onShareAppMessage: function () {
         return {
-            title: "刷题100",
+            title: "擦，我发现一个刷题小程序，很棒啊，你也试试",
             path: "/pages/index/index"
         }
     }

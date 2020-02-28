@@ -14,19 +14,19 @@ Page({
         keyword: '',
         priceItems: [{
             time: '一个月',
-            realPrice: '9.9',
-            originalPrice: '15',
+            realPrice: '15',
+            originalPrice: '20',
             savePrice: '5'
         }, {
             time: '三个月',
-            realPrice: '24.9',
-            originalPrice: '45',
-            savePrice: '20'
+            realPrice: '30',
+            originalPrice: '60',
+            savePrice: '30'
         }, {
             time: '六个月',
-            realPrice: '34.9',
-            originalPrice: '90',
-            savePrice: '55'
+            realPrice: '45',
+            originalPrice: '120',
+            savePrice: '75'
         }],
         privileges: [{
             name: '真题模拟免费做',

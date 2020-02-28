@@ -42,5 +42,5 @@ Page({
         this.setData({
             vipInfo:vipInfo
         })
-    },
+    }
 })
