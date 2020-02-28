@@ -269,7 +269,8 @@ Page({
             this.markHideClick();
         }else{
             wx.showToast({
-                title:"还没答题，无法提交"
+                title:"还没答题，无法提交",
+                icon:'none'
             })
         }
     },

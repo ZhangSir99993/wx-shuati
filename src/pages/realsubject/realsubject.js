@@ -85,15 +85,19 @@ Page({
             success: function (res) {
                 if (res.data.code == 200) {
                     if (res.data.data.length) {
-                        res.data.data.forEach(element => {
-                            var currentCount = that.getCurrent(element.albumId);
-                            element.finishCount = currentCount.finishCount
-                            element.rightCount = currentCount.rightCount
-                            element.errorCount = currentCount.errorCount
-                            element.isContinue = currentCount.isContinue
-                        });
                         that.setData({
                             itemList: next?that.data.itemList.concat(res.data.data):res.data.data
+                        },function(){
+                            that.data.itemList.forEach(element => {
+                                var currentCount = that.getCurrent(element.albumId);
+                                element.finishCount = currentCount.finishCount
+                                element.rightCount = currentCount.rightCount
+                                element.errorCount = currentCount.errorCount
+                                element.isContinue = currentCount.isContinue
+                            });
+                            that.setData({
+                                itemList: that.data.itemList
+                            })
                         })
                         if (res.data.data.length<15) {
                             that.data.haveMore = false
