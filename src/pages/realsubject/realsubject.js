@@ -183,6 +183,10 @@ Page({
         var ms = parseInt(validTime) - new Date().getTime()
         var day = ms / (1000 * 60 * 60 * 24)
         if (day > 0) {
+            this.setData({
+                isVip: true,
+                validTime: util.formatDateTime(validTime, 'yyyy-MM-dd')
+            })
             if (day < 3) {
                 wx.showModal({
                     title: '您的VIP即将过期。',
@@ -193,12 +197,7 @@ Page({
                             that.openVipClick()
                         }
                     }
-                })
-            } else {
-                this.setData({
-                    isVip: true,
-                    validTime: util.formatDateTime(validTime, 'yyyy-MM-dd')
-                })
+                })                
             }
         } else {
             //过期vip，关闭用户对应科目vip状态

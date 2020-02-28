@@ -402,8 +402,8 @@ Page({
      */
     onShareAppMessage: function () {
         return {
-            title: "刷题100",
-            path: "/pages/index/index"
+            title: this.options.albumId,
+            path: `/pages/detail/detail?albumId=${this.options.albumId}`
         }
     }
 })

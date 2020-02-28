@@ -160,8 +160,8 @@ Page({
    */
   onShareAppMessage: function () {
     return {
-      title: "刷题100",
-      path: "/pages/index/index"
+      title: "刷题100-个人中心",
+      path: "/pages/my/my"
     }
   }
 })
