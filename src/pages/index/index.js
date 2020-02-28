@@ -6,14 +6,14 @@ Page({
     data: {
         itemList: [],
         navArr: [{
-            title:"NPDP",
-            tablename:'npdp'
-        },{
-            title:"PMP",
-            tablename:'pmp'
-        },{
-            title:"ACP",
-            tablename:'acp'
+            title: "NPDP",
+            tablename: 'npdp'
+        }, {
+            title: "PMP",
+            tablename: 'pmp'
+        }, {
+            title: "ACP",
+            tablename: 'acp'
         }],
         currentTap: 0
     },
@@ -23,10 +23,10 @@ Page({
     initData: function () {
         var that = this
         wx.showLoading({
-            title:'加载中...'
+            title: '加载中...'
         })
         wx.request({
-            url: site.m + 'list/'+app.globalData.tablename,
+            url: site.m + 'list/' + app.globalData.tablename,
             method: 'GET',
             dataType: 'json',
             success: function (res) {
@@ -38,7 +38,7 @@ Page({
                             element.continue = that.getCurrent(element.albumId)
                             element.finishCount = that.getProgress(element.albumId)
                             if (element.finishCount) {
-                                element.progress = (element.finishCount/element.count)*100
+                                element.progress = (element.finishCount / element.count) * 100
                             }
                         });
                         that.setData({
@@ -62,6 +62,7 @@ Page({
             },
             complete: function () {
                 wx.hideLoading()
+                wx.stopPullDownRefresh()
             }
         })
     },
@@ -83,7 +84,7 @@ Page({
             return null;
         }
     },
-    getProgress: function (albumId,count) {
+    getProgress: function (albumId, count) {
         var answer_List = wx.getStorageSync(albumId) || []; //获取当前章节的答题列表
         if (answer_List.length) {
             var finishCurrent = 0;
@@ -107,7 +108,7 @@ Page({
                 element.continue = that.getCurrent(element.albumId)
                 element.finishCount = that.getProgress(element.albumId)
                 if (element.finishCount) {
-                    element.progress = (element.finishCount/element.count)*100
+                    element.progress = (element.finishCount / element.count) * 100
                 }
             });
             that.setData({
@@ -127,10 +128,10 @@ Page({
     navTap: function (e) {
         if (e.currentTarget.dataset.tablename) {
             app.globalData.tablename = e.currentTarget.dataset.tablename
-            this.initData();     
+            this.initData();
             this.setData({
-                currentTap:e.currentTarget.dataset.index
-            })     
+                currentTap: e.currentTarget.dataset.index
+            })
         }
     },
     goNav: function (e) {
@@ -156,6 +157,10 @@ Page({
             default:
                 break;
         }
+    },
+    //下拉刷新
+    onPullDownRefresh: function () {
+        this.initData(app.globalData.tablename)
     },
     /**
      * 用户点击右上角分享

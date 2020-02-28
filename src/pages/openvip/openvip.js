@@ -124,10 +124,11 @@ Page({
         this.data.keyword = e.detail.value
     },
     openVipClick: function () {
-        if (this.data.keyword) {
-            if (this.data.keyword.length >= 15 && this.data.keyword.length <= 18) {
-                var tablename = this.data.keyword.substr(0, 3)
-                if (tablename != this.data.tablename.substr(0,3)) {
+        var that = this
+        if (that.data.keyword) {
+            if (that.data.keyword.length >= 15 && that.data.keyword.length <= 18) {
+                var tablename = that.data.keyword.substr(0, 3)
+                if (tablename != that.data.tablename.substr(0,3)) {
                     wx.showToast({
                         title: '非该科目授权码',
                         icon: 'none',
@@ -135,10 +136,10 @@ Page({
                     })
                     return;
                 }
-                if (this.data.loadingStatus) {
+                if (that.data.loadingStatus) {
                     return
                 }
-                this.data.loadingStatus = true
+                that.data.loadingStatus = true
                 wx.showLoading({
                     title: '正在开通...'
                 })
@@ -147,8 +148,8 @@ Page({
                     method: 'POST',
                     header: auth.setHeader(),
                     data: {
-                        code: this.data.keyword,
-                        userInfo: JSON.stringify(this.data.userInfo)
+                        code: that.data.keyword,
+                        userInfo: JSON.stringify(that.data.userInfo)
                     },
                     dataType: 'json',
                     success: function (res) {
@@ -160,6 +161,7 @@ Page({
                                     url: '/pages/vipresult/vipresult'
                                 })
                             } else {
+                                wx.hideLoading();
                                 wx.showModal({
                                     title: '提示',
                                     showCancel: false,
@@ -183,7 +185,7 @@ Page({
                         })
                     },
                     complete: function () {
-                        this.data.loadingStatus = false
+                        that.data.loadingStatus = false
                         wx.hideLoading();
                     }
                 })

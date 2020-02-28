@@ -11,7 +11,10 @@ Page({
         canIUse: wx.canIUse('button.open-type.getUserInfo'),
         isAuthorize: true, //是否需要授权注册登录
         loadingfinish: false,
-        itemList: []
+        itemList: [],
+        currentPage: 0,
+        haveMore:true
+
     },
     onLoad: function () {
         //登录授权检测
@@ -60,21 +63,29 @@ Page({
             })
         });
     },
-    initInfo: function () {
+    initInfo: function (next) {
         var that = this
+        if (that.data.loadingStatus) {
+            return
+        }
+        that.data.loadingStatus = true
         wx.showLoading({
             title: '加载中...'
         })
+        if (next) {
+            that.data.currentPage += 1
+        }
         wx.request({
             url: site.m + 'listvip/' + app.globalData.tablename,
-            method: 'GET',
+            method: 'POST',
+            data: {
+                currentPage: that.data.currentPage
+            },
             dataType: 'json',
             success: function (res) {
                 if (res.data.code == 200) {
-                    that.setData({
-                        itemList: res.data.data
-                    }, function () {
-                        that.data.itemList.forEach(element => {
+                    if (res.data.data.length) {
+                        res.data.data.forEach(element => {
                             var currentCount = that.getCurrent(element.albumId);
                             element.finishCount = currentCount.finishCount
                             element.rightCount = currentCount.rightCount
@@ -82,9 +93,14 @@ Page({
                             element.isContinue = currentCount.isContinue
                         });
                         that.setData({
-                            itemList: that.data.itemList
+                            itemList: next?that.data.itemList.concat(res.data.data):res.data.data
                         })
-                    })
+                        if (res.data.data.length<15) {
+                            that.data.haveMore = false
+                        }
+                    }else{
+                        that.data.haveMore = false
+                    }
                 } else {
                     wx.showToast({
                         title: '服务器出了点问题，请稍候重试',
@@ -101,6 +117,7 @@ Page({
                 })
             },
             complete: function () {
+                that.data.loadingStatus = false
                 wx.hideLoading();
             }
         })
@@ -253,4 +270,9 @@ Page({
             url: `/pages/detail/detail?albumId=${e.currentTarget.dataset.albumid}&isVip=true`
         });
     },
+    onReachBottom:function(){
+        if (this.data.haveMore) {
+            this.initInfo(true);            
+        }
+    }
 })

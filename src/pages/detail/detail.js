@@ -43,7 +43,7 @@ Page({
     initData: function (albumId) {
         var that = this,
             url = site.m + "detail/" + app.globalData.tablename,
-            pageNum = 15;        
+            pageNum = 15;
         if (that.options.isVip && that.options.isVip != 'undefined') {
             if (!url.includes('vip')) {
                 url += 'vip'
@@ -77,7 +77,7 @@ Page({
                             that.setData({
                                 current: that.data.current,
                                 chapters: that.options.albumId,
-                                itemList: res.data.data.slice(0,10)
+                                itemList: res.data.data.slice(0, 10)
                             }, function () {
                                 that.setData({
                                     itemList: res.data.data,
@@ -262,10 +262,16 @@ Page({
     },
     submitClick: function () {
         this.saveExerciseRecordData();
-        wx.redirectTo({
-            url: `/pages/result/result?albumId=${this.options.albumId}&isVip=${this.options.isVip}`
-        })
-        this.markHideClick();
+        if (this.data.currentAnswerList.includes(1) || this.data.currentAnswerList.includes(2)) {
+            wx.redirectTo({
+                url: `/pages/result/result?albumId=${this.options.albumId}&isVip=${this.options.isVip}`
+            })
+            this.markHideClick();
+        }else{
+            wx.showToast({
+                title:"还没答题，无法提交"
+            })
+        }
     },
     /**
      * 生命周期函数--监听页面初次渲染完成
@@ -322,7 +328,7 @@ Page({
             } catch (e) {}
         }
     },
-    saveExerciseRecordData:function(){
+    saveExerciseRecordData: function () {
         if (this.data.currentAnswerList.includes(1) || this.data.currentAnswerList.includes(2)) {
             try {
                 //添加错题到错题集
