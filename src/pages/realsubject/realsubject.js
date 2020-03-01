@@ -266,12 +266,13 @@ Page({
             })
             return
         }
-        if (!this.data.isVip) {
+        if (this.data.isVip) {
+            wx.navigateTo({
+                url: `/pages/detail/detail?albumId=${e.currentTarget.dataset.albumid}&isVip=true`
+            });
+        }else{
             this.openVipClick()
         }
-        wx.navigateTo({
-            url: `/pages/detail/detail?albumId=${e.currentTarget.dataset.albumid}&isVip=true`
-        });
     },
     onReachBottom:function(){
         if (this.data.haveMore) {
