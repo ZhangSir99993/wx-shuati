@@ -335,10 +335,15 @@ Page({
                 //添加错题到错题集
                 var error_subject = wx.getStorageSync("error_subject_" + app.globalData.tablename) || []; //获取全部错题集(数组)
                 var error_id = wx.getStorageSync("error_id_" + app.globalData.tablename) || []; //获取全部错题集id(数组)
+                
                 for (let index = 0; index < this.data.itemList.length; index++) {
                     const element = this.data.itemList[index];
                     //如果存在错题
-                    if (element.select && (element.select != element.correct)) {
+                    if (this.data.currentAnswerList[index] == 2) {
+                        if (!element.select) {
+                            element.select = this.data.chooseList[index]
+                        }
+                    // if (element.select && (element.select != element.correct)) {
                         //如果错题集里存在该错题
                         if (error_id.includes(element.id)) {
                             //找到改错题，修改对应的错误答案
