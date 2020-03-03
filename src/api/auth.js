@@ -131,6 +131,7 @@ const wxRegister = (that, fn) => {
         },
         dataType: 'json',
         success: function (res) {
+            wx.hideLoading()
             if (res.data.code == 200) {
                 if (res.data.data && res.data.data.status) {
                     //登录成功

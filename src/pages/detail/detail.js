@@ -19,6 +19,15 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function () {
+        if (this.options.comeFrom == 'share') {
+            app.globalData.tablename = this.options.tablename;
+            wx.setStorageSync('tablename', app.globalData.tablename);
+            this.data.currentPage =  this.options.currentPage;
+            this.data.current = parseInt(this.options.current);
+            this.initData(this.options.albumId)
+            return;
+        }
+
         var answer_List = wx.getStorageSync(this.options.albumId) || []; //获取当前章节的答题列表
         if (answer_List.length) {
             this.data.currentAnswerList = answer_List[answer_List.length - 1].currentAnswerList;
@@ -408,7 +417,8 @@ Page({
     onShareAppMessage: function () {
         return {
             title: this.options.albumId,
-            path: `/pages/detail/detail?albumId=${this.options.albumId}`
+            path: `/pages/detail/detail?tablename=${app.globalData.tablename}&albumId=${this.options.albumId}&isVip=${this.options.isVip}&currentPage=${this.data.currentPage}&current=${this.data.current}&comeFrom=share`
         }
     }
 })
+

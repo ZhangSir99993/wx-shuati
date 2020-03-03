@@ -1,5 +1,17 @@
 <view class="container">
-    <view class="userInfo">
+    <button class="none_style userInfo" wx:if="{{isAuthorize}}"  open-type="getUserInfo" bindgetuserinfo="getUserInfo">
+        <image class="avatar" src="../../images/default_avatar.png" mode="aspectFit"></image>
+        <view class="vipInfo">
+            <view class="nickname">点击登录</view> 
+            <view class="subject">
+                有效日期：未开通
+            </view>
+        </view>
+        <view class="vipStatus {{vipInfo.vip?'bc_red':'bc_gray'}}">
+            未开通会员
+        </view>
+    </button>
+    <view class="userInfo"  wx:else>
         <image class="avatar" src="{{userInfo.avatarUrl}}" mode="aspectFit"></image>
         <view class="vipInfo">
             <view class="nickname">{{userInfo.nickName}}</view> 
@@ -68,7 +80,10 @@
             </view>
         </view>
     </view>
-    <view class="openButtion bc_blue" bindtap="openVipClick">
+    <button wx:if="{{isAuthorize}}" class="none_style openButtion bc_blue" open-type="getUserInfo" bindgetuserinfo="getUserInfo" data-openvip='true'>
+        确定开通
+    </button>
+    <view wx:else class="openButtion bc_blue" bindtap="openVipClick">
         确定开通
     </view>
     <button class="playButton bc_blue"  open-type="contact">

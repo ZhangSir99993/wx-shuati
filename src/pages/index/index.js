@@ -17,7 +17,26 @@ Page({
         }],
         currentTap: 0
     },
-    onLoad: function () {
+    onLoad: function () {       
+        switch (app.globalData.tablename) {
+            case 'npdp':
+                this.setData({
+                    currentTap: 0
+                })
+                break;
+            case 'pmp':
+                this.setData({
+                    currentTap: 1
+                })
+                break;
+            case 'acp':
+                this.setData({
+                    currentTap: 2
+                })
+                break;
+            default:
+                break;
+        }
         this.initData(app.globalData.tablename)
     },
     initData: function () {
@@ -128,6 +147,7 @@ Page({
     navTap: function (e) {
         if (e.currentTarget.dataset.tablename) {
             app.globalData.tablename = e.currentTarget.dataset.tablename
+            wx.setStorageSync('tablename', app.globalData.tablename);
             this.initData();
             this.setData({
                 currentTap: e.currentTarget.dataset.index

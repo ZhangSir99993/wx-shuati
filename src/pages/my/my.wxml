@@ -14,13 +14,6 @@
                 <image class="user_pic" src="{{userInfo.avatarUrl}}" mode="aspectFit"></image>
                 <view class="user_info">
                     <view class="user_name">{{userInfo.nickName}}</view>
-                    <block wx:if="{{userInfo.review}}">
-                        <view class="user_xinyu">
-                            <text>买家好评率 {{userInfo.rate}}</text>
-                            <text class="line_gray"></text>
-                            <text>买家信誉 {{userInfo.review}}</text>
-                        </view>
-                    </block>
                 </view>
             </button>
         </block>

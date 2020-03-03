@@ -1,5 +1,6 @@
 App({
   onLaunch: function () {
+    /*
     // 获取用户信息
     wx.getSetting({
       success: res => {
@@ -19,6 +20,7 @@ App({
         }
       }
     })
+    */
   },
   onShow: function () {
     console.log('App Show')
@@ -29,7 +31,7 @@ App({
   globalData: {
     hasLogin: false,
     userInfo: null,
-    tablename:'npdp',
+    tablename:wx.getStorageSync('tablename')||'npdp',
     refreshVip:false
   }
 })

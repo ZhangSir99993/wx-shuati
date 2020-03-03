@@ -9,7 +9,7 @@ const util = require('../../utils/util.js')
 Page({
     data: {
         userInfo: {},
-        tablename:"",
+        tablename: "",
         canIUse: wx.canIUse('button.open-type.getUserInfo'),
         keyword: '',
         priceItems: [{
@@ -47,7 +47,8 @@ Page({
             name: '免费享有会员新增服务',
             desc: '我们会不断增加会员其他功能'
         }],
-        loadingStatus:false //防重复提交
+        isAuthorize: true,
+        loadingStatus: false //防重复提交
     },
     onLoad: function () {
         //登录授权检测
@@ -87,27 +88,27 @@ Page({
                     userInfo = res.userInfo
                 }
             })
-        }        
-        var vipInfo={}
+        }
+        var vipInfo = {}
         switch (app.globalData.tablename) {
             case 'npdp':
                 if (userInfo.npdpVip) {
                     vipInfo.tablename = 'npdp'
-                    vipInfo.validTime =  util.formatDateTime(userInfo.npdpValidTime,'yyyy-MM-dd')
+                    vipInfo.validTime = util.formatDateTime(userInfo.npdpValidTime, 'yyyy-MM-dd')
                     vipInfo.vip = userInfo.npdpVip
                 }
                 break;
             case 'pmp':
                 if (userInfo.pmpVip) {
                     vipInfo.tablename = 'pmp'
-                    vipInfo.validTime = util.formatDateTime(userInfo.pmpValidTime,'yyyy-MM-dd')
+                    vipInfo.validTime = util.formatDateTime(userInfo.pmpValidTime, 'yyyy-MM-dd')
                     vipInfo.vip = userInfo.pmpVip
                 }
                 break;
             case 'acp':
                 if (userInfo.acpVip) {
                     vipInfo.tablename = 'acp'
-                    vipInfo.validTime = util.formatDateTime(userInfo.acpValidTime,'yyyy-MM-dd')
+                    vipInfo.validTime = util.formatDateTime(userInfo.acpValidTime, 'yyyy-MM-dd')
                     vipInfo.vip = userInfo.acpVip
                 }
                 break;
@@ -116,8 +117,24 @@ Page({
         }
         this.setData({
             userInfo: userInfo,
-            vipInfo:vipInfo,
-            tablename:app.globalData.tablename
+            vipInfo: vipInfo,
+            tablename: app.globalData.tablename
+        })
+    },
+    getUserInfo: function (e) {
+        if (e.detail.errMsg == 'getUserInfo:fail auth deny') {
+            return;
+        }
+        var that = this
+        app.globalData.userInfo = e.detail.userInfo
+        auth.wxRegister(this, function () {
+            that.setData({
+                isAuthorize: false,
+                userInfo: e.detail.userInfo
+            })
+            if (e.currentTarget.dataset.openvip) {
+                that.openVipClick()
+            }
         })
     },
     bindblur: function (e) {
@@ -128,7 +145,7 @@ Page({
         if (that.data.keyword) {
             if (that.data.keyword.length >= 15 && that.data.keyword.length <= 18) {
                 var tablename = that.data.keyword.substr(0, 3)
-                if (tablename != that.data.tablename.substr(0,3)) {
+                if (tablename != that.data.tablename.substr(0, 3)) {
                     wx.showToast({
                         title: '非该科目授权码',
                         icon: 'none',
