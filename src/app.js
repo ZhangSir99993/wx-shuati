@@ -32,6 +32,7 @@ App({
     hasLogin: false,
     userInfo: null,
     tablename:wx.getStorageSync('tablename')||'npdp',
-    refreshVip:false
+    refreshVip:false,
+    loadingStatus:false //防重复提交
   }
 })

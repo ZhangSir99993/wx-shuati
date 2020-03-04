@@ -117,6 +117,11 @@ const loginOAuth = (that, code, fn) => {
 }
 //注册
 const wxRegister = (that, fn) => {
+    if (app.globalData.loadingStatus) {
+        return;
+    }
+    app.globalData.loadingStatus = true
+
     let openid = wx.getStorageSync("openid")
     wx.showLoading({
         title:'正在注册...'
@@ -131,6 +136,7 @@ const wxRegister = (that, fn) => {
         },
         dataType: 'json',
         success: function (res) {
+            app.globalData.loadingStatus = false
             wx.hideLoading()
             if (res.data.code == 200) {
                 if (res.data.data && res.data.data.status) {
@@ -156,6 +162,7 @@ const wxRegister = (that, fn) => {
             }
         },
         fail: function (err) {
+            app.globalData.loadingStatus = false
             wx.showToast({
                 title: JSON.stringify(err),
                 icon: 'none',
@@ -211,7 +218,6 @@ const setHeader = () => {
             'content-type': 'application/x-www-form-urlencoded',
             'cookie': 'openid=' + openid + ';client=miniprogram;' //读取cookie
         };
-
     }
     return header;
 }
