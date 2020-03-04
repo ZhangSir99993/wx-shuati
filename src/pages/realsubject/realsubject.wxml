@@ -1,0 +1,49 @@
+<view class="loading" wx:if="{{!loadingfinish}}">
+    <text></text>
+</view>
+
+<view class="container" wx:else>
+    <view class="item" wx:if="{{isVip}}">
+        <view class="title">
+            尊敬的VIP用户 您好
+        </view>
+        <view class="validTime">
+            有效期至：{{validTime}}
+        </view>
+    </view>
+    <view class="item" wx:else>
+        <view class="title">
+            开通VIP 解锁所有权限
+        </view>
+         <button class="openButton bc_blue" wx:if="{{isAuthorize && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 
+            点击开通
+        </button>
+        <view class="openButton bc_blue" wx:else bindtap="openVipClick">
+            点击开通
+        </view>
+    </view>
+    <view class="item" wx:for="{{itemList}}" wx:key="index" bindtap="detailClick" data-albumid="{{item.albumId}}">
+        <view class="vipTag bc_red" wx:if="{{!isVip}}">vip</view>
+        <view class="title">2020{{item.albumId}}</view>
+        <view class="continueTage">
+            <text wx:if="{{item.isContinue}}" class="blue">继续上次</text>
+        </view>
+        <view class="dataView">
+            <view class="data">
+                <view class="name">已做</view>
+                <view class="number">{{item.finishCount}}/{{item.count}}</view>
+            </view>
+            <view class="data">
+                <view class="name">正确</view>
+                <view class="number">{{item.rightCount}}</view>
+            </view>
+            <view class="data">
+                <view class="name">错误</view>
+                <view class="number">{{item.errorCount}}</view>
+            </view>
+        </view>
+    </view>
+    <view class="item" wx:if="{{!itemList.length}}">
+        <view class="question">网络出错了</view>
+    </view>
+</view>

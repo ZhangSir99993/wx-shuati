@@ -1,0 +1,92 @@
+<view class="container">
+    <button class="none_style userInfo" wx:if="{{isAuthorize}}"  open-type="getUserInfo" bindgetuserinfo="getUserInfo">
+        <image class="avatar" src="../../images/default_avatar.png" mode="aspectFit"></image>
+        <view class="vipInfo">
+            <view class="nickname">点击登录</view> 
+            <view class="subject">
+                有效日期：未开通
+            </view>
+        </view>
+        <view class="vipStatus {{vipInfo.vip?'bc_red':'bc_gray'}}">
+            未开通会员
+        </view>
+    </button>
+    <view class="userInfo"  wx:else>
+        <image class="avatar" src="{{userInfo.avatarUrl}}" mode="aspectFit"></image>
+        <view class="vipInfo">
+            <view class="nickname">{{userInfo.nickName}}</view> 
+            <view class="subject">
+                开通科目：{{tablename}}
+            </view>
+            <view class="subject" wx:if="{{vipInfo.validTime}}">
+                有效日期：{{vipInfo.validTime}}
+            </view>
+            <view class="subject" wx:else>
+                有效日期：未开通
+            </view>
+        </view>
+        <view class="vipStatus {{vipInfo.vip?'bc_red':'bc_gray'}}">
+            {{vipInfo.vip?'VIP会员':'未开通会员'}}
+        </view>
+    </view>
+    <view class="openVip">
+        <view class="title">
+            开通会员
+        </view>
+        <view class="vipPrice">
+            <view class="priceView" wx:for="{{priceItems}}" wx:key="key">
+                <view class="time">
+                    {{item.time}}
+                </view>
+                <view class="realPrice red">
+                    ￥{{item.realPrice}}
+                </view>
+                <view class="originalPrice gray">
+                    ￥{{item.originalPrice}}
+                </view>
+                <view class="savePrice bc_red">
+                    立省{{item.savePrice}}元
+                </view>
+            </view>
+        </view>
+        <input class="search_input" type="text" value="{{keyword}}" confirm-type="done" bindblur="bindblur" placeholder="请输入会员授权码"/>
+        <view class="descView">
+            <view>
+                如何开通会员？
+            </view>
+            <view>
+                1、联系客服获得购买链接
+            </view>
+            <view>
+                2、购买成功后会获得授权码
+            </view>
+            <view>
+                3、将授权码复制到本页面文本框中，点击确定开通
+            </view>
+        </view>
+    </view>
+    <view class="privilegeVip">
+        <view class="title">
+            会员特权
+        </view>
+        <view class="privileges">
+            <view class="item" wx:for="{{privileges}}" wx:key="key">
+                <view class="name">
+                    {{item.name}}
+                </view>
+                <view class="desc">
+                    {{item.desc}}
+                </view>
+            </view>
+        </view>
+    </view>
+    <button wx:if="{{isAuthorize}}" class="none_style openButtion bc_blue" open-type="getUserInfo" bindgetuserinfo="getUserInfo" data-openvip='true'>
+        确定开通
+    </button>
+    <view wx:else class="openButtion bc_blue" bindtap="openVipClick">
+        确定开通
+    </view>
+    <button class="playButton bc_blue"  open-type="contact">
+        <image src="../../images/customer_service.png" mode="aspectFill"/>
+    </button>
+</view>

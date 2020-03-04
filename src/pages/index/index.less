@@ -1,0 +1,166 @@
+.topNav {
+  width: 100vw;
+  height: 88rpx;
+  font-size: 32rpx;
+  display: flex;
+  flex-direction: row;
+  white-space: nowrap;
+  background-color: white;
+  position: fixed;
+  top: 0;
+  z-index: 99999;
+  padding: 0 30rpx;
+
+  view {
+    display: inline-flex;
+    height: 80rpx;
+    width: 120rpx;
+    line-height: 80rpx;
+    color: rgba(166, 166, 166, 1);
+    justify-content: center;
+  }
+
+  .active {
+    font-weight: bolder;
+    color: #1f90e6;
+    border-bottom: 6rpx solid #1f90e6;
+    padding: 0 10rpx;
+  }
+}
+
+.main {
+  padding-top: 88rpx;
+  box-sizing: border-box;
+  padding-bottom: 88rpx;
+
+  .banner {
+    display: flex;
+    align-items: center;
+    margin-top: 30rpx;
+
+    swiper {
+      width: 700rpx;
+      height: 300rpx;
+      margin: 0 auto;
+      border-radius: 20rpx;
+
+      swiper-item {
+        border-radius: 20rpx;
+
+        image {
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+  }
+
+  .nav_list {
+    width: 100%;
+    padding: 30rpx 60rpx 30rpx;
+    background-color: #fff;
+    box-sizing: border-box;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-around;
+    margin: 30rpx 0;
+    border-radius: 20rpx;
+    box-shadow: 2rpx 2rpx 16rpx 0 #f1f1f1;
+
+    .nav_item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 30rpx;
+
+      .item_icon {
+        display: flex;
+        width: 70rpx;
+        height: 70rpx;
+      }
+
+      .item_text {
+        margin-top: 10rpx;
+        color: #666666;
+        text-align: center;
+        overflow: hidden;
+      }
+    }
+  }
+
+  .title_list {
+    background: white;
+    border-radius: 20rpx;
+    box-shadow: 2rpx 2rpx 16rpx 0 #f1f1f1;
+    padding: 0 30rpx 20rpx;
+    .title_item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #2b2a2a;
+      height: 160rpx;
+      line-height: 160rpx;
+
+      // border-bottom: 1rpx solid #f5f5f5;
+      .left_item {
+        display: flex;
+        flex-direction: column;
+        height: 160rpx;
+        flex: 3;
+
+      }
+
+      .right_item {
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        flex: 1;
+        height: 160rpx;
+        justify-content: flex-end;
+        font-size: 26rpx;
+
+        image {
+          width: 24rpx;
+          height: 24rpx;
+        }
+      }
+    }
+    .progressView {
+      height: 20rpx;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      
+      progress {
+        width: 100%;
+      }
+
+      text {
+        margin-left: 20rpx;
+        height: 20rpx;
+        line-height: 20rpx;
+        font-size: 24rpx;
+        color: rgba(166, 166, 166, 1);
+      }
+    }
+  }
+}
+
+.playButton{
+  position: fixed;
+  bottom: 40rpx;
+  right: 30rpx;
+  width: 90rpx;
+  height: 90rpx;
+  border-radius:50%;
+  // background-color: #07bc9b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  image{
+    width: 60rpx;
+    height: 60rpx;
+  }
+}

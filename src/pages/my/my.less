@@ -1,0 +1,205 @@
+/**index.wxss**/
+.container {
+    padding: 20rpx;
+}
+
+.header_box {
+    overflow: hidden;
+
+    .user_info_box {
+        float: left;
+        height: 110rpx;
+        width: 100%;
+        margin-bottom: 26rpx;
+        overflow: hidden;
+
+        .user_pic {
+            float: left;
+            width: 100rpx;
+            height: 100rpx;
+            margin-right: 20rpx;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .user_info {
+            float: left;
+            display: -webkit-box;
+            display: -moz-box;
+            display: -mz-flexbox;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100rpx;
+            padding: 8rpx 0;
+            box-sizing: border-box;
+
+            .user_name {
+                line-height: 52rpx;
+                margin-bottom: 10rpx;
+                font-size: 38rpx;
+                font-weight: bold;
+                color: #262626;
+
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 1;
+                -webkit-box-orient: vertical;
+            }
+
+            .m_b0 {
+                margin-bottom: 0;
+            }
+
+            .user_xinyu {
+                line-height: 24rpx;
+                font-size: 24rpx;
+                color: #666666;
+
+                .line_gray {
+                    display: inline-block;
+                    height: 20rpx;
+                    line-height: 20rpx;
+                    margin: -1rpx 12rpx;
+                    border-right: 2rpx solid rgba(153, 153, 153, 0.9);
+                }
+            }
+        }
+    }
+
+    .message_icon {
+        position: absolute;
+        right: 0;
+        width: 60rpx;
+        height: 60rpx;
+        margin-right: 10rpx;
+        padding: 0;
+        background: transparent;
+        display: flex;
+        align-items: center;
+
+        .message {
+            height: 42rpx;
+            width: 40rpx;
+        }
+
+        .messageCount {
+            display: inline-block;
+            height: 28rpx;
+            min-width: 20rpx;
+            border-radius: 14rpx;
+            background: #D10E0B;
+            font-size: 20rpx;
+            color: #FFFFFF;
+            text-align: center;
+            position: absolute;
+            top: -10rpx;
+            right: 10rpx;
+            padding: 0 5rpx;
+        }
+    }
+
+    .message_icon::after {
+        border: none;
+    }
+}
+
+.section {
+    margin-bottom: 26rpx;
+    box-shadow: 0 6rpx 16rpx 0 rgba(153, 153, 153, 0.10);
+    border-radius: 24rpx;
+    background: #ffffff;
+
+    /*
+    .section_title_box{
+      height: 84rpx;
+      line-height: 84rpx;
+      padding: 0 30rpx;
+      border-bottom: 1rpx solid #EAEAEA;
+      overflow: hidden;
+      .section_title{
+        float: left;
+        height: 84rpx;
+        line-height: 84rpx;
+        font-size: 28rpx;
+        font-weight:bold;
+        color: #262626;
+      }
+      .show_more{
+        float: right;
+        height: 84rpx;
+        line-height: 84rpx;
+        font-size: 26rpx;
+        color: #999999;
+        text{
+          vertical-align: middle;
+        }
+        image{
+          width: 30rpx;
+          height: 20rpx;
+          vertical-align: middle;
+        }
+      }
+    }*/
+    .section_title_box {
+        height: 84rpx;
+        line-height: 84rpx;
+        padding: 0 30rpx;
+        border-bottom: 1rpx solid #EAEAEA;
+        overflow: hidden;
+
+        .section_title {
+            float: left;
+            height: 84rpx;
+            line-height: 84rpx;
+            font-size: 28rpx;
+            font-weight: bold;
+            color: #262626;
+        }
+
+        view {
+            float: right;
+
+            text {
+                color: #999999;
+                height: 84rpx;
+                line-height: 84rpx;
+                font-size: 26rpx;
+            }
+
+            image {
+                width: 30rpx;
+                height: 20rpx;
+            }
+        }
+    }
+    .section_service_list {
+        padding: 36rpx 42rpx;
+        overflow: hidden;
+
+        .section_item {
+            position: relative;
+            float: left;
+            margin-right: 80rpx;
+            text-align: center;
+            line-height: 150%;
+
+            .section_item_img {
+                width: 48rpx;
+                height: 48rpx;
+                margin-bottom: 10rpx;
+            }
+
+            .section_item_name {
+                line-height: 33rpx;
+                font-size: 24rpx;
+                color: #262626;
+            }
+        }
+
+        .section_item:nth-child(4n) {
+            margin-right: 0;
+        }
+    }
+}

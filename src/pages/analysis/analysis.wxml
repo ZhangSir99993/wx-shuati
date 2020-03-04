@@ -1,0 +1,101 @@
+<wxs src="../../utils/tool.wxs" module="util"></wxs>
+<view class="container">
+    <view class="chapters">
+        <text>{{chapters}}</text>
+        <text wx:if="{{showCard}}" bindtap="markShowClick">  答题卡</text>
+        <text wx:if="{{!showAnalyse}}"  bindtap="deleteClick">删除</text>
+        <view>
+            <text class="current">{{util.toInt(current)+1}}</text>
+            <text class="total">/{{itemList.length}}</text>
+        </view>
+    </view>
+    <swiper class="items" current="{{current}}" duration="{{duration}}" bindchange="bindchange">
+        <block wx:for="{{itemList}}" wx:key="index">
+            <swiper-item class="item">
+                <view wx-if="{{item.showAnalyse||showAnalyse}}">
+                    <view class="question">{{util.deleteNum(item.question)}}</view>
+                    <button class="answer {{item.correct=='A'?'correct':''}} {{item.select=='A'?'error':''}}" hover-class="defaultTap">
+                        <text class="tag">A</text>
+                        <text>{{item.A}}</text>
+                    </button>
+                    <button class="answer {{item.correct=='B'?'correct':''}} {{item.select=='B'?'error':''}}" hover-class="defaultTap">
+                        <text class="tag">B</text>
+                        <text>{{item.B}}</text>
+                    </button>
+                    <button class="answer {{item.correct=='C'?'correct':''}} {{item.select=='C'?'error':''}}" wx:if="{{item.C}}" hover-class="defaultTap">
+                        <text class="tag">C</text>
+                        <text>{{item.C}}</text>
+                    </button>
+                    <button class="answer {{item.correct=='D'?'correct':''}} {{item.select=='D'?'error':''}}" wx:if="{{item.D}}" hover-class="defaultTap">
+                        <text class="tag">D</text>
+                        <text>{{item.D}}</text>
+                    </button>
+                    <button class="answer {{item.correct=='E'?'correct':''}} {{item.select=='E'?'error':''}}" wx:if="{{item.E}}" hover-class="defaultTap">
+                        <text class="tag">E</text>
+                        <text>{{item.E}}</text>
+                    </button>
+                    <view class="correctView">
+                        答案 {{item.correct}}
+                    </view>
+                    <view class="analysis" wx:if="{{item.analysis}}">
+                        <view class="lineTop">
+                            <text class="line"></text>
+                            <text class="lineText">试题详解</text>
+                            <text class="line"></text>
+                        </view>
+                        <view class="content">
+                            <rich-text nodes="{{item.analysis}}"></rich-text>
+                        </view>
+                    </view>
+                    <view class="kaodainView">考点</view>
+                    <text class="kaodain">{{item.kaodianId}}</text>
+                </view>
+                <view wx:else>
+                    <view class="question">{{util.deleteNum(item.question)}}</view>
+                    <button class="answer" hover-class="defaultTap">
+                        <text class="tag">A</text>
+                        <text>{{item.A}}</text>
+                    </button>
+                    <button class="answer" hover-class="defaultTap">
+                        <text class="tag">B</text>
+                        <text>{{item.B}}</text>
+                    </button>
+                    <button class="answer" wx:if="{{item.C}}" hover-class="defaultTap">
+                        <text class="tag">C</text>
+                        <text>{{item.C}}</text>
+                    </button>
+                    <button class="answer" wx:if="{{item.D}}" hover-class="defaultTap">
+                        <text class="tag">D</text>
+                        <text>{{item.D}}</text>
+                    </button>
+                    <button class="answer" wx:if="{{item.E}}" hover-class="defaultTap">
+                        <text class="tag">E</text>
+                        <text>{{item.E}}</text>
+                    </button>
+                    <view class="inspectAnalyse" bindtap="inspectAnalyse" data-index="{{index}}">
+                        查看解析
+                    </view>
+                </view>
+            </swiper-item>
+        </block>
+    </swiper>
+</view>
+
+<view class="markView" wx:if="{{showMarkView}}">
+    <view class="mark" bindtap="markHideClick"></view>
+    <view class="mark_content" animation="{{animationData}}">
+        <view class="mark_top">
+            <text>答题卡</text>
+            <view class="close" bindtap="markHideClick">
+                <image src="../../images/close@3x.png" mode="aspectFit"></image>
+            </view>
+        </view>
+        <view class="mark_conter">
+            <block wx:for="{{currentAnswerList}}" wx:key="index">
+                <text class="tag right" wx:if="{{item==1}}" bindtap="tagClick" data-current="{{index}}">{{index+1}}</text>
+                <text class="tag error" wx:elif="{{item==2}}" bindtap="tagClick" data-current="{{index}}">{{index+1}}</text>
+                <text class="tag" wx:else bindtap="tagClick" data-current="{{index}}">{{index+1}}</text>
+            </block>
+        </view>
+    </view>
+</view>

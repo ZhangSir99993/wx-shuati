@@ -1,0 +1,9 @@
+<view class="container">
+    <view class="item" wx:for="{{itemList}}" wx:key="index" bindtap="vipClick" data-index="{{index}}">
+        <view class="question">{{item.tablename}}会员</view>
+        <view class="validTime">会员到期时间：{{item.validTime}}</view>
+    </view>
+    <view class="item" wx:if="{{!itemList.length}}">
+        <view class="question">暂无记录</view>
+    </view>
+</view>
