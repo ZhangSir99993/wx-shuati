@@ -1,0 +1,50 @@
+<scroll-view class="topNav" scroll-x>
+    <view wx:for="{{navArr}}" wx:key="index" bindtap="navTap" data-index="{{index}}" data-tablename="{{item.tablename}}">
+        <text class="{{currentTap==index ? 'active' : ''}}">{{item.title}}</text>
+    </view>
+</scroll-view>
+<view class="container">
+    <view class="main">
+        <view class="banner">
+            <swiper>
+                <swiper-item>
+                    <image src="../../images/banner.png" mode="aspectFit"></image>
+                </swiper-item>
+            </swiper>
+        </view>
+        <view class="nav_list">
+            <view class="nav_item" data-index="0" bindtap="goNav">
+                <image class="item_icon" src="../../images/learnRecord.png" mode="aspectFill"></image>
+                <view class="item_text">学习记录</view>
+            </view>
+            <view class="nav_item"  data-index="1" bindtap="goNav">
+                <image class="item_icon" src="../../images/errSubject.png" mode="aspectFill"></image>
+                <view class="item_text">错题本</view>
+            </view>
+            <view class="nav_item"  data-index="2" bindtap="goNav">
+                <image class="item_icon" src="../../images/vipSubject.png" mode="aspectFill"></image>
+                <view class="item_text">真题模拟</view>
+            </view>
+        </view>
+        <view class="title_list">
+            <block wx:for="{{itemList}}"  wx:key="index">
+            <view class="title_item" bindtap="detailClick" data-albumid="{{item.albumId}}">
+                <view class="left_item">
+                    <text>{{item.albumId}}</text>
+                </view>
+                <view class="right_item">
+                    <text wx:if="{{item.continue}}" class="blue">继续上次</text>
+                    <image src="../../images/arrowright.png"></image>  
+                </view>
+            </view>
+            <view class="progressView">
+                <progress percent="{{item.progress||0}}" stroke-width="1" color="#999999" />
+                <text>{{item.finishCount||0}}/{{item.count}}</text>
+            </view>
+            </block>
+        </view>
+    </view>
+    <button class="playButton bc_blue"  open-type="contact">
+        <image src="../../images/customer_service.png" mode="aspectFill"/>
+    </button>
+</view>

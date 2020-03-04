@@ -1,0 +1,5 @@
+<view class="no_signal" hidden="{{!isShow}}">
+  <image src="../../images/createorder/img_wifi@3x.png" mode="aspectFit"></image>
+  <view class="text"><text>{{content}}</text></view>
+  <view class="btn" catchtap='_reload'><text>{{btn}}</text></view>
+</view>

@@ -1,0 +1,16 @@
+<view class="container">
+    <view class="successIcon">
+        <icon type="success" size="80" color="#10AEFF"/>
+    </view>
+    <view class="successText">
+        开通成功
+    </view>
+    <view class="item">
+        <text>开通课程</text>
+        <text>{{vipInfo.tablename}}</text>
+    </view>
+    <view class="item">
+        <text>会员有效期至：</text>
+        <text>{{vipInfo.validTime}}</text>
+    </view>
+</view>

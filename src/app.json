@@ -1,0 +1,46 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/detail/detail",
+    "pages/result/result",
+    "pages/errsubject/errsubject",
+    "pages/record/record",
+    "pages/analysis/analysis",
+    "pages/realsubject/realsubject",
+    "pages/openvip/openvip",
+    "pages/vipresult/vipresult",
+    "pages/study/study",
+    "pages/my/my",
+    "pages/myvip/myvip"
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "刷题100",
+    "navigationBarBackgroundColor": "#fbf9fe",
+    "backgroundColor": "#fbf9fe"
+  },
+  "tabBar": {
+    "color": "#8a8a8a",
+    "selectedColor": "#1f90e6",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [{
+      "pagePath": "pages/index/index",
+      "iconPath": "images/home_gray.png",
+      "selectedIconPath": "images/home_blue.png",
+      "text": "练习"
+    }, {
+      "pagePath": "pages/my/my",
+      "iconPath": "images/mine_gray.png",
+      "selectedIconPath": "images/mine_blue.png",
+      "text": "我的"
+    }]
+  },
+  "networkTimeout": {
+    "request": 10000,
+    "connectSocket": 10000,
+    "uploadFile": 10000,
+    "downloadFile": 10000
+  },
+  "debug": true
+}

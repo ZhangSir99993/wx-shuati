@@ -1,0 +1,46 @@
+<view class="wxAuthor_box" wx:if="{{(isAuthor || isRegister)&&!isNextType}}">
+  <button wx:if="{{isAuthor}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo" type="default"><text>微信授权登录</text></button>
+  <button wx:if="{{!isAuthor && isRegister}}" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" type="default"><text>登录/注册孔网账号</text></button>
+</view>
+<!-- get_author_box -->
+<view class="get_author_box" wx:if="{{status.finish}}">
+  <view class="mark"></view>
+  <view class="get_author">
+    <view class="top"><text>授权成功</text></view>
+    <view class="bottom">
+      <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" type="default"><text>确定</text></button></view>
+  </view>
+</view>
+
+<!-- mobileCode -->
+<view class="mobileCode" wx:if="{{mobileCodeStaus}}">
+  <view class="mobileCode_mark"></view>
+  <view class="mobileCode_box">
+      <view class="close" bindtap="closemobileCode">
+          <image src="../../images/close@3x.png" mode="aspectFit"></image>
+      </view>
+      <view class="title">
+          <text>请输入验证码</text>
+      </view>
+      <view class="phone">
+          <text>验证码已发送至</text>
+          <text>{{phoneNumberS}}</text>
+      </view>
+      <view class="err">
+          <text>{{errInfo}}</text>
+      </view>
+      <view class="val">
+          <view><input bindinput="bindKeyInput" type="number" auto-focus/></view>
+      </view>
+      <view wx:if="{{countDownType}}" class="time">
+          <text>{{num}}秒后重新获取</text>
+      </view>
+      <view wx:else class="reSend" bindtap="sendMobile">
+          <text>点击重新获取验证码</text>
+      </view>
+      <view class="mobileCode_line"></view>
+      <view class="btn" bindtap="register">
+          <text>确定</text>
+      </view>
+  </view>
+</view>
