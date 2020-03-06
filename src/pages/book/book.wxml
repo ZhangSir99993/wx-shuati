@@ -1,0 +1,39 @@
+<view class="container">
+    <view class="main">
+        <view class="albumId">{{firstBookDetail.albumId}}</view>
+        <view class="albumId2" wx:if="{{firstBookDetail.albumId2}}">{{firstBookDetail.albumId2}}</view>
+        <view wx:for="{{bookDetailList}}" wx:key="key" wx:for-item="bookDetail">
+            <view class="albumId3" wx:if="{{bookDetail.albumId3}}">{{bookDetail.albumId3}}</view>
+            <view>{{bookDetail.content}}</view>
+            <view class="imageView" wx:if="{{bookDetail.image1}}">
+                <image bindtap="showBigImg" data-url="https://www.beginlisten.com/acpbook/{{bookDetail.image1}}.jpg" src="https://www.beginlisten.com/acpbook/{{bookDetail.image1}}.jpg" mode="aspectFill"/>
+                <view class="imageName">
+                    {{bookDetail.image1}}
+                </view>
+            </view>
+            <view wx:if="{{bookDetail.content2}}">{{bookDetail.content2}}</view>
+            <view class="imageView" wx:if="{{bookDetail.image2}}" >
+                <image bindtap="showBigImg" data-url="https://www.beginlisten.com/acpbook/{{bookDetail.image2}}.jpg" src="https://www.beginlisten.com/acpbook/{{bookDetail.image2}}.jpg" mode="aspectFill"/>
+                <view class="imageName">
+                    {{bookDetail.image2}}
+                </view>
+            </view>
+            <view wx:if="{{bookDetail.content3}}">{{bookDetail.content3}}</view>
+            <view class="imageView" wx:if="{{bookDetail.image3}}">
+                <image bindtap="showBigImg" data-url="https://www.beginlisten.com/acpbook/{{bookDetail.image3}}.jpg" src="https://www.beginlisten.com/acpbook/{{bookDetail.image3}}.jpg" mode="aspectFill"/>
+                <view class="imageName">
+                    {{bookDetail.image3}}
+                </view> 
+            </view>
+            <view wx:if="{{bookDetail.content4}}">{{bookDetail.content4}}</view>
+            <view class="imageView" wx:if="{{bookDetail.image4}}">
+                <image bindtap="showBigImg" data-url="https://www.beginlisten.com/acpbook/{{bookDetail.image4}}.jpg" src="https://www.beginlisten.com/acpbook/{{bookDetail.image4}}.jpg" mode="aspectFill"/>
+                <view class="imageName">
+                    {{bookDetail.image4}}
+                </view> 
+            </view>
+            <view wx:if="{{bookDetail.content5}}">{{bookDetail.content5}}</view>
+        </view>
+
+    </view>
+</view>

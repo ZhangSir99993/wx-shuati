@@ -1,5 +1,7 @@
 {
   "pages": [
+    "pages/study/study",
+    "pages/book/book",
     "pages/index/index",
     "pages/detail/detail",
     "pages/result/result",
@@ -9,7 +11,6 @@
     "pages/realsubject/realsubject",
     "pages/openvip/openvip",
     "pages/vipresult/vipresult",
-    "pages/study/study",
     "pages/my/my",
     "pages/myvip/myvip"
   ],
@@ -29,6 +30,11 @@
       "iconPath": "images/home_gray.png",
       "selectedIconPath": "images/home_blue.png",
       "text": "练习"
+    },{
+      "pagePath": "pages/study/study",
+      "iconPath": "images/home_gray.png",
+      "selectedIconPath": "images/home_blue.png",
+      "text": "学习"
     }, {
       "pagePath": "pages/my/my",
       "iconPath": "images/mine_gray.png",
