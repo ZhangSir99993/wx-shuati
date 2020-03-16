@@ -12,7 +12,10 @@
     "pages/openvip/openvip",
     "pages/vipresult/vipresult",
     "pages/my/my",
-    "pages/myvip/myvip"
+    "pages/myvip/myvip",
+    "pages/webview/webview",
+    "pages/keyword/keyword",
+    "pages/kwdetail/kwdetail"
   ],
   "window": {
     "navigationBarTextStyle": "black",
@@ -32,8 +35,8 @@
       "text": "练习"
     },{
       "pagePath": "pages/study/study",
-      "iconPath": "images/home_gray.png",
-      "selectedIconPath": "images/home_blue.png",
+      "iconPath": "images/study_gray.png",
+      "selectedIconPath": "images/study_blue.png",
       "text": "学习"
     }, {
       "pagePath": "pages/my/my",

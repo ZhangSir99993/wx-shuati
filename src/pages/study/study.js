@@ -4,11 +4,39 @@ const app = getApp()
 const site = require('../../api/site.js').site;
 Page({
     data: {
-        itemList: [
-
-        ]
+        itemList: [],
+        navArr: [{
+            title: "NPDP",
+            tablename: 'npdp'
+        }, {
+            title: "PMP",
+            tablename: 'pmp'
+        }, {
+            title: "ACP",
+            tablename: 'acp'
+        }],
+        currentTap: 0
     },
     onLoad: function () {
+        switch (app.globalData.tablename) {
+            case 'npdp':
+                this.setData({
+                    currentTap: 0
+                })
+                break;
+            case 'pmp':
+                this.setData({
+                    currentTap: 1
+                })
+                break;
+            case 'acp':
+                this.setData({
+                    currentTap: 2
+                })
+                break;
+            default:
+                break;
+        }
         this.initData()
     },
     initData: function () {
@@ -17,7 +45,7 @@ Page({
             title: '加载中...'
         })
         wx.request({
-            url: site.m + 'listbook/' + 'acpbook',
+            url: site.m + 'listbook/' + app.globalData.tablename + 'book',
             method: 'GET',
             dataType: 'json',
             success: function (res) {
@@ -46,15 +74,38 @@ Page({
             }
         })
     },
-  
-    detailClick: function (e) {
-        if (e.currentTarget.dataset.albumid) {
-            wx.navigateTo({
-                url:`/pages/book/book?albumid=${e.currentTarget.dataset.albumid}&albumid2=${e.currentTarget.dataset.albumid2}&albumid3=${e.currentTarget.dataset.albumid3}`
+    navTap: function (e) {
+        if (e.currentTarget.dataset.tablename) {
+            app.globalData.tablename = e.currentTarget.dataset.tablename
+            wx.setStorageSync('tablename', app.globalData.tablename);
+            this.initData();
+            this.setData({
+                currentTap: e.currentTarget.dataset.index
             })
         }
     },
-    
+    albumIdClick: function (e) {
+        let index = e.currentTarget.dataset.index
+        let key = `itemList[${index}].selected`
+        this.setData({
+            [key]: this.data.itemList[index].selected?false:true
+        })
+    },
+    detailClick: function (e) {
+        wx.navigateTo({
+            url: `/pages/book/book?albumid=${e.currentTarget.dataset.albumid}&albumid2=${e.currentTarget.dataset.albumid2}&albumid3=${e.currentTarget.dataset.albumid3}&albumid4=${e.currentTarget.dataset.albumid4}`
+        })
+        return;
+        if (e.currentTarget.dataset.name) {
+            wx.navigateTo({
+                url: `/pages/webview/webview?albumid=${e.currentTarget.dataset.name}`
+            })
+        }
+    },
+    //下拉刷新
+    onPullDownRefresh: function () {
+        this.initData()
+    },
     /**
      * 用户点击右上角分享
      */

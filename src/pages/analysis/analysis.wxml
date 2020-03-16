@@ -2,7 +2,7 @@
 <view class="container">
     <view class="chapters">
         <text>{{chapters}}</text>
-        <text wx:if="{{showCard}}" bindtap="markShowClick">  答题卡</text>
+        <button wx:if="{{showCard}}" class="none_style datika" bindtap="markShowClick"  hover-class="defaultTap">  答题卡</button>
         <text wx:if="{{!showAnalyse}}"  bindtap="deleteClick">删除</text>
         <view>
             <text class="current">{{util.toInt(current)+1}}</text>

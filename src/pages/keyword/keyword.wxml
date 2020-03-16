@@ -1,0 +1,6 @@
+<view class="container">
+    <view class="item" wx:for="{{itemList}}" wx:key="index" bindtap="itemClick" data-detail="{{item}}">
+        {{item.name}}
+        <image class="arrowright" src="../../images/arrowright.png" />
+    </view>
+</view>
