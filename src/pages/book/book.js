@@ -12,8 +12,12 @@ Page({
     },
     getDetailInfo: function (albumId,albumId2,albumId3,albumId4) {
         var that = this
+        var url = site.m + 'bookdetail/' + app.globalData.tablename + 'book';
+        if (that.options.book2 && that.options.book2 != 'undefined') {
+            url += '2'
+        }
         wx.request({
-            url: site.m + 'bookdetail/' + app.globalData.tablename + 'book',
+            url: url,
             method: 'POST',
             data: {
                 albumId: albumId
@@ -25,15 +29,17 @@ Page({
                 if (res.data.code == 200) {
                     res.data.data.forEach(element => {
                         if (element.albumId2 && albumId2 != 'undefined') {
-                            element.albumId2Class = element.albumId2.match(/\d\.\d/)[0].replace(/\./g,'_')
+                            element.albumId2Class = element.albumId2.match(/\d+\.\d/)[0].replace(/\./g,'_')
                         }
                         if (element.albumId3 && albumId3 != 'undefined') {
-                            element.albumId3Class = element.albumId3.match(/\d\.\d\.\d/)[0].replace(/\./g,'_')
+                            element.albumId3Class = element.albumId3.match(/\d+\.\d+\.\d/)[0].replace(/\./g,'_')
                         }
                         if (element.albumId4 && albumId4 != 'undefined') {
-                            element.albumId4Class = element.albumId4.match(/\d\.\d\.\d\.\d/)[0].replace(/\./g,'_')
+                            element.albumId4Class = element.albumId4.match(/\d+\.\d+\.\d+\.\d/)[0].replace(/\./g,'_')
                         }
-                        element.content = element.content.split(/<img [^>]*src=['"]([^'"]+)[^>]*>/)
+                        if (element.content) {
+                            element.content = element.content.split(/<img [^>]*src=['"]([^'"]+)[^>]*>/)
+                        }
                     });
                     that.setData({
                         firstBookDetail:res.data.data[0],
@@ -41,11 +47,11 @@ Page({
                     },function(){
                         var toView;
                         if(albumId4 && albumId4 != 'undefined'){
-                            toView = `toView${albumId4.match(/\d\.\d\.\d\.\d/)[0].replace(/\./g,'_')}`
+                            toView = `toView${albumId4.match(/\d+\.\d+\.\d+\.\d/)[0].replace(/\./g,'_')}`
                         }else if(albumId3 && albumId3 != 'undefined'){
-                            toView = `toView${albumId3.match(/\d\.\d\.\d/)[0].replace(/\./g,'_')}`
+                            toView = `toView${albumId3.match(/\d+\.\d+\.\d/)[0].replace(/\./g,'_')}`
                         }else if (albumId2 && albumId2 != 'undefined') {
-                            toView = `toView${albumId2.match(/\d\.\d/)[0].replace(/\./g,'_')}`
+                            toView = `toView${albumId2.match(/\d+\.\d/)[0].replace(/\./g,'_')}`
                         }  
                         if (toView) {
                             that.setData({

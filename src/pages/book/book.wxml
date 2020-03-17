@@ -12,7 +12,7 @@
                 因为二进制为逢2进1，所以如果是2的倍数的话，则这个数的最后一位必定是0，而1的二进制的最后一位为1，其余全为0。
                 比如5的二进制为101，1的二进制为1，101&001=001，所以5不是一个偶数。
             -->
-                <image class="imageView" wx:if="{{i & 1 != 0}}" src="{{content}}" data-url="{{content}}" bindtap="showBigImg"/>
+                <image class="imageView" wx:if="{{i & 1 != 0}}" src="{{content}}" data-url="{{content}}" bindtap="showBigImg" mode="aspectFit"></image>
                 <rich-text wx:else class="content" nodes="{{content}}"></rich-text>
             </view>
         </view>

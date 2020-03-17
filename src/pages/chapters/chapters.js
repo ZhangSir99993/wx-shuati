@@ -5,7 +5,6 @@ const site = require('../../api/site.js').site;
 Page({
     data: {
         itemList: [],
-        itemList2:[],
         navArr: [{
             title: "NPDP",
             tablename: 'npdp'
@@ -45,18 +44,22 @@ Page({
         wx.showLoading({
             title: '加载中...'
         })
+        var url  = site.m + 'deatilchapters/' + app.globalData.tablename + 'book'
+        if (that.options.book2) {
+            url += '2'
+        }
         wx.request({
-            url: site.m + 'listchapters/' + app.globalData.tablename + 'book',
-            method: 'GET',
+            url: url,
+            method: 'POST',
+            data:{
+                albumId:that.options.albumid
+            },  
             dataType: 'json',
             success: function (res) {
                 if (res.data.code == 200) {
                     that.setData({
                         itemList: res.data.data
                     })
-                    if (app.globalData.tablename == 'pmp') {
-                        that.initData2();
-                    }
                 } else {
                     wx.showToast({
                         title: '服务器出了点问题，请稍候重试',
@@ -78,41 +81,7 @@ Page({
             }
         })
     },
-    initData2: function () {
-        var that = this
-        wx.showLoading({
-            title: '加载中...'
-        })
-        wx.request({
-            url: site.m + 'listchapters/' + app.globalData.tablename + 'book2',
-            method: 'GET',
-            dataType: 'json',
-            success: function (res) {
-                if (res.data.code == 200) {
-                    that.setData({
-                        itemList2: res.data.data
-                    })
-                } else {
-                    wx.showToast({
-                        title: '服务器出了点问题，请稍候重试',
-                        icon: 'none',
-                        duration: 2000
-                    })
-                }
-            },
-            fail: function (err) {
-                wx.showToast({
-                    title: '服务器出了点问题，请稍候重试',
-                    icon: 'none',
-                    duration: 2000
-                })
-            },
-            complete: function () {
-                wx.hideLoading()
-                wx.stopPullDownRefresh()
-            }
-        })
-    },
+
     navTap: function (e) {
         if (e.currentTarget.dataset.tablename) {
             app.globalData.tablename = e.currentTarget.dataset.tablename
@@ -123,23 +92,9 @@ Page({
             })
         }
     },
-    albumIdClick: function (e) {
-        let index = e.currentTarget.dataset.index
-        let key = `itemList[${index}].selected`
-        this.setData({
-            [key]: this.data.itemList[index].selected?false:true
-        })
-    },
-    albumIdClick2: function (e) {
-        let index = e.currentTarget.dataset.index
-        let key = `itemList2[${index}].selected`
-        this.setData({
-            [key]: this.data.itemList2[index].selected?false:true
-        })
-    },
     detailClick: function (e) {
         wx.navigateTo({
-            url: `/pages/chapters/chapters?albumid=${e.currentTarget.dataset.albumid}&albumid2=${e.currentTarget.dataset.albumid2}&albumid3=${e.currentTarget.dataset.albumid3}&albumid4=${e.currentTarget.dataset.albumid4}`
+            url: `/pages/book/book?book2=${this.options.book2}&albumid=${e.currentTarget.dataset.albumid}&albumid2=${e.currentTarget.dataset.albumid2}&albumid3=${e.currentTarget.dataset.albumid3}&albumid4=${e.currentTarget.dataset.albumid4}`
         })
         return;
         if (e.currentTarget.dataset.name) {
@@ -147,11 +102,6 @@ Page({
                 url: `/pages/webview/webview?albumid=${e.currentTarget.dataset.name}`
             })
         }
-    },
-    detailClick2: function(e){
-        wx.navigateTo({
-            url: `/pages/chapters/chapters?book2=true&albumid=${e.currentTarget.dataset.albumid}&albumid2=${e.currentTarget.dataset.albumid2}&albumid3=${e.currentTarget.dataset.albumid3}&albumid4=${e.currentTarget.dataset.albumid4}`
-        })
     },
     //下拉刷新
     onPullDownRefresh: function () {

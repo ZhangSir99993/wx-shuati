@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/study/study",
+    "pages/chapters/chapters",
     "pages/book/book",
     "pages/index/index",
     "pages/detail/detail",
