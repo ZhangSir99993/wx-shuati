@@ -1,0 +1,26 @@
+<view class="container">
+    <view>
+        {{detail.processGroup}}
+    </view>
+    <view>
+        {{detail.explain}}
+    </view>
+    <view>
+        输入
+    </view>
+    <view>
+        <text>{{detail.input}}</text>
+    </view>
+    <view>
+        工具与技术
+    </view>
+    <view>
+        <text>{{detail.tool}}</text>
+    </view>
+    <view>
+        输出
+    </view>
+    <view>
+        <text>{{detail.output}}</text>
+    </view>
+</view>

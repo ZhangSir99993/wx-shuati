@@ -2,6 +2,9 @@
 const app = getApp()
 //api.js
 const site = require('../../api/site.js').site;
+import '../../images/learnRecord.png'
+import '../../images/errSubject.png'
+import '../../images/vipSubject.png'
 Page({
     data: {
         itemList: [],
@@ -16,7 +19,69 @@ Page({
             title: "ACP",
             tablename: 'acp'
         }],
-        currentTap: 0
+        currentTap: 0,
+        navList:[
+            {
+                tablename:'npdp',
+                buttonList:[{
+                    title:"术语",
+                    count: '468',
+                    image:'vipSubject.png'
+                },{
+                    title:"缩写",
+                    count: '45',
+                    image:'vipSubject.png'
+                },{
+                    title:"图表",
+                    count: '248',
+                    image:'vipSubject.png'
+                }]
+            },
+            {
+                tablename:'pmp',
+                buttonList:[{
+                    title:"知识体系",
+                    count: '10',
+                    image:'learnRecord.png'
+                },{
+                    title:"过程组",
+                    count: '49',
+                    image:'errSubject.png'
+                },{
+                    title:"输入/工具/输出",
+                    count: '144',
+                    image:'vipSubject.png'
+                },{
+                    title:"术语",
+                    count: '468',
+                    image:'vipSubject.png'
+                },{
+                    title:"缩写",
+                    count: '45',
+                    image:'vipSubject.png'
+                },{
+                    title:"图表",
+                    count: '248',
+                    image:'vipSubject.png'
+                }]
+            },
+            {
+                tablename:'acp',
+                buttonList:[{
+                    title:"术语",
+                    count: '468',
+                    image:'vipSubject.png'
+                },{
+                    title:"缩写",
+                    count: '45',
+                    image:'vipSubject.png'
+                },{
+                    title:"图表",
+                    count: '248',
+                    image:'vipSubject.png'
+                }]
+            }
+        ]
     },
     onLoad: function () {
         switch (app.globalData.tablename) {
@@ -46,7 +111,7 @@ Page({
             title: '加载中...'
         })
         wx.request({
-            url: site.m + 'listchapters/' + app.globalData.tablename + 'book',
+            url: site.m + 'firstchapters/' + app.globalData.tablename + 'book',
             method: 'GET',
             dataType: 'json',
             success: function (res) {
@@ -84,7 +149,7 @@ Page({
             title: '加载中...'
         })
         wx.request({
-            url: site.m + 'listchapters/' + app.globalData.tablename + 'book2',
+            url: site.m + 'firstchapters/' + app.globalData.tablename + 'book2',
             method: 'GET',
             dataType: 'json',
             success: function (res) {
@@ -117,25 +182,11 @@ Page({
         if (e.currentTarget.dataset.tablename) {
             app.globalData.tablename = e.currentTarget.dataset.tablename
             wx.setStorageSync('tablename', app.globalData.tablename);
-            this.initData();
             this.setData({
                 currentTap: e.currentTarget.dataset.index
             })
+            this.initData();
         }
-    },
-    albumIdClick: function (e) {
-        let index = e.currentTarget.dataset.index
-        let key = `itemList[${index}].selected`
-        this.setData({
-            [key]: this.data.itemList[index].selected?false:true
-        })
-    },
-    albumIdClick2: function (e) {
-        let index = e.currentTarget.dataset.index
-        let key = `itemList2[${index}].selected`
-        this.setData({
-            [key]: this.data.itemList2[index].selected?false:true
-        })
     },
     detailClick: function (e) {
         wx.navigateTo({
@@ -152,6 +203,40 @@ Page({
         wx.navigateTo({
             url: `/pages/chapters/chapters?book2=true&albumid=${e.currentTarget.dataset.albumid}&albumid2=${e.currentTarget.dataset.albumid2}&albumid3=${e.currentTarget.dataset.albumid3}&albumid4=${e.currentTarget.dataset.albumid4}`
         })
+    },
+    goNav: function (e) {
+        console.log("e.currentTarget.dataset.title=",e.currentTarget.dataset.title);
+        
+        switch (e.currentTarget.dataset.title) {
+            
+            case '知识体系':
+                wx.navigateTo({
+                    url: `/pages/explain/explain?title=knowledge`
+                })
+                break;
+            case '过程组':
+                wx.navigateTo({
+                    url: `/pages/explain/explain?title=process`
+                })
+                break;
+            case '输入/工具/输出':
+                wx.navigateTo({
+                    url: `/pages/explain/explain?title=inputoutput`
+                })
+                break;
+            case '术语':
+                wx.navigateTo({
+                    url: `/pages/explain/explain?title=keyword`
+                })
+                break;
+            case '缩写':
+
+                break;
+            case '图表':
+                break;
+            default:
+                break;
+        }
     },
     //下拉刷新
     onPullDownRefresh: function () {

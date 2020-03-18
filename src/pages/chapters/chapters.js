@@ -44,7 +44,7 @@ Page({
         wx.showLoading({
             title: '加载中...'
         })
-        var url  = site.m + 'deatilchapters/' + app.globalData.tablename + 'book'
+        var url  = site.m + 'secondchapters/' + app.globalData.tablename + 'book'
         if (that.options.book2) {
             url += '2'
         }
@@ -94,7 +94,7 @@ Page({
     },
     detailClick: function (e) {
         wx.navigateTo({
-            url: `/pages/book/book?book2=${this.options.book2}&albumid=${e.currentTarget.dataset.albumid}&albumid2=${e.currentTarget.dataset.albumid2}&albumid3=${e.currentTarget.dataset.albumid3}&albumid4=${e.currentTarget.dataset.albumid4}`
+            url: `/pages/chaptersdetail/chaptersdetail?book2=${this.options.book2}&albumid=${e.currentTarget.dataset.albumid}&albumid2=${e.currentTarget.dataset.albumid2}&albumid3=${e.currentTarget.dataset.albumid3}&albumid4=${e.currentTarget.dataset.albumid4}`
         })
         return;
         if (e.currentTarget.dataset.name) {

@@ -12,7 +12,7 @@ Page({
     },
     getDetailInfo: function (albumId,albumId2,albumId3,albumId4) {
         var that = this
-        var url = site.m + 'bookdetail/' + app.globalData.tablename + 'book';
+        var url = site.m + 'chaptersdetail/' + app.globalData.tablename + 'book';
         if (that.options.book2 && that.options.book2 != 'undefined') {
             url += '2'
         }

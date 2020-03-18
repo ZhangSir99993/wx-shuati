@@ -1,0 +1,10 @@
+Page({
+    data:{
+        detail:{}
+    },
+    onLoad:function(options){
+        this.setData({
+            detail:JSON.parse(options.detail)
+        })
+    }
+})

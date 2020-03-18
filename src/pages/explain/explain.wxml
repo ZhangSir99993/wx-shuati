@@ -1,0 +1,29 @@
+
+<view class="container">
+    <view class="main">
+        <view class="title_list" wx:if="{{title=='knowledge'}}">
+            <view class="title_item" wx:for="{{itemList}}"  wx:key="index" data-albumid="{{item.knowledgeSystem}}" bindtap="detailClick">
+                <text>{{item.knowledgeSystem}}</text>
+                <image class="arrowright" src="../../images/arrowright.png"  mode="aspectFill"></image>
+            </view>
+        </view>
+        <view class="title_list" wx:elif="{{title=='process'}}">
+            <view class="title_item" wx:for="{{itemList}}"  wx:key="index" data-index="{{index}}" bindtap="detailClick">
+                <text>{{item.processGroup}}</text>
+                <image class="arrowright" src="../../images/arrowright.png"  mode="aspectFill"></image>
+            </view>
+        </view>
+        <view class="title_list" wx:elif="{{title=='inputoutput'}}">
+            <view class="title_item" wx:for="{{itemList}}"  wx:key="index" data-albumid="{{item.inputoutput}}" bindtap="detailClick">
+                <text>{{item.inputoutput}}</text>
+                <image class="arrowright" src="../../images/arrowright.png"  mode="aspectFill"></image>
+            </view>
+        </view>
+        <view class="title_list" wx:elif="{{title=='keyword'}}">
+            <view class="title_item" wx:for="{{itemList}}"  wx:key="index" data-albumid="{{item.name}}" bindtap="detailClick">
+                <text>{{item.name}}</text>
+                <image class="arrowright" src="../../images/arrowright.png"  mode="aspectFill"></image>
+            </view>
+        </view>
+    </view>
+</view>

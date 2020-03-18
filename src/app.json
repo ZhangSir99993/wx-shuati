@@ -1,8 +1,7 @@
 {
   "pages": [
     "pages/study/study",
-    "pages/chapters/chapters",
-    "pages/book/book",
+    
     "pages/index/index",
     "pages/detail/detail",
     "pages/result/result",
@@ -10,11 +9,17 @@
     "pages/record/record",
     "pages/analysis/analysis",
     "pages/realsubject/realsubject",
-    "pages/openvip/openvip",
-    "pages/vipresult/vipresult",
     "pages/my/my",
     "pages/myvip/myvip",
+    "pages/openvip/openvip",
+    "pages/vipresult/vipresult",
     "pages/webview/webview",
+    "pages/chapters/chapters",
+    "pages/chaptersdetail/chaptersdetail",
+
+    "pages/explain/explain",
+    "pages/explaindetail/explaindetail",
+    "pages/process/process",
     "pages/keyword/keyword",
     "pages/kwdetail/kwdetail"
   ],
@@ -34,7 +39,7 @@
       "iconPath": "images/home_gray.png",
       "selectedIconPath": "images/home_blue.png",
       "text": "练习"
-    },{
+    }, {
       "pagePath": "pages/study/study",
       "iconPath": "images/study_gray.png",
       "selectedIconPath": "images/study_blue.png",
