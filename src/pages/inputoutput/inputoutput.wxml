@@ -16,7 +16,7 @@
             {{item.desc}}
         </view>
         <view class="content">
-            <view class="item" wx:for="{{item.list}}" wx:key="j" wx:for-item="process" wx:for-index="j" data-i="{{i}}" data-j="{{j}}" bindtap="detailClick" hover-class="defaultTap">{{process.processGroup}}</view>
+            <view class="item" wx:for="{{item.list}}" wx:key="j" wx:for-item="process" wx:for-index="j" data-i="{{i}}" data-j="{{j}}" bindtap="detailClick" data-name="{{process.processGroup}}" hover-class="defaultTap">{{process.processGroup}}</view>
             <text class="item" wx:if="{{item.list.length & 1 != 0}}"></text>
         </view>
     </view>

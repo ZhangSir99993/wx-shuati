@@ -15,7 +15,7 @@
     包含的过程组
     </view>
     <view class="content">
-        <view class="item" wx:for="{{itemList}}"  wx:key="index" data-index="{{index}}" bindtap="detailClick" hover-class="defaultTap">{{item.processGroup}}</view>
+        <view class="item" wx:for="{{itemList}}"  wx:key="index" data-index="{{index}}" bindtap="detailClick" data-name="{{item.processGroup}}" hover-class="defaultTap">{{item.processGroup}}</view>
         <text class="item" wx:if="{{itemList.length & 1 != 0}}"></text>
     </view>
     <view class="title" wx:if="{{bookList.length}}">第一部分 PMBOK 指南 - 书中位置</view>
