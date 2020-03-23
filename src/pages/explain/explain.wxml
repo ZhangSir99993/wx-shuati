@@ -2,28 +2,53 @@
 <view class="container">
     <view class="main">
         <view class="title_list" wx:if="{{title=='knowledge'}}">
-            <view class="title_item" wx:for="{{itemList}}"  wx:key="index" data-albumid="{{item.knowledgeSystem}}" bindtap="detailClick">
-                <text>{{item.knowledgeSystem}}</text>
+            <view class="title_item" wx:for="{{itemList}}"  wx:key="index" data-name="{{item.knowledgeSystem}}" bindtap="detailClick" hover-class="defaultTap">
+                <view class="left_view">
+                    <text class="title_icon bc_blue"></text>
+                    <text>{{item.knowledgeSystem}}</text>
+                </view>
                 <image class="arrowright" src="../../images/arrowright.png"  mode="aspectFill"></image>
             </view>
         </view>
         <view class="title_list" wx:elif="{{title=='process'}}">
-            <view class="title_item" wx:for="{{itemList}}"  wx:key="index" data-index="{{index}}" bindtap="detailClick">
-                <text>{{item.processGroup}}</text>
+            <view class="title_item" wx:for="{{itemList}}"  wx:key="index" data-index="{{index}}" data-name="{{item.processGroup}}" bindtap="detailClick" hover-class="defaultTap">
+                <view class="left_view">
+                    <text class="title_icon bc_blue_dark"></text>
+                    <text>{{item.processGroup}}</text>
+                </view>
                 <image class="arrowright" src="../../images/arrowright.png"  mode="aspectFill"></image>
             </view>
         </view>
         <view class="title_list" wx:elif="{{title=='inputoutput'}}">
-            <view class="title_item" wx:for="{{itemList}}"  wx:key="index" data-albumid="{{item.inputoutput}}" bindtap="detailClick">
-                <text>{{item.inputoutput}}</text>
+            <view class="title_item" wx:for="{{itemList}}"  wx:key="index" data-name="{{item.inputoutput}}" bindtap="detailClick" hover-class="defaultTap">
+                <view class="left_view">
+                    <text class="title_icon bc_green_light"></text>
+                    <text>{{item.inputoutput}}</text>
+                </view>
                 <image class="arrowright" src="../../images/arrowright.png"  mode="aspectFill"></image>
             </view>
         </view>
         <view class="title_list" wx:elif="{{title=='keyword'}}">
-            <view class="title_item" wx:for="{{itemList}}"  wx:key="index" data-albumid="{{item.name}}" bindtap="detailClick">
-                <text>{{item.name}}</text>
+            <view class="title_item" wx:for="{{itemList}}"  wx:key="index" data-index="{{index}}" data-name="{{item.name}}" bindtap="detailClick" hover-class="defaultTap">
+                <view class="left_view">
+                    <text class="title_icon bc_purple"></text>
+                    <text>{{item.name}}</text>
+                </view>
                 <image class="arrowright" src="../../images/arrowright.png"  mode="aspectFill"></image>
             </view>
         </view>
+        <view class="title_list" wx:elif="{{title=='abbreviate'}}">
+            <view class="title_item" wx:for="{{itemList}}"  wx:key="index" data-index="{{index}}" data-name="{{item.name}}" bindtap="detailClick" hover-class="defaultTap">
+                <view class="left_view">
+                    <text class="title_icon bc_red"></text>
+                    <text>{{item.name}}</text>
+                </view>
+                <view>
+                    <text class="english">{{item.english}}</text>
+                    <image class="arrowright" src="../../images/arrowright.png"  mode="aspectFill"></image>
+                </view>
+            </view>
+        </view>
     </view>
+    <view hidden="{{!isLoading}}" class="loading_more">正在加载更多...</view>
 </view>

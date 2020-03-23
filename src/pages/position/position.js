@@ -4,34 +4,30 @@ const app = getApp()
 const site = require('../../api/site.js').site;
 Page({
     data:{
-        title:'',
-        itemList:[]
+        contentList:[],
+        name:''
     },
-    onLoad: function (options) {
-        this.initData(options.title)
+    onLoad:function(){
+        this.getChaptersData()
     },
-    initData: function (title) {
+    getChaptersData:function(){
         var that = this
         wx.showLoading({
             title: '加载中...'
         })
-        var url = 'process';
-        switch (title) {
-            case 'knowledge':
-                url += `?albumId=${that.options.albumid}`
-                break;
-            default:
-                break;
+        var url  = site.m + 'chaptersPosition/' + app.globalData.tablename + 'book'
+        if (that.options.book2) {
+            url += '2'
         }
         wx.request({
-            url: site.m + url,
+            url: url+`?name=${that.options.name}`,
             method: 'GET',
             dataType: 'json',
             success: function (res) {
                 if (res.data.code == 200) {
                     that.setData({
-                        title:title,
-                        itemList: res.data.data
+                        name:that.options.name,
+                        contentList:res.data.data[that.options.index].contentList
                     })
                 } else {
                     wx.showToast({
@@ -56,7 +52,7 @@ Page({
     },
     detailClick:function(e){
         wx.navigateTo({
-            url:`/pages/process/process?detail=${JSON.stringify(this.data.itemList[e.currentTarget.dataset.index])}`
+            url: `/pages/chaptersdetail/chaptersdetail?name=${this.options.name}&book2=${this.options.book2}&albumid=${e.currentTarget.dataset.albumid}&albumid2=${e.currentTarget.dataset.albumid2}&albumid3=${e.currentTarget.dataset.albumid3}&albumid4=${e.currentTarget.dataset.albumid4}`
         })
     }
 })

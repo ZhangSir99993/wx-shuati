@@ -37,7 +37,10 @@ var deleteNum = function(str){
   var reg=getRegExp('\d+(\.|、)');
   return str.replace(reg,'')
 }
-
+var changText = function(str,name){
+  var reg=getRegExp('\<img.+>');
+  return str.replace(reg,'').replace(name,'<span style="color:red;">'+name+'</span>')
+}
 module.exports = {
   toInt:toInt,
   priceb:priceb,
@@ -46,5 +49,6 @@ module.exports = {
   indexOf:indexOf,
   toThousand:toThousand,
   ceil:ceil,
-  deleteNum:deleteNum
+  deleteNum:deleteNum,
+  changText:changText
 };

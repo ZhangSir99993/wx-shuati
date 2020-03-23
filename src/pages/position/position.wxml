@@ -1,0 +1,17 @@
+<wxs src="../../utils/tool.wxs" module="util"></wxs>
+<view class="container">
+      <view class="title_list">
+        <view wx:for="{{contentList}}"  wx:key="index">
+            <view class="title_item" wx:for="{{item.content}}" wx:for-item="element" wx:for-index="j" wx:key="j" data-albumid="{{item.albumId}}" data-albumid2="{{item.albumId2}}" data-albumid3="{{item.albumId3}}" data-albumid4="{{item.albumId4}}" bindtap="detailClick" hover-class="defaultTap">
+                <rich-text class="content" nodes="{{util.changText(element,name)}}"></rich-text>
+                <view class="albumId2" wx:if="{{item.albumId2}}">
+                    {{item.albumId2}}
+                </view>
+                <view class="albumId2" wx:else>
+                    {{item.albumId}}
+                </view>
+                <image class="arrowright" src="../../images/arrowright.png" />
+            </view>
+        </view>
+    </view>
+</view>

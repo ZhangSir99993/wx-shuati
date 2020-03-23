@@ -2,9 +2,12 @@
 const app = getApp()
 //api.js
 const site = require('../../api/site.js').site;
-import '../../images/learnRecord.png'
-import '../../images/errSubject.png'
-import '../../images/vipSubject.png'
+import '../../images/knowledge.png'
+import '../../images/keyword.png'
+import '../../images/abbreviate.png'
+import '../../images/process.png'
+import '../../images/inputoutput.png'
+import '../../images/icontable.png'
 Page({
     data: {
         itemList: [],
@@ -25,16 +28,12 @@ Page({
                 tablename:'npdp',
                 buttonList:[{
                     title:"术语",
-                    count: '468',
-                    image:'vipSubject.png'
-                },{
-                    title:"缩写",
-                    count: '45',
-                    image:'vipSubject.png'
+                    count: '287',
+                    image:'keyword.png'
                 },{
                     title:"图表",
                     count: '248',
-                    image:'vipSubject.png'
+                    image:'icontable.png'
                 }]
             },
             {
@@ -42,43 +41,43 @@ Page({
                 buttonList:[{
                     title:"知识体系",
                     count: '10',
-                    image:'learnRecord.png'
+                    image:'knowledge.png'
                 },{
                     title:"过程组",
                     count: '49',
-                    image:'errSubject.png'
+                    image:'process.png'
                 },{
                     title:"输入/工具/输出",
                     count: '144',
-                    image:'vipSubject.png'
+                    image:'inputoutput.png'
                 },{
                     title:"术语",
-                    count: '468',
-                    image:'vipSubject.png'
+                    count: '467',
+                    image:'keyword.png'
                 },{
                     title:"缩写",
                     count: '45',
-                    image:'vipSubject.png'
+                    image:'abbreviate.png'
                 },{
                     title:"图表",
                     count: '248',
-                    image:'vipSubject.png'
+                    image:'icontable.png'
                 }]
             },
             {
                 tablename:'acp',
                 buttonList:[{
                     title:"术语",
-                    count: '468',
-                    image:'vipSubject.png'
+                    count: '83',
+                    image:'keyword.png'
                 },{
                     title:"缩写",
-                    count: '45',
-                    image:'vipSubject.png'
+                    count: '17',
+                    image:'abbreviate.png'
                 },{
                     title:"图表",
                     count: '248',
-                    image:'vipSubject.png'
+                    image:'icontable.png'
                 }]
             }
         ]
@@ -205,10 +204,7 @@ Page({
         })
     },
     goNav: function (e) {
-        console.log("e.currentTarget.dataset.title=",e.currentTarget.dataset.title);
-        
         switch (e.currentTarget.dataset.title) {
-            
             case '知识体系':
                 wx.navigateTo({
                     url: `/pages/explain/explain?title=knowledge`
@@ -230,7 +226,9 @@ Page({
                 })
                 break;
             case '缩写':
-
+                wx.navigateTo({
+                    url: `/pages/explain/explain?title=abbreviate`
+                })
                 break;
             case '图表':
                 break;

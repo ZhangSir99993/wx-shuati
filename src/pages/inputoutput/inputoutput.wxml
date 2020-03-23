@@ -1,14 +1,23 @@
 <view class="container">
     <view class="top">
-        <view class="name">
-            <text class="title_icon {{keyword?'bc_purple':'bc_red'}}"></text>
+       <view class="name">
+            <text class="title_icon bc_green_light"></text>
             {{detail.name}}
         </view>
-        <view class="english">
+        <view class="english" wx:if="{{detail.english}}">
             {{detail.english}}
         </view>
-        <view class="describe">
+        <view class="describe" wx:if="{{detail.describe}}">
             {{detail.describe}}
+        </view>
+    </view>
+    <view wx:for="{{itemList}}" wx:key="i" wx:for-index="i"> 
+        <view class="title">
+            {{item.desc}}
+        </view>
+        <view class="content">
+            <view class="item" wx:for="{{item.list}}" wx:key="j" wx:for-item="process" wx:for-index="j" data-i="{{i}}" data-j="{{j}}" bindtap="detailClick" hover-class="defaultTap">{{process.processGroup}}</view>
+            <text class="item" wx:if="{{item.list.length & 1 != 0}}"></text>
         </view>
     </view>
     <view class="title" wx:if="{{bookList.length}}">第一部分 PMBOK 指南 - 书中位置</view>

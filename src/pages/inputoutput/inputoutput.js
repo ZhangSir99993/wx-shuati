@@ -3,43 +3,73 @@ const app = getApp()
 //api.js
 const site = require('../../api/site.js').site;
 Page({
-    data:{
-        keyword:false,
-        detail:{},
+    data: {
+        detail: {},
+        itemList: [],
         bookList:[],
         bookList2:[]
     },
-    onLoad: function (options) {
-        this.data.detail  = JSON.parse(options.detail)
-        this.getKeyWordData(this.data.detail.name)
+    onLoad: function () {
+        this.getProcessData()
+        this.getKeyWordData()
         this.getChaptersData()
-        if (app.globalData.tablename == 'pmp') {
-            this.getChaptersData2()            
-        }
-        if (options.keyword) {
-            this.setData({
-                keyword:true
-            })
-        }
+        this.getChaptersData2()
     },
-    getKeyWordData:function(name){
+    getProcessData: function () {
         var that = this
         wx.showLoading({
             title: '加载中...'
         })
         wx.request({
-            url: site.m + `keyword/${app.globalData.tablename}?name=${name}`,
+            url: site.m + 'process' + `?name=${that.options.name}`,
             method: 'GET',
             dataType: 'json',
             success: function (res) {
                 if (res.data.code == 200) {
                     if (res.data.data.length) {
                         that.setData({
-                            detail:res.data.data[0]
+                            itemList: res.data.data
                         })
-                    }else{
+                    }
+                } else {
+                    wx.showToast({
+                        title: '服务器出了点问题，请稍候重试',
+                        icon: 'none',
+                        duration: 2000
+                    })
+                }
+            },
+            fail: function (err) {
+                wx.showToast({
+                    title: '服务器出了点问题，请稍候重试',
+                    icon: 'none',
+                    duration: 2000
+                })
+            },
+            complete: function () {
+                wx.hideLoading()
+                wx.stopPullDownRefresh()
+            }
+        })
+    },
+    getKeyWordData: function () {
+        var that = this
+        wx.showLoading({
+            title: '加载中...'
+        })
+        wx.request({
+            url: site.m + `keyword/${app.globalData.tablename}?name=${that.options.name}`,
+            method: 'GET',
+            dataType: 'json',
+            success: function (res) {
+                if (res.data.code == 200) {
+                    if (res.data.data.length) {
                         that.setData({
-                            detail:that.data.detail
+                            detail: res.data.data[0]
+                        })
+                    } else {
+                        that.setData({
+                            'detail.name': that.options.name
                         })
                     }
                 } else {
@@ -131,6 +161,11 @@ Page({
                 wx.hideLoading()
                 wx.stopPullDownRefresh()
             }
+        })
+    },
+    detailClick: function (e) {
+        wx.navigateTo({
+            url: `/pages/process/process?detail=${JSON.stringify(this.data.itemList[e.currentTarget.dataset.i].list[e.currentTarget.dataset.j])}`
         })
     },
     bookClick: function (e) {

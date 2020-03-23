@@ -1,7 +1,7 @@
 <view class="container">
     <view class="top">
-        <view class="name">
-            <text class="title_icon {{keyword?'bc_purple':'bc_red'}}"></text>
+       <view class="name">
+            <text class="title_icon bc_blue"></text>
             {{detail.name}}
         </view>
         <view class="english">
@@ -10,6 +10,13 @@
         <view class="describe">
             {{detail.describe}}
         </view>
+    </view>
+    <view class="title">
+    包含的过程组
+    </view>
+    <view class="content">
+        <view class="item" wx:for="{{itemList}}"  wx:key="index" data-index="{{index}}" bindtap="detailClick" hover-class="defaultTap">{{item.processGroup}}</view>
+        <text class="item" wx:if="{{itemList.length & 1 != 0}}"></text>
     </view>
     <view class="title" wx:if="{{bookList.length}}">第一部分 PMBOK 指南 - 书中位置</view>
     <view class="title_list">
@@ -26,3 +33,5 @@
         </view>
     </view>
 </view>
+
+

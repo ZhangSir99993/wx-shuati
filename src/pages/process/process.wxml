@@ -1,26 +1,50 @@
 <view class="container">
-    <view>
-        {{detail.processGroup}}
+    <view class="top">
+        <view class="name">
+            <text class="title_icon bc_blue_dark"></text>
+            {{detail.name}}
+        </view>
+        <view class="english">
+            {{detail.english}}
+        </view>
+        <view class="describe">
+            {{detail.describe}}
+        </view>
     </view>
-    <view>
-        {{detail.explain}}
-    </view>
-    <view>
+    <view class="title">
         输入
     </view>
-    <view>
-        <text>{{detail.input}}</text>
+    <view class="content">
+        <view class="item" wx:for="{{process.input}}"  wx:key="index" data-name="{{item}}" bindtap="detailClick" hover-class="defaultTap">{{item}}</view>
+        <text class="item" wx:if="{{process.input.length & 1 != 0}}"></text>
     </view>
-    <view>
+    <view class="title">
         工具与技术
     </view>
-    <view>
-        <text>{{detail.tool}}</text>
+    <view class="content">
+        <view class="item" wx:for="{{process.tool}}"  wx:key="index" data-name="{{item}}" bindtap="detailClick" hover-class="defaultTap">{{item}}</view>
+        <text class="item" wx:if="{{process.tool.length & 1 != 0}}"></text>
     </view>
-    <view>
+    <view class="title">
         输出
     </view>
-    <view>
-        <text>{{detail.output}}</text>
+    <view class="content">
+        <view class="item" wx:for="{{process.output}}"  wx:key="index" data-name="{{item}}" bindtap="detailClick" hover-class="defaultTap">{{item}}</view>
+        <text class="item" wx:if="{{process.output.length & 1 != 0}}"></text>
+    </view>
+    <view class="title" wx:if="{{bookList.length}}">第一部分 PMBOK 指南 - 书中位置</view>
+    <view class="title_list">
+        <view class="title_item" wx:for="{{bookList}}"  wx:key="index" data-albumid="{{item.albumId}}">
+            <view class="albumId1" data-index="{{index}}" catchtap="bookClick" hover-class="defaultTap">{{item.albumId}}<text class="count">{{item.count}}</text></view>
+            <image class="arrowright" src="../../images/arrowright.png" />
+        </view>
+    </view>
+    <view class="title" wx:if="{{bookList2.length}}">第二部分 项目管理标准 - 书中位置</view>
+    <view class="title_list">
+        <view class="title_item" wx:for="{{bookList2}}"  wx:key="index" data-albumid="{{item.albumId}}">
+            <view class="albumId1" data-index="{{index}}" catchtap="bookClick2" hover-class="defaultTap">{{item.albumId}}<text class="count">{{item.count}}</text></view>
+            <image class="arrowright" src="../../images/arrowright.png" />
+        </view>
     </view>
 </view>
+

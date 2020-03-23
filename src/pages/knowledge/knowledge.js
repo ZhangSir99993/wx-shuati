@@ -4,44 +4,70 @@ const app = getApp()
 const site = require('../../api/site.js').site;
 Page({
     data:{
-        keyword:false,
+        title:'',
         detail:{},
+        itemList:[],
         bookList:[],
         bookList2:[]
     },
-    onLoad: function (options) {
-        this.data.detail  = JSON.parse(options.detail)
-        this.getKeyWordData(this.data.detail.name)
-        this.getChaptersData()
-        if (app.globalData.tablename == 'pmp') {
-            this.getChaptersData2()            
-        }
-        if (options.keyword) {
-            this.setData({
-                keyword:true
-            })
-        }
+    onLoad: function () {
+        this.initData()
     },
-    getKeyWordData:function(name){
+    initData: function () {
+        this.getProcessData()
+        this.getKeyWordData()
+        this.getChaptersData()
+        this.getChaptersData2()
+    },
+    getProcessData:function(){
         var that = this
         wx.showLoading({
             title: '加载中...'
         })
         wx.request({
-            url: site.m + `keyword/${app.globalData.tablename}?name=${name}`,
+            url: site.m + `process?knowledgeSystem=${this.options.name}`,
             method: 'GET',
             dataType: 'json',
             success: function (res) {
                 if (res.data.code == 200) {
-                    if (res.data.data.length) {
-                        that.setData({
-                            detail:res.data.data[0]
-                        })
-                    }else{
-                        that.setData({
-                            detail:that.data.detail
-                        })
-                    }
+                    that.setData({
+                        itemList: res.data.data
+                    })
+                } else {
+                    wx.showToast({
+                        title: '服务器出了点问题，请稍候重试',
+                        icon: 'none',
+                        duration: 2000
+                    })
+                }
+            },
+            fail: function (err) {
+                wx.showToast({
+                    title: '服务器出了点问题，请稍候重试',
+                    icon: 'none',
+                    duration: 2000
+                })
+            },
+            complete: function () {
+                wx.hideLoading()
+                wx.stopPullDownRefresh()
+            }
+        })
+    },
+    getKeyWordData:function(){
+        var that = this
+        wx.showLoading({
+            title: '加载中...'
+        })
+        wx.request({
+            url: site.m + `keyword/${app.globalData.tablename}?name=${that.options.name}`,
+            method: 'GET',
+            dataType: 'json',
+            success: function (res) {
+                if (res.data.code == 200) {
+                    that.setData({
+                        detail:res.data.data[0]
+                    })
                 } else {
                     wx.showToast({
                         title: '服务器出了点问题，请稍候重试',
@@ -131,6 +157,11 @@ Page({
                 wx.hideLoading()
                 wx.stopPullDownRefresh()
             }
+        })
+    },
+    detailClick:function(e){
+        wx.navigateTo({
+            url:`/pages/process/process?detail=${JSON.stringify(this.data.itemList[e.currentTarget.dataset.index])}`
         })
     },
     bookClick: function (e) {

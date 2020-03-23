@@ -18,10 +18,13 @@
     "pages/chaptersdetail/chaptersdetail",
 
     "pages/explain/explain",
-    "pages/explaindetail/explaindetail",
+    "pages/knowledge/knowledge",
     "pages/process/process",
+    "pages/inputoutput/inputoutput",
     "pages/keyword/keyword",
-    "pages/kwdetail/kwdetail"
+    "pages/position/position"
+
+
   ],
   "window": {
     "navigationBarTextStyle": "black",

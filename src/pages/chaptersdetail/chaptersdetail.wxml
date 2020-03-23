@@ -1,3 +1,4 @@
+<wxs src="../../utils/tool.wxs" module="util"></wxs>
 <view class="container">
     <scroll-view class="main" scroll-y="true" scroll-into-view="{{toView}}">
         <view class="albumId">{{firstBookDetail.albumId}}</view>
@@ -13,7 +14,7 @@
                 比如5的二进制为101，1的二进制为1，101&001=001，所以5不是一个偶数。
             -->
                 <image class="imageView" wx:if="{{i & 1 != 0}}" src="{{content}}" data-url="{{content}}" bindtap="showBigImg" mode="aspectFit"></image>
-                <rich-text wx:else class="content" nodes="{{content}}"></rich-text>
+                <rich-text wx:else class="content" nodes="{{name?util.changText(content,name):content}}"></rich-text>
             </view>
         </view>
     </scroll-view>

@@ -1,11 +1,12 @@
 .main {
     box-sizing: border-box;
     padding-bottom: 88rpx;
-    .title{
+
+    .title {
         height: 70rpx;
         line-height: 70rpx;
         padding-left: 30rpx;
-        color:#666666;
+        color: #666666;
     }
 
     .title_list {
@@ -24,9 +25,21 @@
             flex-direction: row;
             align-items: center;
             justify-content: space-between;
-            .count{
-                color: #666666;
+
+            .left_view {
+                display: flex;
+                align-items: center;
+
+                .title_icon {
+                    margin-right: 20rpx;
+                }
             }
+
+            .english {
+                color: #666666;
+                font-size: 28rpx;
+            }
+
             .arrowright {
                 width: 24rpx;
                 height: 24rpx;
@@ -34,7 +47,7 @@
             }
         }
 
-      
+
     }
 
 }

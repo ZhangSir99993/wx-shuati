@@ -12,7 +12,9 @@ Page({
     },
     onLoad: function () {
         var userInfo = app.globalData.userInfo
-       
+        if (!userInfo) {
+            return
+        }
         if (userInfo.npdpVip) {
             this.data.itemList.push({
                 tablename: 'npdp',
