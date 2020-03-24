@@ -164,8 +164,9 @@ Page({
         })
     },
     detailClick: function (e) {
+        app.globalData.itemDetail = this.data.itemList[e.currentTarget.dataset.i].list[e.currentTarget.dataset.j]
         wx.navigateTo({
-            url: `/pages/process/process?name=${e.currentTarget.dataset.name}&detail=${JSON.stringify(this.data.itemList[e.currentTarget.dataset.i].list[e.currentTarget.dataset.j])}`
+            url: `/pages/process/process?name=${e.currentTarget.dataset.name}`
         })
     },
     bookClick: function (e) {

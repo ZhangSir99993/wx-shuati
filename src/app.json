@@ -22,9 +22,9 @@
     "pages/process/process",
     "pages/inputoutput/inputoutput",
     "pages/keyword/keyword",
+    "pages/icontable/icontable",
     "pages/position/position"
-
-
+    
   ],
   "window": {
     "navigationBarTextStyle": "black",

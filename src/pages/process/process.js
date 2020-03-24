@@ -10,7 +10,7 @@ Page({
         bookList2:[]
     },
     onLoad:function(options){
-        this.data.process = JSON.parse(options.detail)
+        this.data.process = app.globalData.itemDetail
         this.data.process.input = this.data.process.input.split('/')
         this.data.process.tool = this.data.process.tool.split('/')
         this.data.process.output = this.data.process.output.split('/')

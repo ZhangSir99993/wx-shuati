@@ -32,7 +32,7 @@ Page({
                     image:'keyword.png'
                 },{
                     title:"图表",
-                    count: '248',
+                    count: '126',
                     image:'icontable.png'
                 }]
             },
@@ -60,7 +60,7 @@ Page({
                     image:'abbreviate.png'
                 },{
                     title:"图表",
-                    count: '248',
+                    count: '229',
                     image:'icontable.png'
                 }]
             },
@@ -76,7 +76,7 @@ Page({
                     image:'abbreviate.png'
                 },{
                     title:"图表",
-                    count: '248',
+                    count: '69',
                     image:'icontable.png'
                 }]
             }
@@ -231,6 +231,9 @@ Page({
                 })
                 break;
             case '图表':
+                wx.navigateTo({
+                    url: `/pages/explain/explain?title=icontable`
+                })
                 break;
             default:
                 break;
