@@ -2,6 +2,7 @@
 const app = getApp()
 //api.js
 const site = require('../../api/site.js').site;
+
 Page({
     data:{
         prefix:'',
@@ -114,11 +115,12 @@ Page({
     },
     bookClick: function (e) {
         var albumid = this.data.bookDetail.contentList[0].albumId
-        var albumid2 = this.data.bookDetail.contentList[0].albumid2
+        var albumid2 = this.data.bookDetail.contentList[0].albumId2
         var albumid3 = this.data.bookDetail.contentList[0].albumId3
         var albumid4 = this.data.bookDetail.contentList[0].albumId4
+        
         wx.navigateTo({
-            url: `/pages/chaptersdetail/chaptersdetail?name=${this.options.name}&albumid=${albumid}&albumid2=${albumid2}&albumid3=${albumid3}&albumid4=${albumid4}`
+            url: `/pages/chaptersdetail/chaptersdetail?imagename=${this.options.name}&albumid=${albumid}&albumid2=${albumid2}&albumid3=${albumid3}&albumid4=${albumid4}`
         })
     },
     bookClick2: function (e) {
@@ -127,7 +129,7 @@ Page({
         var albumid3 = this.data.bookDetail2.contentList[0].albumId3
         var albumid4 = this.data.bookDetail2.contentList[0].albumId4
         wx.navigateTo({
-            url: `/pages/chaptersdetail/chaptersdetail?name=${this.options.name}&book2=true&albumid=${albumid}&albumid2=${albumid2}&albumid3=${albumid3}&albumid4=${albumid4}`
+            url: `/pages/chaptersdetail/chaptersdetail?imagename=${this.options.name}&book2=true&albumid=${albumid}&albumid2=${albumid2}&albumid3=${albumid3}&albumid4=${albumid4}`
         })
     }
 })

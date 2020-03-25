@@ -5,8 +5,16 @@ const site = require('../../api/site.js').site;
 //util.js
 const util = require('../../utils/util.js');
 var debounce = util.createDebounce(1000);
+//auth.js
+const auth = require('../../api/auth.js');
 Page({
     data: {
+        isVip: false,
+        validTime: '',
+        canIUse: wx.canIUse('button.open-type.getUserInfo'),
+        isAuthorize: true, //是否需要授权注册登录
+        // loadingfinish: false,
+        //数据信息
         currentPage: 0,
         pageNum: 15,
         isHaveMore: true,
@@ -15,12 +23,146 @@ Page({
         itemList: [],
         defaultList: [],
         keyword: ''
-
     },
     onLoad: function () {
-        this.initData()
+        //登录授权检测
+        this.checkAuthorized();
     },
-    initData: function (more) {
+    onShow: function () {
+        var that = this
+        if (app.globalData.refreshVip) {
+            app.globalData.refreshVip = false
+            //登录授权检测
+            that.checkAuthorized();
+        }
+    },
+    checkAuthorized: function () {
+        var that = this;
+        auth.wxCheckSession(this, function (session_key) {
+            let sessionKey = session_key ? session_key : wx.getStorageSync("session_key");
+            if (sessionKey) {
+                that.setData({
+                    isAuthorize: true //需要授权，注册登录
+                });
+                //初始化页面信息
+                that.initInfo();
+            } else {
+                that.setData({
+                    isAuthorize: false //不需要授权，已登录状态
+                });
+                //初始化页面信息
+                that.initInfo();
+                that.vipInfo();
+            }
+            // that.setData({
+            //     loadingfinish: true
+            // })
+        });
+    },
+    vipInfo: function () {
+        var userInfo = app.globalData.userInfo
+        switch (app.globalData.tablename) {
+            case 'npdp':
+                if (userInfo.npdpVip) {
+                    this.handleVipInfp(userInfo.npdpValidTime, 'npdp')
+                }
+                break;
+            case 'pmp':
+                if (userInfo.pmpVip) {
+                    this.handleVipInfp(userInfo.pmpValidTime, 'pmp')
+                }
+                break;
+            case 'acp':
+                if (userInfo.acpVip) {
+                    this.handleVipInfp(userInfo.acpValidTime, 'acp')
+                }
+                break;
+            default:
+                break;
+        }
+    },
+    //处理vip用户信息
+    handleVipInfp: function (validTime, tablename) {
+        var that = this
+        var ms = parseInt(validTime) - new Date().getTime()
+        var day = ms / (1000 * 60 * 60 * 24)
+        if (day > 0) {
+            this.setData({
+                isVip: true,
+                validTime: util.formatDateTime(validTime, 'yyyy-MM-dd')
+            })
+            if (day < 3) {
+                wx.showModal({
+                    title: '您的VIP即将过期。',
+                    content: '您的npdp VIP有效期不足3天，到期未续期将影响您相关业务的正常使用。',
+                    confirmText: '立刻续期',
+                    success(res) {
+                        if (res.confirm) {
+                            that.openVipClick()
+                        }
+                    }
+                })                
+            }
+        } else {
+            //过期vip，关闭用户对应科目vip状态
+            wx.request({
+                url: site.m + 'miniprogram/closevip',
+                method: 'POST',
+                header: auth.setHeader(),
+                data: {
+                    tablename: tablename
+                },
+                dataType: 'json',
+                success: function (res) {
+                    if (res.data.code == 200) {
+                        if (res.data.data.result) {
+                            app.globalData.userInfo = res.data.data.result
+                        } else {
+                            wx.showModal({
+                                title: '提示',
+                                showCancel: false,
+                                content: res.data.data.message,
+                                success: function (res) {}
+                            })
+                        }
+                    } else {
+                        wx.showToast({
+                            title: '服务器出了点问题，请稍候重试',
+                            icon: 'none',
+                            duration: 2000
+                        })
+                    }
+                },
+                fail: function (err) {
+                    wx.showToast({
+                        title: JSON.stringify(err),
+                        icon: 'none',
+                        duration: 2000
+                    })
+                },
+                complete: function () {}
+            })
+        }
+    },
+    getUserInfo: function (e) {
+        if (e.detail.errMsg == 'getUserInfo:fail auth deny') {
+            return;
+        }
+        var that = this
+        app.globalData.userInfo = e.detail.userInfo
+        auth.wxRegister(this, function () {
+            that.setData({
+                isAuthorize: false
+            })
+            that.openVipClick()
+        })
+    },
+    openVipClick: function () {
+        wx.navigateTo({
+            url: '/pages/openvip/openvip'
+        })
+    },
+    initInfo: function (more) {
         var that = this
         that.setData({
             isLoading: true
@@ -72,69 +214,6 @@ Page({
             }
         })
     },
-    detailClick: function (e) {
-        switch (this.options.title) {
-            case 'knowledge':
-                wx.navigateTo({
-                    url: `/pages/knowledge/knowledge?name=${e.currentTarget.dataset.name}`
-                })
-                break;
-            case 'process':
-                app.globalData.itemDetail = this.data.itemList[e.currentTarget.dataset.index];
-                wx.navigateTo({
-                    url: `/pages/process/process?name=${e.currentTarget.dataset.name}`
-                })
-                break;
-            case 'inputoutput':
-                wx.navigateTo({
-                    url: `/pages/inputoutput/inputoutput?name=${e.currentTarget.dataset.name}`
-                })
-                break;
-            case 'keyword':
-                app.globalData.itemDetail = this.data.itemList[e.currentTarget.dataset.index];
-                wx.navigateTo({
-                    url: `/pages/keyword/keyword?name=${e.currentTarget.dataset.name}&keyword=true`
-                })
-                break;
-            case 'abbreviate':
-                app.globalData.itemDetail = this.data.itemList[e.currentTarget.dataset.index];
-                wx.navigateTo({
-                    url: `/pages/keyword/keyword?name=${e.currentTarget.dataset.name}`
-                })
-                break;
-            case 'icontable':
-                wx.navigateTo({
-                    url: `/pages/icontable/icontable?name=${e.currentTarget.dataset.name}&prefix=${e.currentTarget.dataset.prefix}`
-                })
-                break;
-            default:
-
-                break;
-        }
-    },
-    //搜索
-    searchTap: function () {
-        var that = this;
-        that.searchBtn();
-    },
-
-    searchBtn: function () {
-        var that = this;
-        if (that.data.keyword.replace(/\s/g, '') == '') {
-            wx.showToast({
-                title: '请输入搜索内容',
-                icon: 'none',
-                duration: 2000
-            })
-            return;
-        }
-        debounce(() => {
-            if (that.data.keyword.length > 50) {
-                that.data.keyword = that.data.keyword.slice(0, 50);
-            }
-            that.searchSuggest(that.data.keyword);
-        })
-    },
     setKeyWord: function (event) {
         var that = this,
             value = event.detail.value;
@@ -160,7 +239,6 @@ Page({
             itemList: that.data.defaultList
         });
     },
-
     searchSuggest: function (value) {
         var that = this;
         if (that.requestTask != null) that.requestTask.abort(); //中断上一次的请求
@@ -229,22 +307,74 @@ Page({
             }
         })
     },
+    detailClick: function (e) {
+        if (this.data.isAuthorize) {
+            wx.showToast({
+                title: '请先登录',
+                icon: 'none'
+            })
+            return
+        }
+        if (!this.data.isVip) {
+            this.openVipClick()
+            return
+        }
+        switch (this.options.title) {
+            case 'knowledge':
+                wx.navigateTo({
+                    url: `/pages/knowledge/knowledge?name=${e.currentTarget.dataset.name}`
+                })
+                break;
+            case 'process':
+                app.globalData.itemDetail = this.data.itemList[e.currentTarget.dataset.index];
+                wx.navigateTo({
+                    url: `/pages/process/process?name=${e.currentTarget.dataset.name}`
+                })
+                break;
+            case 'inputoutput':
+                wx.navigateTo({
+                    url: `/pages/inputoutput/inputoutput?name=${e.currentTarget.dataset.name}`
+                })
+                break;
+            case 'keyword':
+                app.globalData.itemDetail = this.data.itemList[e.currentTarget.dataset.index];
+                wx.navigateTo({
+                    url: `/pages/keyword/keyword?name=${e.currentTarget.dataset.name}&keyword=true`
+                })
+                break;
+            case 'abbreviate':
+                app.globalData.itemDetail = this.data.itemList[e.currentTarget.dataset.index];
+                wx.navigateTo({
+                    url: `/pages/keyword/keyword?name=${e.currentTarget.dataset.name}`
+                })
+                break;
+            case 'icontable':
+                wx.navigateTo({
+                    url: `/pages/icontable/icontable?name=${e.currentTarget.dataset.name}&prefix=${e.currentTarget.dataset.prefix}`
+                })
+                break;
+            default:
+
+                break;
+        }
+    },
     /**
      * 页面相关事件处理函数--监听用户下拉动作
-     */
     onPullDownRefresh: function () {
         // 显示顶部刷新图标
-        wx.showNavigationBarLoading();
-        this.initData()
+        if (!this.data.keyword) {
+            wx.showNavigationBarLoading();
+            this.initInfo()
+        }
     },
-
+    */
     /**
      * 页面上拉触底事件的处理函数
      */
     onReachBottom: function () {
         if (this.data.isHaveMore && !this.data.keyword) {
             this.data.currentPage++;
-            this.initData(true)
+            this.initInfo(true)
         }
     },
 

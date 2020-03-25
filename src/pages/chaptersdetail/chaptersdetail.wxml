@@ -13,8 +13,14 @@
                 因为二进制为逢2进1，所以如果是2的倍数的话，则这个数的最后一位必定是0，而1的二进制的最后一位为1，其余全为0。
                 比如5的二进制为101，1的二进制为1，101&001=001，所以5不是一个偶数。
             -->
+            <block wx:if="{{imagename}}">
+                <image class="imageView" id="{{content.nameClass}}" wx:if="{{i & 1 != 0}}" src="{{content.str}}" data-url="{{content.str}}" bindtap="showBigImg" mode="aspectFit"></image>
+                <rich-text wx:else class="content" nodes="{{util.changText(content.str,imagename)}}"></rich-text>
+            </block>
+            <block wx:else>
                 <image class="imageView" wx:if="{{i & 1 != 0}}" src="{{content}}" data-url="{{content}}" bindtap="showBigImg" mode="aspectFit"></image>
                 <rich-text wx:else class="content" nodes="{{name?util.changText(content,name):content}}"></rich-text>
+            </block>
             </view>
         </view>
     </scroll-view>

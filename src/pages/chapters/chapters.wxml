@@ -1,4 +1,7 @@
-<view class="container">
+<view class="loading" wx:if="{{!loadingfinish}}">
+    <text></text>
+</view>
+<view class="container" wx:else>
     <view class="main">
         <view class="title_list">
             <view class="title_item" wx:for="{{itemList}}"  wx:key="index" data-albumid="{{item.albumId}}">
