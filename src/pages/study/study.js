@@ -12,7 +12,7 @@ import '../../images/icontable.png'
 Page({
     data: {
         itemList: [],
-        itemList2:[],
+        itemList2: [],
         navArr: [{
             title: "NPDP",
             tablename: 'npdp'
@@ -24,61 +24,60 @@ Page({
             tablename: 'acp'
         }],
         currentTap: 0,
-        navList:[
-            {
-                tablename:'npdp',
-                buttonList:[{
-                    title:"术语",
+        navList: [{
+                tablename: 'npdp',
+                buttonList: [{
+                    title: "术语",
                     count: '287',
-                    image:'keyword.png'
-                },{
-                    title:"图表",
+                    image: 'keyword.png'
+                }, {
+                    title: "图表",
                     count: '126',
-                    image:'icontable.png'
+                    image: 'icontable.png'
                 }]
             },
             {
-                tablename:'pmp',
-                buttonList:[{
-                    title:"知识体系",
+                tablename: 'pmp',
+                buttonList: [{
+                    title: "知识体系",
                     count: '10',
-                    image:'knowledge.png'
-                },{
-                    title:"过程组",
+                    image: 'knowledge.png'
+                }, {
+                    title: "过程组",
                     count: '49',
-                    image:'process.png'
-                },{
-                    title:"输入/工具/输出",
+                    image: 'process.png'
+                }, {
+                    title: "输入/工具/输出",
                     count: '144',
-                    image:'inputoutput.png'
-                },{
-                    title:"术语",
+                    image: 'inputoutput.png'
+                }, {
+                    title: "术语",
                     count: '467',
-                    image:'keyword.png'
-                },{
-                    title:"缩写",
+                    image: 'keyword.png'
+                }, {
+                    title: "缩写",
                     count: '45',
-                    image:'abbreviate.png'
-                },{
-                    title:"图表",
+                    image: 'abbreviate.png'
+                }, {
+                    title: "图表",
                     count: '229',
-                    image:'icontable.png'
+                    image: 'icontable.png'
                 }]
             },
             {
-                tablename:'acp',
-                buttonList:[{
-                    title:"术语",
+                tablename: 'acp',
+                buttonList: [{
+                    title: "术语",
                     count: '83',
-                    image:'keyword.png'
-                },{
-                    title:"缩写",
+                    image: 'keyword.png'
+                }, {
+                    title: "缩写",
                     count: '17',
-                    image:'abbreviate.png'
-                },{
-                    title:"图表",
+                    image: 'abbreviate.png'
+                }, {
+                    title: "图表",
                     count: '69',
-                    image:'icontable.png'
+                    image: 'icontable.png'
                 }]
             }
         ]
@@ -189,6 +188,17 @@ Page({
         }
     },
     detailClick: function (e) {
+        /*
+        if (e.currentTarget.dataset.index < 3) {
+            wx.navigateTo({
+                url: `/pages/chapters/chapters?isfree=true&albumid=${e.currentTarget.dataset.albumid}&albumid2=${e.currentTarget.dataset.albumid2}&albumid3=${e.currentTarget.dataset.albumid3}&albumid4=${e.currentTarget.dataset.albumid4}`
+            })
+        }else{
+            wx.navigateTo({
+                url: `/pages/chapters/chapters?albumid=${e.currentTarget.dataset.albumid}&albumid2=${e.currentTarget.dataset.albumid2}&albumid3=${e.currentTarget.dataset.albumid3}&albumid4=${e.currentTarget.dataset.albumid4}`
+            })
+        }
+        */
         wx.navigateTo({
             url: `/pages/chapters/chapters?albumid=${e.currentTarget.dataset.albumid}&albumid2=${e.currentTarget.dataset.albumid2}&albumid3=${e.currentTarget.dataset.albumid3}&albumid4=${e.currentTarget.dataset.albumid4}`
         })
@@ -199,7 +209,7 @@ Page({
             })
         }
     },
-    detailClick2: function(e){
+    detailClick2: function (e) {
         wx.navigateTo({
             url: `/pages/chapters/chapters?book2=true&albumid=${e.currentTarget.dataset.albumid}&albumid2=${e.currentTarget.dataset.albumid2}&albumid3=${e.currentTarget.dataset.albumid3}&albumid4=${e.currentTarget.dataset.albumid4}`
         })

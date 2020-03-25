@@ -239,8 +239,7 @@ Page({
         if (!this.data.isVip&&!this.options.isfree) {
             this.openVipClick()
             return
-        }
-        */
+        }*/
         wx.navigateTo({
             url: `/pages/chaptersdetail/chaptersdetail?book2=${this.options.book2}&albumid=${e.currentTarget.dataset.albumid}&albumid2=${e.currentTarget.dataset.albumid2}&albumid3=${e.currentTarget.dataset.albumid3}&albumid4=${e.currentTarget.dataset.albumid4}`
         })
