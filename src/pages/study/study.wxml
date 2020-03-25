@@ -21,7 +21,7 @@
             <view class="title_item" wx:for="{{itemList}}"  wx:key="index" data-albumid="{{item.albumId}}">
                 <view class="albumId1" data-albumid="{{item.albumId}}" data-name="{{item.name}}" data-index="{{index}}" catchtap="detailClick" hover-class="defaultTap">{{item.albumId}}</view>
                 <image class="arrowright" src="../../images/arrowright.png" />
-                <text class="vip red" wx:if="{{!isVip && index>1}}">vip</text>
+                <text class="vip red" wx:if="{{!isVip && index>2}}">vip</text>
             </view>
         </view>
         <view class="title" wx:if="{{navArr[currentTap].tablename=='pmp'}}">第二部分 项目管理标准</view>

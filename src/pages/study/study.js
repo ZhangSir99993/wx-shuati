@@ -189,9 +189,7 @@ Page({
         }
     },
     detailClick: function (e) {
-        console.log(e.currentTarget.dataset.index);
-        // return
-        if (e.currentTarget.dataset.index == 0 || e.currentTarget.dataset.index == 1) {
+        if (e.currentTarget.dataset.index < 3) {
             wx.navigateTo({
                 url: `/pages/chapters/chapters?isfree=true&albumid=${e.currentTarget.dataset.albumid}&albumid2=${e.currentTarget.dataset.albumid2}&albumid3=${e.currentTarget.dataset.albumid3}&albumid4=${e.currentTarget.dataset.albumid4}`
             })
