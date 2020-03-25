@@ -1,7 +1,5 @@
 {
-  "pages": [
-    "pages/study/study",
-    
+  "pages": [    
     "pages/index/index",
     "pages/detail/detail",
     "pages/result/result",
@@ -13,10 +11,10 @@
     "pages/myvip/myvip",
     "pages/openvip/openvip",
     "pages/vipresult/vipresult",
+    "pages/study/study",
     "pages/webview/webview",
     "pages/chapters/chapters",
     "pages/chaptersdetail/chaptersdetail",
-
     "pages/explain/explain",
     "pages/knowledge/knowledge",
     "pages/process/process",
@@ -24,7 +22,6 @@
     "pages/keyword/keyword",
     "pages/icontable/icontable",
     "pages/position/position"
-    
   ],
   "window": {
     "navigationBarTextStyle": "black",
