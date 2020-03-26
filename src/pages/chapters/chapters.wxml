@@ -1,0 +1,25 @@
+<view class="loading" wx:if="{{!loadingfinish}}">
+    <text></text>
+</view>
+<view class="container" wx:else>
+    <view class="main">
+        <view class="title_list">
+            <view class="title_item" wx:for="{{itemList}}"  wx:key="index" data-albumid="{{item.albumId}}">
+                <view class="albumId1" data-albumid="{{item.albumId}}" data-name="{{item.name}}" data-index="{{index}}" catchtap="detailClick">{{item.albumId}}</view>
+                <view class="albumId2" wx:for="{{item.albumId2}}" wx:key="key" wx:for-item="value"  data-albumid="{{item.albumId}}" data-albumid2="{{value.albumId2}}" data-name="{{item.name}}" catchtap="detailClick">
+                    {{value.albumId2}}
+                    <view class="albumId3" wx:for="{{value.albumId3}}" wx:key="i" wx:for-item="element"  data-albumid="{{item.albumId}}" data-albumid2="{{value.albumId2}}" data-albumid3="{{element.albumId3}}" data-name="{{item.name}}" catchtap="detailClick">
+                        {{element.albumId3}}
+                        <view class="albumId4" wx:for="{{element.albumId4}}" wx:key="j" wx:for-item="albumId4"  data-albumid="{{item.albumId}}" data-albumid2="{{value.albumId2}}" data-albumid3="{{element.albumId3}}" data-albumid4="{{albumId4}}" data-name="{{item.name}}" catchtap="detailClick">
+                            {{albumId4}}
+                            <image class="arrowright" src="../../images/arrowright.png" />
+                        </view>
+                        <image class="arrowright" src="../../images/arrowright.png" />
+                    </view>
+                    <image class="arrowright" src="../../images/arrowright.png" />
+                </view>
+                <image class="arrowright" src="../../images/arrowright.png" />
+            </view>
+        </view>
+    </view>
+</view>

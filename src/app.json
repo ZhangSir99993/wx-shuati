@@ -1,5 +1,5 @@
 {
-  "pages": [
+  "pages": [    
     "pages/index/index",
     "pages/detail/detail",
     "pages/result/result",
@@ -7,11 +7,21 @@
     "pages/record/record",
     "pages/analysis/analysis",
     "pages/realsubject/realsubject",
+    "pages/my/my",
+    "pages/myvip/myvip",
     "pages/openvip/openvip",
     "pages/vipresult/vipresult",
     "pages/study/study",
-    "pages/my/my",
-    "pages/myvip/myvip"
+    "pages/webview/webview",
+    "pages/chapters/chapters",
+    "pages/chaptersdetail/chaptersdetail",
+    "pages/explain/explain",
+    "pages/knowledge/knowledge",
+    "pages/process/process",
+    "pages/inputoutput/inputoutput",
+    "pages/keyword/keyword",
+    "pages/icontable/icontable",
+    "pages/position/position"
   ],
   "window": {
     "navigationBarTextStyle": "black",
@@ -29,6 +39,11 @@
       "iconPath": "images/home_gray.png",
       "selectedIconPath": "images/home_blue.png",
       "text": "练习"
+    }, {
+      "pagePath": "pages/study/study",
+      "iconPath": "images/study_gray.png",
+      "selectedIconPath": "images/study_blue.png",
+      "text": "学习"
     }, {
       "pagePath": "pages/my/my",
       "iconPath": "images/mine_gray.png",

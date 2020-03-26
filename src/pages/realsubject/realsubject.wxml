@@ -15,7 +15,7 @@
         <view class="title">
             开通VIP 解锁所有权限
         </view>
-         <button class="openButton bc_blue" wx:if="{{isAuthorize && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 
+        <button class="openButton bc_blue" wx:if="{{isAuthorize && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 
             点击开通
         </button>
         <view class="openButton bc_blue" wx:else bindtap="openVipClick">

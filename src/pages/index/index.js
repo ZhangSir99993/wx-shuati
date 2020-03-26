@@ -37,7 +37,7 @@ Page({
             default:
                 break;
         }
-        this.initData(app.globalData.tablename)
+        this.initData()
     },
     initData: function () {
         var that = this
@@ -180,7 +180,7 @@ Page({
     },
     //下拉刷新
     onPullDownRefresh: function () {
-        this.initData(app.globalData.tablename)
+        this.initData()
     },
     /**
      * 用户点击右上角分享

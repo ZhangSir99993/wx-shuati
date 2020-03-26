@@ -1,0 +1,40 @@
+<scroll-view class="topNav" scroll-x>
+    <view wx:for="{{navArr}}" wx:key="index" bindtap="navTap" data-index="{{index}}" data-tablename="{{item.tablename}}">
+        <text class="{{currentTap==index ? 'active' : ''}}">{{item.title}}</text>
+    </view>
+</scroll-view>
+<view class="container">
+    <view class="main">
+        <view wx:for="{{navList}}" wx:key="key" wx:for-index="key" wx:for-item="element">
+            <view class="nav_list" wx:if="{{currentTap==key}}">
+                <view class="nav_item" wx:key="index" wx:for="{{element.buttonList}}" data-title="{{item.title}}" bindtap="goNav" hover-class="defaultTap">
+                    <view class="left_view">
+                        <image class="item_icon" src="../../images/{{item.image}}" mode="aspectFill"></image>
+                        <text class="item_title">{{item.title}}</text>
+                    </view>
+                    <text class="item_count">{{item.count}}</text>
+                </view>
+            </view>
+        </view>
+        <view class="title" wx:if="{{navArr[currentTap].tablename=='pmp'}}">第一部分 PMBOK 指南</view>
+        <view class="title_list {{navArr[currentTap].tablename=='pmp'?'':'mt_30'}}">
+            <view class="title_item" wx:for="{{itemList}}"  wx:key="index" data-albumid="{{item.albumId}}">
+                <view class="albumId1" data-albumid="{{item.albumId}}" data-name="{{item.name}}" data-index="{{index}}" catchtap="detailClick" hover-class="defaultTap">{{item.albumId}}</view>
+                <image class="arrowright" src="../../images/arrowright.png" />
+                <!--
+                <text class="vip red" wx:if="{{!isVip && index > 2}}">vip</text>
+                -->
+            </view>
+        </view>
+        <view class="title" wx:if="{{navArr[currentTap].tablename=='pmp'}}">第二部分 项目管理标准</view>
+        <view class="title_list" wx:if="{{navArr[currentTap].tablename=='pmp'}}">
+            <view class="title_item" wx:for="{{itemList2}}"  wx:key="index" data-albumid="{{item.albumId}}">
+                <view class="albumId1" data-albumid="{{item.albumId}}" data-name="{{item.name}}" data-index="{{index}}" catchtap="detailClick2" hover-class="defaultTap">{{item.albumId}}</view>
+                <image class="arrowright" src="../../images/arrowright.png" />
+                <!--
+                <text class="vip red" wx:if="{{!isVip}}">vip</text>
+                -->
+            </view>
+        </view>
+    </view>
+</view>

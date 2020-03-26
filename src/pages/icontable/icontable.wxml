@@ -1,0 +1,31 @@
+<view class="container">
+    <view class="top">
+        <view class="name">
+            <text class="title_icon bc_yellow"></text>
+            {{name}}
+        </view>
+        <view class="english">
+            {{prefix}}
+        </view>
+        <view class="describe">
+            <image class="icontable" src="{{imageUrl}}"  data-url="{{imageUrl}}" bindtap="showBigImg" mode="aspectFit"></image>
+            <view>
+                {{prefix}}{{name}}
+            </view>
+        </view>
+    </view>
+    <view class="title" wx:if="{{isShowBook}}">第一部分 PMBOK 指南 - 书中位置</view>
+    <view class="title_list" wx:if="{{isShowBook}}">
+        <view class="title_item">
+            <view class="albumId1" bindtap="bookClick" hover-class="defaultTap">{{bookDetail.albumId}}</view>
+            <image class="arrowright" src="../../images/arrowright.png" />
+        </view>
+    </view>
+    <view class="title" wx:if="{{isShowBook2}}">第二部分 项目管理标准 - 书中位置</view>
+    <view class="title_list" wx:if="{{isShowBook2}}">
+        <view class="title_item">
+            <view class="albumId1" bindtap="bookClick2" hover-class="defaultTap">{{bookDetail2.albumId}}</view>
+            <image class="arrowright" src="../../images/arrowright.png" />
+        </view>
+    </view>
+</view>
