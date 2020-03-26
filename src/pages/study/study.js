@@ -82,26 +82,38 @@ Page({
             }
         ]
     },
-    onLoad: function () {
+    onShow:function(){
+        var that = this
         switch (app.globalData.tablename) {
             case 'npdp':
-                this.setData({
-                    currentTap: 0
-                })
+                if (that.data.currentTap!=0) {
+                    that.setData({
+                        currentTap: 0
+                    })
+                    that.initData()
+                }
                 break;
             case 'pmp':
-                this.setData({
-                    currentTap: 1
-                })
+                if (that.data.currentTap!=1) {
+                    that.setData({
+                        currentTap: 1
+                    })
+                    that.initData()
+                }
                 break;
             case 'acp':
-                this.setData({
-                    currentTap: 2
-                })
+                if (that.data.currentTap!=2) {
+                    that.setData({
+                        currentTap: 2
+                    })
+                    that.initData()
+                }
                 break;
             default:
                 break;
         }
+    },
+    onLoad: function () {
         this.initData()
     },
     initData: function () {
@@ -200,7 +212,7 @@ Page({
         }
         */
         wx.navigateTo({
-            url: `/pages/chapters/chapters?albumid=${e.currentTarget.dataset.albumid}&albumid2=${e.currentTarget.dataset.albumid2}&albumid3=${e.currentTarget.dataset.albumid3}&albumid4=${e.currentTarget.dataset.albumid4}`
+            url: `/pages/chapters/chapters?albumid=${e.currentTarget.dataset.albumid}`
         })
         return;
         if (e.currentTarget.dataset.name) {
@@ -211,7 +223,7 @@ Page({
     },
     detailClick2: function (e) {
         wx.navigateTo({
-            url: `/pages/chapters/chapters?book2=true&albumid=${e.currentTarget.dataset.albumid}&albumid2=${e.currentTarget.dataset.albumid2}&albumid3=${e.currentTarget.dataset.albumid3}&albumid4=${e.currentTarget.dataset.albumid4}`
+            url: `/pages/chapters/chapters?book2=true&albumid=${e.currentTarget.dataset.albumid}`
         })
     },
     goNav: function (e) {
