@@ -2,7 +2,7 @@
 <view class="container">
     <view class="chapters">
         <text>{{chapters}}</text>
-        <text bindtap="markShowClick">  答题卡</text>
+        <button class="none_style datika" bindtap="markShowClick"  hover-class="defaultTap">  答题卡</button>
         <view>
             <text class="current">{{current+1}}</text>
             <text class="total">/{{itemList.length}}</text>

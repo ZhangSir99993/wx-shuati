@@ -1,0 +1,27 @@
+<wxs src="../../utils/tool.wxs" module="util"></wxs>
+<view class="container">
+    <scroll-view class="main" scroll-y="true" scroll-into-view="{{toView}}">
+        <view class="albumId">{{firstBookDetail.albumId}}</view>
+        <view class="bookDetailList" wx:for="{{bookDetailList}}" wx:key="key" wx:for-item="bookDetail">
+            <view class="albumId4" id="toView{{bookDetail.albumId4Class}}" wx:if="{{bookDetail.albumId4}}">{{bookDetail.albumId4}}</view>
+            <view class="albumId3" id="toView{{bookDetail.albumId3Class}}" wx:elif="{{bookDetail.albumId3}}">{{bookDetail.albumId3}}</view>
+            <view class="albumId2" id="toView{{bookDetail.albumId2Class}}" wx:elif="{{bookDetail.albumId2}}">{{bookDetail.albumId2}}</view>
+            <view wx:for="{{bookDetail.content}}" wx:for-index="i" wx:for-item="content" wx:key="i" >
+           <!--
+            如果 n & 1 == 0，则n为偶数。
+            解析：
+                因为二进制为逢2进1，所以如果是2的倍数的话，则这个数的最后一位必定是0，而1的二进制的最后一位为1，其余全为0。
+                比如5的二进制为101，1的二进制为1，101&001=001，所以5不是一个偶数。
+            -->
+            <block wx:if="{{imagename}}">
+                <image class="imageView" id="{{content.nameClass}}" wx:if="{{i & 1 != 0}}" src="{{content.str}}" data-url="{{content.str}}" bindtap="showBigImg" mode="aspectFit"></image>
+                <rich-text wx:else class="content" nodes="{{util.changText(content.str,imagename)}}"></rich-text>
+            </block>
+            <block wx:else>
+                <image class="imageView" wx:if="{{i & 1 != 0}}" src="{{content}}" data-url="{{content}}" bindtap="showBigImg" mode="aspectFit"></image>
+                <rich-text wx:else class="content" nodes="{{name?util.changText(content,name):content}}"></rich-text>
+            </block>
+            </view>
+        </view>
+    </scroll-view>
+</view>
