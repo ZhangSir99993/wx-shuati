@@ -22,7 +22,8 @@ Page({
         title: '',
         itemList: [],
         defaultList: [],
-        keyword: ''
+        keyword: '',
+        isSearch:false
     },
     onLoad: function () {
         //登录授权检测
@@ -232,7 +233,8 @@ Page({
             } else {
                 that.setData({
                     keyword: '',
-                    itemList: that.data.defaultList
+                    itemList: that.data.defaultList,
+                    isSearch:false
                 });
             }
         })
@@ -242,7 +244,8 @@ Page({
         that.setData({
             keyword: '',
             searchFocus: true,
-            itemList: that.data.defaultList
+            itemList: that.data.defaultList,
+            isSearch:false
         });
     },
     searchSuggest: function (value) {
@@ -292,7 +295,8 @@ Page({
                         }
                         that.setData({
                             keyword: value,
-                            itemList: res.data.data
+                            itemList: res.data.data,
+                            isSearch:true
                         });
                     } else {
                         that.setData({
@@ -321,9 +325,11 @@ Page({
             })
             return
         }
-        if (!this.data.isVip && e.currentTarget.dataset.index>2) {
-            this.openVipClick()
-            return
+        if (!this.data.isVip) {
+            if (e.currentTarget.dataset.index>2||this.data.isSearch) {
+                this.openVipClick()
+                return
+            }
         }
         switch (this.options.title) {
             case 'knowledge':

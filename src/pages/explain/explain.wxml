@@ -19,7 +19,10 @@
                         <text wx:else>{{item.knowledgeSystem}}</text>
                     </view>
                     <image class="arrowright" src="../../images/arrowright.png"  mode="aspectFill"></image>
-                    <text class="vip red" wx:if="{{!isVip&index>2}}">vip</text>
+                    <block wx:if="{{!isVip}}">
+                        <text class="vip red" wx:if="{{isSearch}}">vip</text>
+                        <text class="vip red" wx:elif="{{index>2}}">vip</text>
+                    </block>
                 </view>
             </view>
             <view class="title_list" wx:elif="{{title=='process'}}">
@@ -30,7 +33,10 @@
                         <text wx:else>{{item.processGroup}}</text>
                     </view>
                     <image class="arrowright" src="../../images/arrowright.png"  mode="aspectFill"></image>
-                    <text class="vip red" wx:if="{{!isVip&index>2}}">vip</text>
+                    <block wx:if="{{!isVip}}">
+                        <text class="vip red" wx:if="{{isSearch}}">vip</text>
+                        <text class="vip red" wx:elif="{{index>2}}">vip</text>
+                    </block>
                 </view>
             </view>
             <view class="title_list" wx:elif="{{title=='inputoutput'}}">
@@ -41,7 +47,10 @@
                         <text wx:else>{{item.inputoutput}}</text>
                     </view>
                     <image class="arrowright" src="../../images/arrowright.png"  mode="aspectFill"></image>
-                    <text class="vip red" wx:if="{{!isVip&index>2}}">vip</text>
+                    <block wx:if="{{!isVip}}">
+                        <text class="vip red" wx:if="{{isSearch}}">vip</text>
+                        <text class="vip red" wx:elif="{{index>2}}">vip</text>
+                    </block>
                 </view>
             </view>
             <view class="title_list" wx:elif="{{title=='keyword'}}">
@@ -52,7 +61,10 @@
                         <text wx:else>{{item.name}}</text>
                     </view>
                     <image class="arrowright" src="../../images/arrowright.png"  mode="aspectFill"></image>
-                    <text class="vip red" wx:if="{{!isVip&index>2}}">vip</text>
+                    <block wx:if="{{!isVip}}">
+                        <text class="vip red" wx:if="{{isSearch}}">vip</text>
+                        <text class="vip red" wx:elif="{{index>2}}">vip</text>
+                    </block>
                 </view>
             </view>
             <view class="title_list" wx:elif="{{title=='abbreviate'}}">
@@ -65,7 +77,10 @@
                     <view>
                         <text class="english">{{item.english}}</text>
                         <image class="arrowright" src="../../images/arrowright.png"  mode="aspectFill"></image>
-                        <text class="vip red mr_130" wx:if="{{!isVip&index>2}}">vip</text>
+                        <block wx:if="{{!isVip}}">
+                            <text class="vip red mr_130" wx:if="{{isSearch}}">vip</text>
+                            <text class="vip red mr_130" wx:elif="{{index>2}}">vip</text>
+                        </block>
                     </view>
                 </view>
             </view>
@@ -77,7 +92,10 @@
                         <text wx:else>{{item.name}}</text>
                     </view>
                     <image class="arrowright" src="../../images/arrowright.png"  mode="aspectFill"></image>
-                    <text class="vip red" wx:if="{{!isVip&index>2}}">vip</text>
+                    <block wx:if="{{!isVip}}">
+                        <text class="vip red" wx:if="{{isSearch}}">vip</text>
+                        <text class="vip red" wx:elif="{{index>2}}">vip</text>
+                    </block>
                 </view>
             </view>
         </view>

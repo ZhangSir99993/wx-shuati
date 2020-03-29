@@ -13,7 +13,6 @@ Page({
         this.getProcessData()
         this.getKeyWordData()
         this.getChaptersData()
-        this.getChaptersData2()
     },
     getProcessData: function () {
         var that = this
@@ -104,9 +103,11 @@ Page({
             dataType: 'json',
             success: function (res) {
                 if (res.data.code == 200) {
-                    that.setData({
-                        bookList:res.data.data
-                    })
+                    if (res.data.data&&res.data.data.length) {
+                        that.setData({
+                            bookList:res.data.data
+                        })
+                    }
                 } else {
                     wx.showToast({
                         title: '服务器出了点问题，请稍候重试',
@@ -125,46 +126,34 @@ Page({
             complete: function () {
                 wx.hideLoading()
                 wx.stopPullDownRefresh()
+                that.getChaptersData2()
             }
         })
     },
     getChaptersData2:function(){
         var that = this
-        wx.showLoading({
-            title: '加载中...'
-        })
         wx.request({
             url: site.m + `chaptersPosition/${app.globalData.tablename}book2?name=${that.options.name}`,
             method: 'GET',
             dataType: 'json',
             success: function (res) {
                 if (res.data.code == 200) {
-                    that.setData({
-                        bookList2:res.data.data
-                    })
-                } else {
-                    wx.showToast({
-                        title: '服务器出了点问题，请稍候重试',
-                        icon: 'none',
-                        duration: 2000
-                    })
+                    if (res.data.data&&res.data.data.length) {
+                        that.setData({
+                            bookList2:res.data.data
+                        })
+                    }
                 }
-            },
-            fail: function (err) {
-                wx.showToast({
-                    title: '服务器出了点问题，请稍候重试',
-                    icon: 'none',
-                    duration: 2000
-                })
-            },
-            complete: function () {
-                wx.hideLoading()
-                wx.stopPullDownRefresh()
             }
         })
     },
     detailClick: function (e) {
-        app.globalData.itemDetail = this.data.itemList[e.currentTarget.dataset.i].list[e.currentTarget.dataset.j]
+        var itemObj = this.data.itemList[e.currentTarget.dataset.i].list[e.currentTarget.dataset.j];
+        app.globalData.itemDetail = {
+            input:itemObj.input.split('/'),
+            tool:itemObj.tool.split('/'),
+            output:itemObj.output.split('/')
+        };
         wx.navigateTo({
             url: `/pages/process/process?name=${e.currentTarget.dataset.name}`
         })

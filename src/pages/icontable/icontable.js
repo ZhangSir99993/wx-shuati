@@ -25,11 +25,7 @@ Page({
             prefix:options.prefix,
             imageUrl:imageUrl
         })
-
         this.getChaptersData()
-        if (app.globalData.tablename == 'pmp') {
-            this.getChaptersData2()            
-        }
     },
     showBigImg: function (e) {
         wx.previewImage({
@@ -48,7 +44,7 @@ Page({
             dataType: 'json',
             success: function (res) {
                 if (res.data.code == 200) {
-                    if (res.data.data.length) {
+                    if (res.data.data&&res.data.data.length) {
                         that.setData({
                             isShowBook:true,
                             bookDetail:res.data.data[0]
@@ -72,44 +68,27 @@ Page({
             complete: function () {
                 wx.hideLoading()
                 wx.stopPullDownRefresh()
+                if (app.globalData.tablename == 'pmp') {
+                    that.getChaptersData2()            
+                }
             }
         })
     },
     getChaptersData2:function(){
         var that = this
-        wx.showLoading({
-            title: '加载中...'
-        })
         wx.request({
             url: site.m + `chaptersPosition/${app.globalData.tablename}book2?name=${that.options.prefix}${that.options.name}`,
             method: 'GET',
             dataType: 'json',
             success: function (res) {
                 if (res.data.code == 200) {
-                    if (res.data.data.length) {
+                    if (res.data.data&&res.data.data.length) {
                         that.setData({
                             isShowBook2:true,
                             bookDetail2:res.data.data[0]
                         })
                     }
-                } else {
-                    wx.showToast({
-                        title: '服务器出了点问题，请稍候重试',
-                        icon: 'none',
-                        duration: 2000
-                    })
                 }
-            },
-            fail: function (err) {
-                wx.showToast({
-                    title: '服务器出了点问题，请稍候重试',
-                    icon: 'none',
-                    duration: 2000
-                })
-            },
-            complete: function () {
-                wx.hideLoading()
-                wx.stopPullDownRefresh()
             }
         })
     },
