@@ -65,8 +65,12 @@ Page({
         wx.showLoading({
             title: '加载中...'
         })
+        var name = that.options.name;
+        if (app.globalData.tablename == 'pmp') {
+            name = that.options.name.replace(/\s/g,'')
+        }
         wx.request({
-            url: site.m + `chaptersPosition/${app.globalData.tablename}book?name=${that.options.name}`,
+            url: site.m + `chaptersPosition/${app.globalData.tablename}book?name=${name}`,
             method: 'GET',
             dataType: 'json',
             success: function (res) {
@@ -100,8 +104,12 @@ Page({
     },
     getChaptersData2: function () {
         var that = this
+        var name = that.options.name;
+        if (app.globalData.tablename == 'pmp') {
+            name = that.options.name.replace(/\s/g,'')
+        }
         wx.request({
-            url: site.m + `chaptersPosition/${app.globalData.tablename}book2?name=${that.options.name}`,
+            url: site.m + `chaptersPosition/${app.globalData.tablename}book2?name=${name}`,
             method: 'GET',
             dataType: 'json',
             success: function (res) {

@@ -19,16 +19,22 @@ Page({
         if (that.options.book2) {
             url += '2'
         }
+        var name = that.options.name;
+        if (app.globalData.tablename == 'pmp') {
+            name = that.options.name.replace(/\s/g,'')
+        }
         wx.request({
-            url: url+`?name=${that.options.name}`,
+            url: url+`?name=${name}`,
             method: 'GET',
             dataType: 'json',
             success: function (res) {
                 if (res.data.code == 200) {
-                    that.setData({
-                        name:that.options.name,
-                        contentList:res.data.data[that.options.index].contentList
-                    })
+                    if (res.data.data&&res.data.data.length) {
+                        that.setData({
+                            name:that.options.name,
+                            contentList:res.data.data[that.options.index].contentList
+                        }) 
+                    }
                 } else {
                     wx.showToast({
                         title: '服务器出了点问题，请稍候重试',
