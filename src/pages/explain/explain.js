@@ -92,16 +92,22 @@ Page({
                 validTime: util.formatDateTime(validTime, 'yyyy-MM-dd')
             })
             if (day < 3) {
+                if (wx.getStorageSync('no_remind')) {
+                    return;
+                }
                 wx.showModal({
                     title: '您的VIP即将过期。',
-                    content: '您的npdp VIP有效期不足3天，到期未续期将影响您相关业务的正常使用。',
+                    content: '您的VIP有效期不足3天，到期未续期将影响您相关业务的正常使用。',
+                    cancelText: '不在提示',
                     confirmText: '立刻续期',
                     success(res) {
                         if (res.confirm) {
                             that.openVipClick()
+                        } else if (res.cancel) {
+                            wx.setStorageSync('no_remind','true')
                         }
                     }
-                })                
+                })               
             }
         } else {
             //过期vip，关闭用户对应科目vip状态
@@ -315,7 +321,7 @@ Page({
             })
             return
         }
-        if (!this.data.isVip) {
+        if (!this.data.isVip && e.currentTarget.dataset.index>2) {
             this.openVipClick()
             return
         }
@@ -326,7 +332,12 @@ Page({
                 })
                 break;
             case 'process':
-                app.globalData.itemDetail = this.data.itemList[e.currentTarget.dataset.index];
+                var itemObj = this.data.itemList[e.currentTarget.dataset.index];
+                app.globalData.itemDetail = {
+                    input:itemObj.input.split('/'),
+                    tool:itemObj.tool.split('/'),
+                    output:itemObj.output.split('/')
+                };
                 wx.navigateTo({
                     url: `/pages/process/process?name=${e.currentTarget.dataset.name}`
                 })

@@ -22,7 +22,7 @@ Page({
         if (this.options.comeFrom == 'share') {
             app.globalData.tablename = this.options.tablename;
             wx.setStorageSync('tablename', app.globalData.tablename);
-            this.data.currentPage =  this.options.currentPage;
+            this.data.currentPage = this.options.currentPage;
             this.data.current = parseInt(this.options.current);
             this.initData(this.options.albumId)
             return;
@@ -270,16 +270,18 @@ Page({
         this.markHideClick();
     },
     submitClick: function () {
-        this.saveExerciseRecordData();
-        if (this.data.currentAnswerList.includes(1) || this.data.currentAnswerList.includes(2)) {
-            wx.redirectTo({
-                url: `/pages/result/result?albumId=${this.options.albumId}&isVip=${this.options.isVip}`
-            })
-            this.markHideClick();
-        }else{
+        var that = this
+        if (that.data.currentAnswerList.includes(1) || that.data.currentAnswerList.includes(2)) {
+            that.saveExerciseRecordData(function () {
+                wx.redirectTo({
+                    url: `/pages/result/result?albumId=${that.options.albumId}&isVip=${that.options.isVip}`
+                })
+                that.markHideClick();
+            });
+        } else {
             wx.showToast({
-                title:"还没答题，无法提交",
-                icon:'none'
+                title: "还没答题，无法提交",
+                icon: 'none'
             })
         }
     },
@@ -340,65 +342,115 @@ Page({
             } catch (e) {}
         }
     },
-    saveExerciseRecordData: function () {
-        if (this.data.currentAnswerList.includes(1) || this.data.currentAnswerList.includes(2)) {
-            try {
-                //添加错题到错题集
-                var error_subject = wx.getStorageSync("error_subject_" + app.globalData.tablename) || []; //获取全部错题集(数组)
-                var error_id = wx.getStorageSync("error_id_" + app.globalData.tablename) || []; //获取全部错题集id(数组)
-                
-                for (let index = 0; index < this.data.itemList.length; index++) {
-                    const element = this.data.itemList[index];
-                    //如果存在错题
-                    if (this.data.currentAnswerList[index] == 2) {
-                        if (!element.select) {
-                            element.select = this.data.chooseList[index]
-                        }
-                    // if (element.select && (element.select != element.correct)) {
-                        //如果错题集里存在该错题
-                        if (error_id.includes(element.id)) {
-                            //找到改错题，修改对应的错误答案
-                            error_subject.forEach(item => {
-                                if (item.id == element.id) {
-                                    item.select = element.select //更新错误答案
-                                }
-                            });
-                        } else { //如果不存在就新增该错题
-                            element.time = new Date().toLocaleString().split(' ')[0];
-                            error_subject.push(element)
-                            error_id.push(element.id)
-                        }
-                    }
-                }
-                wx.setStorageSync("error_subject_" + app.globalData.tablename, error_subject)
-                wx.setStorageSync("error_id_" + app.globalData.tablename, error_id)
-                //添加到练习记录
-                var exercise_record_list = wx.getStorageSync("exercise_record_list_" + app.globalData.tablename) || []; //获取全部练习记录(数组)
-                var rightCount = 0;
-                for (let index = 0; index < this.data.currentAnswerList.length; index++) {
-                    if (this.data.currentAnswerList[index] == 1) {
-                        rightCount++
-                    }
-                }
+    saveExerciseRecordData: function (fn) {
+        try {
+            //添加错题到错题集
+            var error_subject = wx.getStorageSync("error_subject_" + app.globalData.tablename) || []; //获取全部错题集(数组)
+            var error_id = wx.getStorageSync("error_id_" + app.globalData.tablename) || []; //获取全部错题集id(数组)
 
-                var obj = {
-                    tablename: app.globalData.tablename,
-                    albumId: this.options.albumId,
-                    currentAnswerList: this.data.currentAnswerList,
-                    chooseList: this.data.chooseList,
-                    currentPage: this.data.currentPage,
-                    rightCount: rightCount,
-                    time: new Date().toLocaleString().split(' ')[0]
-                }
-                if (this.options.isVip && this.options.isVip != 'undefined') {
-                    if (!obj.tablename.includes('vip')) {
-                        obj.tablename = app.globalData.tablename + 'vip'
+            for (let index = 0; index < this.data.itemList.length; index++) {
+                const element = this.data.itemList[index];
+                //如果存在错题
+                if (this.data.currentAnswerList[index] == 2) {
+                    if (!element.select) {
+                        element.select = this.data.chooseList[index]
+                    }
+                    // if (element.select && (element.select != element.correct)) {
+                    //如果错题集里存在该错题
+                    if (error_id.includes(element.id)) {
+                        //找到改错题，修改对应的错误答案
+                        error_subject.forEach(item => {
+                            if (item.id == element.id) {
+                                item.select = element.select //更新错误答案
+                            }
+                        });
+                    } else { //如果不存在就新增该错题
+                        element.time = new Date().toLocaleString().split(' ')[0];
+                        error_subject.push(element)
+                        error_id.push(element.id)
                     }
                 }
-                exercise_record_list.push(obj);
-                wx.setStorageSync("exercise_record_list_" + app.globalData.tablename, exercise_record_list)
-            } catch (e) {}
+            }
+            wx.setStorageSync("error_subject_" + app.globalData.tablename, error_subject)
+            wx.setStorageSync("error_id_" + app.globalData.tablename, error_id)
+            var rightCount = 0;
+            for (let index = 0; index < this.data.currentAnswerList.length; index++) {
+                if (this.data.currentAnswerList[index] == 1) {
+                    rightCount++
+                }
+            }
+            var obj = {
+                tablename: app.globalData.tablename,
+                albumId: this.options.albumId,
+                currentAnswerList: this.data.currentAnswerList,
+                chooseList: this.data.chooseList,
+                currentPage: this.data.currentPage,
+                rightCount: rightCount,
+                time: new Date().toLocaleString().split(' ')[0]
+            }
+            if (this.options.isVip && this.options.isVip != 'undefined') {
+                if (!obj.tablename.includes('vip')) {
+                    obj.tablename = app.globalData.tablename + 'vip'
+                }
+            }
+            //添加到练习记录
+            this.uploadExerciseData(obj, fn)
+        } catch (e) {}
+    },
+    uploadExerciseData: function (obj, fn) {
+        let openid = wx.getStorageSync("openid")
+        if (!openid) {//未登录用户
+            //数据保存到本地，直到登录以后把本地数据同步到服务器，以后就不在保存的本地，而是全部保存到服务器
+            var exercise_record_list = wx.getStorageSync("exercise_record_list_" + app.globalData.tablename) || []; //获取全部练习记录(数组)
+            exercise_record_list.push(obj);
+            wx.setStorageSync("exercise_record_list_" + app.globalData.tablename, exercise_record_list)
+            return;
         }
+        wx.showLoading({
+            title: '上传数据...',
+            icon: 'none'
+        })
+        wx.request({
+            url: site.m + 'upload_exercise_record_list/' + app.globalData.tablename,
+            method: 'POST',
+            data: {
+                openid: openid,
+                exerciseData: JSON.stringify(obj)
+            },
+            dataType: 'json',
+            success: function (res) {
+                if (res.data.code == 200) {
+                    if (res.data.data && res.data.data.status) {
+                        if (fn) {
+                            fn();
+                        }
+                    } else {
+                        wx.showModal({
+                            title: '提示',
+                            showCancel: false,
+                            content: res.data.data.message,
+                            success: function (res) {}
+                        })
+                    }
+                }else{
+                    wx.showToast({
+                        title: '服务器出了点问题，请稍候重试',
+                        icon: 'none',
+                        duration: 2000
+                    })
+                }
+            },
+            fail: function (err) {
+                wx.showToast({
+                    title: JSON.stringify(err),
+                    icon: 'none',
+                    duration: 2000
+                })
+            },
+            complete: function () {
+                wx.hideLoading();
+            }
+        })
     },
     /**
      * 页面相关事件处理函数--监听用户下拉动作
@@ -423,4 +475,3 @@ Page({
         }
     }
 })
-

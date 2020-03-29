@@ -3,22 +3,19 @@ const app = getApp()
 //api.js
 const site = require('../../api/site.js').site;
 Page({
-    data:{
-        process:{},
-        detail:{},
-        bookList:[],
-        bookList2:[]
+    data: {
+        process: {},
+        detail: {},
+        bookList: [],
+        bookList2: []
     },
-    onLoad:function(options){
+    onLoad: function (options) {
         this.data.process = app.globalData.itemDetail
-        this.data.process.input = this.data.process.input.split('/')
-        this.data.process.tool = this.data.process.tool.split('/')
-        this.data.process.output = this.data.process.output.split('/')
         this.getKeyWordData()
         this.getChaptersData()
         this.getChaptersData2()
     },
-    getKeyWordData:function(){
+    getKeyWordData: function () {
         var that = this
         wx.showLoading({
             title: '加载中...'
@@ -30,8 +27,8 @@ Page({
             success: function (res) {
                 if (res.data.code == 200) {
                     that.setData({
-                        process:that.data.process,
-                        detail:res.data.data[0]
+                        process: that.data.process,
+                        detail: res.data.data[0]
                     })
                 } else {
                     wx.showToast({
@@ -54,7 +51,7 @@ Page({
             }
         })
     },
-    getChaptersData:function(){
+    getChaptersData: function () {
         var that = this
         wx.showLoading({
             title: '加载中...'
@@ -66,7 +63,7 @@ Page({
             success: function (res) {
                 if (res.data.code == 200) {
                     that.setData({
-                        bookList:res.data.data
+                        bookList: res.data.data
                     })
                 } else {
                     wx.showToast({
@@ -89,7 +86,7 @@ Page({
             }
         })
     },
-    getChaptersData2:function(){
+    getChaptersData2: function () {
         var that = this
         wx.showLoading({
             title: '加载中...'
@@ -101,7 +98,7 @@ Page({
             success: function (res) {
                 if (res.data.code == 200) {
                     that.setData({
-                        bookList2:res.data.data
+                        bookList2: res.data.data
                     })
                 } else {
                     wx.showToast({
@@ -124,9 +121,9 @@ Page({
             }
         })
     },
-    detailClick:function(e){
+    detailClick: function (e) {
         wx.navigateTo({
-            url:`/pages/inputoutput/inputoutput?name=${e.currentTarget.dataset.name}`
+            url: `/pages/inputoutput/inputoutput?name=${e.currentTarget.dataset.name}`
         })
     },
     bookClick: function (e) {

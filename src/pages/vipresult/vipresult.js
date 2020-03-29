@@ -10,6 +10,9 @@ Page({
     },
     onLoad:function(){
         this.initInfo();
+        if (wx.getStorageSync('no_remind')) {
+            wx.removeStorageSync('no_remind')
+        }
     },
     initInfo: function () {
         var userInfo = app.globalData.userInfo
