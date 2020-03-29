@@ -229,7 +229,7 @@ Page({
                 value = value.slice(0, 50);
             }
             if (value) {
-                that.searchSuggest(value);
+                that.searchSuggest(value.toLowerCase());
             } else {
                 that.setData({
                     keyword: '',
@@ -266,29 +266,29 @@ Page({
                         switch (that.options.title) {
                             case 'knowledge':
                                 res.data.data.forEach(element => {
-                                    if (element.knowledgeSystem.includes(value)) {
-                                        element.colorname = element.knowledgeSystem.replace(value, `<span style="color:red;">${value}</span>`)
+                                    if (element.knowledgeSystem.toLowerCase().includes(value)) {
+                                        element.colorname = element.knowledgeSystem.toLowerCase().replace(value, `<span style="color:red;">${value}</span>`)
                                     }
                                 });
                                 break;
                             case 'process':
                                 res.data.data.forEach(element => {
-                                    if (element.processGroup.includes(value)) {
-                                        element.colorname = element.processGroup.replace(value, `<span style="color:red;">${value}</span>`)
+                                    if (element.processGroup.toLowerCase().includes(value)) {
+                                        element.colorname = element.processGroup.toLowerCase().replace(value, `<span style="color:red;">${value}</span>`)
                                     }
                                 });
                                 break;
                             case 'inputoutput':
                                 res.data.data.forEach(element => {
-                                    if (element.inputoutput.includes(value)) {
-                                        element.colorname = element.inputoutput.replace(value, `<span style="color:red;">${value}</span>`)
+                                    if (element.inputoutput.toLowerCase().includes(value)) {
+                                        element.colorname = element.inputoutput.toLowerCase().replace(value, `<span style="color:red;">${value}</span>`)
                                     }
                                 });
                                 break;
                             default:
                                 res.data.data.forEach(element => {
-                                    if (element.name.includes(value)) {
-                                        element.colorname = element.name.replace(value, `<span style="color:red;">${value}</span>`)
+                                    if (element.name.toLowerCase().includes(value)) {
+                                        element.colorname = element.name.toLowerCase().replace(value, `<span style="color:red;">${value}</span>`)
                                     }
                                 });
                                 break;
