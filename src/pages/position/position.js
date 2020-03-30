@@ -31,7 +31,7 @@ Page({
                 if (res.data.code == 200) {
                     if (res.data.data&&res.data.data.length) {
                         that.setData({
-                            name:that.options.name,
+                            name:name,
                             contentList:res.data.data[that.options.index].contentList
                         }) 
                     }
@@ -58,7 +58,7 @@ Page({
     },
     detailClick:function(e){
         wx.navigateTo({
-            url: `/pages/chaptersdetail/chaptersdetail?name=${this.options.name}&book2=${this.options.book2}&albumid=${e.currentTarget.dataset.albumid}&albumid2=${e.currentTarget.dataset.albumid2}&albumid3=${e.currentTarget.dataset.albumid3}&albumid4=${e.currentTarget.dataset.albumid4}`
+            url: `/pages/chaptersdetail/chaptersdetail?name=${this.data.name}&book2=${this.options.book2}&albumid=${e.currentTarget.dataset.albumid}&albumid2=${e.currentTarget.dataset.albumid2}&albumid3=${e.currentTarget.dataset.albumid3}&albumid4=${e.currentTarget.dataset.albumid4}`
         })
     }
 })
