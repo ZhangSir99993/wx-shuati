@@ -12,14 +12,17 @@
         </view>
         <view class="main">
             <view class="title_list" wx:if="{{title=='knowledge'}}">
-                <view class="title_item" wx:for="{{itemList}}"  wx:key="index" data-name="{{item.knowledgeSystem}}" bindtap="detailClick" hover-class="defaultTap">
+                <view class="title_item" wx:for="{{itemList}}"  wx:key="index" data-index="{{index}}" data-name="{{item.knowledgeSystem}}" bindtap="detailClick" hover-class="defaultTap">
                     <view class="left_view">
                         <text class="title_icon bc_blue"></text>
                         <rich-text wx:if="{{keyword}}" nodes="{{item.colorname}}"></rich-text>
                         <text wx:else>{{item.knowledgeSystem}}</text>
                     </view>
                     <image class="arrowright" src="../../images/arrowright.png"  mode="aspectFill"></image>
-                    <text class="vip red" wx:if="{{!isVip}}">vip</text>
+                    <block wx:if="{{!isVip}}">
+                        <text class="vip red" wx:if="{{isSearch}}">vip</text>
+                        <text class="vip red" wx:elif="{{index>2}}">vip</text>
+                    </block>
                 </view>
             </view>
             <view class="title_list" wx:elif="{{title=='process'}}">
@@ -30,18 +33,24 @@
                         <text wx:else>{{item.processGroup}}</text>
                     </view>
                     <image class="arrowright" src="../../images/arrowright.png"  mode="aspectFill"></image>
-                    <text class="vip red" wx:if="{{!isVip}}">vip</text>
+                    <block wx:if="{{!isVip}}">
+                        <text class="vip red" wx:if="{{isSearch}}">vip</text>
+                        <text class="vip red" wx:elif="{{index>2}}">vip</text>
+                    </block>
                 </view>
             </view>
             <view class="title_list" wx:elif="{{title=='inputoutput'}}">
-                <view class="title_item" wx:for="{{itemList}}"  wx:key="index" data-name="{{item.inputoutput}}" bindtap="detailClick" hover-class="defaultTap">
+                <view class="title_item" wx:for="{{itemList}}"  wx:key="index" data-index="{{index}}" data-name="{{item.inputoutput}}" bindtap="detailClick" hover-class="defaultTap">
                     <view class="left_view">
                         <text class="title_icon bc_green_light"></text>
                         <rich-text wx:if="{{keyword}}" nodes="{{item.colorname}}"></rich-text>
                         <text wx:else>{{item.inputoutput}}</text>
                     </view>
                     <image class="arrowright" src="../../images/arrowright.png"  mode="aspectFill"></image>
-                    <text class="vip red" wx:if="{{!isVip}}">vip</text>
+                    <block wx:if="{{!isVip}}">
+                        <text class="vip red" wx:if="{{isSearch}}">vip</text>
+                        <text class="vip red" wx:elif="{{index>2}}">vip</text>
+                    </block>
                 </view>
             </view>
             <view class="title_list" wx:elif="{{title=='keyword'}}">
@@ -52,7 +61,10 @@
                         <text wx:else>{{item.name}}</text>
                     </view>
                     <image class="arrowright" src="../../images/arrowright.png"  mode="aspectFill"></image>
-                    <text class="vip red" wx:if="{{!isVip}}">vip</text>
+                    <block wx:if="{{!isVip}}">
+                        <text class="vip red" wx:if="{{isSearch}}">vip</text>
+                        <text class="vip red" wx:elif="{{index>2}}">vip</text>
+                    </block>
                 </view>
             </view>
             <view class="title_list" wx:elif="{{title=='abbreviate'}}">
@@ -65,19 +77,25 @@
                     <view>
                         <text class="english">{{item.english}}</text>
                         <image class="arrowright" src="../../images/arrowright.png"  mode="aspectFill"></image>
-                        <text class="vip red mr_130" wx:if="{{!isVip}}">vip</text>
+                        <block wx:if="{{!isVip}}">
+                            <text class="vip red mr_130" wx:if="{{isSearch}}">vip</text>
+                            <text class="vip red mr_130" wx:elif="{{index>2}}">vip</text>
+                        </block>
                     </view>
                 </view>
             </view>
             <view class="title_list" wx:elif="{{title=='icontable'}}">
-                <view class="title_item" wx:for="{{itemList}}"  wx:key="index" data-prefix="{{item.prefix}}" data-name="{{item.name}}" bindtap="detailClick" hover-class="defaultTap">
+                <view class="title_item" wx:for="{{itemList}}"  wx:key="index" data-index="{{index}}" data-prefix="{{item.prefix}}" data-name="{{item.name}}" bindtap="detailClick" hover-class="defaultTap">
                     <view class="left_view">
                         <text class="title_icon bc_yellow"></text>
                         <rich-text wx:if="{{keyword}}" nodes="{{item.colorname}}"></rich-text>
                         <text wx:else>{{item.name}}</text>
                     </view>
                     <image class="arrowright" src="../../images/arrowright.png"  mode="aspectFill"></image>
-                    <text class="vip red" wx:if="{{!isVip}}">vip</text>
+                    <block wx:if="{{!isVip}}">
+                        <text class="vip red" wx:if="{{isSearch}}">vip</text>
+                        <text class="vip red" wx:elif="{{index>2}}">vip</text>
+                    </block>
                 </view>
             </view>
         </view>
