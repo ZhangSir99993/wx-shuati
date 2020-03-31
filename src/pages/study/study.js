@@ -23,7 +23,7 @@ Page({
             title: "ACP",
             tablename: 'acp'
         }],
-        currentTap: 0,
+        currentTap: 2,
         navList: [{
                 tablename: 'npdp',
                 buttonList: [{
@@ -82,6 +82,7 @@ Page({
             }
         ]
     },
+    /*
     onShow:function(){
         var that = this
         switch (app.globalData.tablename) {
@@ -113,6 +114,7 @@ Page({
                 break;
         }
     },
+    */
     onLoad: function () {
         this.initData()
     },

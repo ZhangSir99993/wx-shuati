@@ -1,8 +1,10 @@
+<!--
 <scroll-view class="topNav" scroll-x>
     <view wx:for="{{navArr}}" wx:key="index" bindtap="navTap" data-index="{{index}}" data-tablename="{{item.tablename}}">
         <text class="{{currentTap==index ? 'active' : ''}}">{{item.title}}</text>
     </view>
 </scroll-view>
+-->
 <view class="container">
     <view class="main">
         <view wx:for="{{navList}}" wx:key="key" wx:for-index="key" wx:for-item="element">

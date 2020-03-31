@@ -15,10 +15,11 @@ Page({
             title: "ACP",
             tablename: 'acp'
         }],
-        currentTap: 0
+        currentTap: 2
     },
     onShow: function () {
         var that = this
+        /*
         switch (app.globalData.tablename) {
             case 'npdp':
                 if (that.data.currentTap!=0) {
@@ -47,6 +48,7 @@ Page({
             default:
                 break;
         }
+        */
         if (that.data.itemList.length) {
             that.data.itemList.forEach(element => {
                 element.continue = that.getCurrent(element.albumId)
