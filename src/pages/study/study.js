@@ -82,6 +82,7 @@ Page({
             }
         ]
     },
+    /*
     onShow:function(){
         var that = this
         switch (app.globalData.tablename) {
@@ -113,6 +114,7 @@ Page({
                 break;
         }
     },
+    */
     onLoad: function () {
         this.initData()
     },

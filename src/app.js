@@ -31,7 +31,7 @@ App({
   globalData: {
     hasLogin: false,
     userInfo: null,
-    tablename:wx.getStorageSync('tablename')||'npdp',
+    tablename:'npdp',
     refreshVip:false,
     loadingStatus:false, //防重复提交
     itemDetail:{}
