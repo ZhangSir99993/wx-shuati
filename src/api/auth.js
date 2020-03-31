@@ -65,7 +65,7 @@ const wxLogin = (that, fn) => {
 }
 const loginOAuth = (that, code, fn) => {
     wx.request({
-        url: site.m + 'miniprogram/login',
+        url: site.m + 'npdpshuati/miniprogram/login',
         method: 'POST',
         // header: setHeader(),
         data: {
