@@ -22,7 +22,8 @@ Page({
         title: '',
         itemList: [],
         defaultList: [],
-        keyword: ''
+        keyword: '',
+        isSearch:false
     },
     onLoad: function () {
         //登录授权检测
@@ -92,16 +93,22 @@ Page({
                 validTime: util.formatDateTime(validTime, 'yyyy-MM-dd')
             })
             if (day < 3) {
+                if (wx.getStorageSync('no_remind')) {
+                    return;
+                }
                 wx.showModal({
                     title: '您的VIP即将过期。',
-                    content: '您的npdp VIP有效期不足3天，到期未续期将影响您相关业务的正常使用。',
+                    content: '您的VIP有效期不足3天，到期未续期将影响您相关业务的正常使用。',
+                    cancelText: '不在提示',
                     confirmText: '立刻续期',
                     success(res) {
                         if (res.confirm) {
                             that.openVipClick()
+                        } else if (res.cancel) {
+                            wx.setStorageSync('no_remind','true')
                         }
                     }
-                })                
+                })               
             }
         } else {
             //过期vip，关闭用户对应科目vip状态
@@ -222,11 +229,12 @@ Page({
                 value = value.slice(0, 50);
             }
             if (value) {
-                that.searchSuggest(value);
+                that.searchSuggest(value.toLowerCase());
             } else {
                 that.setData({
                     keyword: '',
-                    itemList: that.data.defaultList
+                    itemList: that.data.defaultList,
+                    isSearch:false
                 });
             }
         })
@@ -236,7 +244,8 @@ Page({
         that.setData({
             keyword: '',
             searchFocus: true,
-            itemList: that.data.defaultList
+            itemList: that.data.defaultList,
+            isSearch:false
         });
     },
     searchSuggest: function (value) {
@@ -257,36 +266,37 @@ Page({
                         switch (that.options.title) {
                             case 'knowledge':
                                 res.data.data.forEach(element => {
-                                    if (element.knowledgeSystem.includes(value)) {
-                                        element.colorname = element.knowledgeSystem.replace(value, `<span style="color:red;">${value}</span>`)
+                                    if (element.knowledgeSystem.toLowerCase().includes(value)) {
+                                        element.colorname = element.knowledgeSystem.toLowerCase().replace(value, `<span style="color:red;">${value}</span>`)
                                     }
                                 });
                                 break;
                             case 'process':
                                 res.data.data.forEach(element => {
-                                    if (element.processGroup.includes(value)) {
-                                        element.colorname = element.processGroup.replace(value, `<span style="color:red;">${value}</span>`)
+                                    if (element.processGroup.toLowerCase().includes(value)) {
+                                        element.colorname = element.processGroup.toLowerCase().replace(value, `<span style="color:red;">${value}</span>`)
                                     }
                                 });
                                 break;
                             case 'inputoutput':
                                 res.data.data.forEach(element => {
-                                    if (element.inputoutput.includes(value)) {
-                                        element.colorname = element.inputoutput.replace(value, `<span style="color:red;">${value}</span>`)
+                                    if (element.inputoutput.toLowerCase().includes(value)) {
+                                        element.colorname = element.inputoutput.toLowerCase().replace(value, `<span style="color:red;">${value}</span>`)
                                     }
                                 });
                                 break;
                             default:
                                 res.data.data.forEach(element => {
-                                    if (element.name.includes(value)) {
-                                        element.colorname = element.name.replace(value, `<span style="color:red;">${value}</span>`)
+                                    if (element.name.toLowerCase().includes(value)) {
+                                        element.colorname = element.name.toLowerCase().replace(value, `<span style="color:red;">${value}</span>`)
                                     }
                                 });
                                 break;
                         }
                         that.setData({
                             keyword: value,
-                            itemList: res.data.data
+                            itemList: res.data.data,
+                            isSearch:true
                         });
                     } else {
                         that.setData({
@@ -316,8 +326,10 @@ Page({
             return
         }
         if (!this.data.isVip) {
-            this.openVipClick()
-            return
+            if (e.currentTarget.dataset.index>2||this.data.isSearch) {
+                this.openVipClick()
+                return
+            }
         }
         switch (this.options.title) {
             case 'knowledge':
@@ -326,7 +338,12 @@ Page({
                 })
                 break;
             case 'process':
-                app.globalData.itemDetail = this.data.itemList[e.currentTarget.dataset.index];
+                var itemObj = this.data.itemList[e.currentTarget.dataset.index];
+                app.globalData.itemDetail = {
+                    input:itemObj.input.split('/'),
+                    tool:itemObj.tool.split('/'),
+                    output:itemObj.output.split('/')
+                };
                 wx.navigateTo({
                     url: `/pages/process/process?name=${e.currentTarget.dataset.name}`
                 })

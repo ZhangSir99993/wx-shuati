@@ -13,7 +13,7 @@ Page({
         loadingfinish: false,
         itemList: [],
         currentPage: 0,
-        haveMore:true
+        haveMore: true
 
     },
     onLoad: function () {
@@ -86,8 +86,8 @@ Page({
                 if (res.data.code == 200) {
                     if (res.data.data.length) {
                         that.setData({
-                            itemList: next?that.data.itemList.concat(res.data.data):res.data.data
-                        },function(){
+                            itemList: next ? that.data.itemList.concat(res.data.data) : res.data.data
+                        }, function () {
                             that.data.itemList.forEach(element => {
                                 var currentCount = that.getCurrent(element.albumId);
                                 element.finishCount = currentCount.finishCount
@@ -99,10 +99,10 @@ Page({
                                 itemList: that.data.itemList
                             })
                         })
-                        if (res.data.data.length<15) {
+                        if (res.data.data.length < 15) {
                             that.data.haveMore = false
                         }
-                    }else{
+                    } else {
                         that.data.haveMore = false
                     }
                 } else {
@@ -188,16 +188,22 @@ Page({
                 validTime: util.formatDateTime(validTime, 'yyyy-MM-dd')
             })
             if (day < 3) {
+                if (wx.getStorageSync('no_remind')) {
+                    return;
+                }
                 wx.showModal({
                     title: '您的VIP即将过期。',
-                    content: '您的npdp VIP有效期不足3天，到期未续期将影响您相关业务的正常使用。',
+                    content: '您的VIP有效期不足3天，到期未续期将影响您相关业务的正常使用。',
+                    cancelText: '不在提示',
                     confirmText: '立刻续期',
                     success(res) {
                         if (res.confirm) {
                             that.openVipClick()
+                        } else if (res.cancel) {
+                            wx.setStorageSync('no_remind','true')
                         }
                     }
-                })                
+                })
             }
         } else {
             //过期vip，关闭用户对应科目vip状态
@@ -270,13 +276,13 @@ Page({
             wx.navigateTo({
                 url: `/pages/detail/detail?albumId=${e.currentTarget.dataset.albumid}&isVip=true`
             });
-        }else{
+        } else {
             this.openVipClick()
         }
     },
-    onReachBottom:function(){
+    onReachBottom: function () {
         if (this.data.haveMore) {
-            this.initInfo(true);            
+            this.initInfo(true);
         }
     },
     /**

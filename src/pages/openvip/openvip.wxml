@@ -84,7 +84,7 @@
         确定开通
     </button>
     <view wx:else class="openButtion bc_blue" bindtap="openVipClick">
-        确定开通
+        {{vipInfo.vip?'确定续期':'确定开通'}}
     </view>
     <button class="playButton bc_blue"  open-type="contact">
         <image src="../../images/customer_service.png" mode="aspectFill"/>

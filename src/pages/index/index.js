@@ -17,26 +17,51 @@ Page({
         }],
         currentTap: 0
     },
-    onLoad: function () {       
+    onShow: function () {
+        var that = this
         switch (app.globalData.tablename) {
             case 'npdp':
-                this.setData({
-                    currentTap: 0
-                })
+                if (that.data.currentTap!=0) {
+                    that.setData({
+                        currentTap: 0
+                    })
+                    that.initData()
+                }
                 break;
             case 'pmp':
-                this.setData({
-                    currentTap: 1
-                })
+                if (that.data.currentTap!=1) {
+                    that.setData({
+                        currentTap: 1
+                    })
+                    that.initData()
+                }
                 break;
             case 'acp':
-                this.setData({
-                    currentTap: 2
-                })
+                if (that.data.currentTap!=2) {
+                    that.setData({
+                        currentTap: 2
+                    })
+                    that.initData()
+                }
                 break;
             default:
                 break;
         }
+        if (that.data.itemList.length) {
+            that.data.itemList.forEach(element => {
+                element.continue = that.getCurrent(element.albumId)
+                element.finishCount = that.getProgress(element.albumId)
+                if (element.finishCount) {
+                    element.progress = (element.finishCount / element.count) * 100
+                }
+            });
+            that.setData({
+                itemList: that.data.itemList
+            })
+        }
+    },
+    onLoad: function () {       
+        
         this.initData()
     },
     initData: function () {
@@ -118,21 +143,6 @@ Page({
             return finishCurrent;
         } else {
             return null;
-        }
-    },
-    onShow: function () {
-        var that = this
-        if (that.data.itemList.length) {
-            that.data.itemList.forEach(element => {
-                element.continue = that.getCurrent(element.albumId)
-                element.finishCount = that.getProgress(element.albumId)
-                if (element.finishCount) {
-                    element.progress = (element.finishCount / element.count) * 100
-                }
-            });
-            that.setData({
-                itemList: that.data.itemList
-            })
         }
     },
     onHide: function () {},

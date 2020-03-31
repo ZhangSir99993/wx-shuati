@@ -19,16 +19,22 @@ Page({
         if (that.options.book2) {
             url += '2'
         }
+        var name = that.options.name;
+        if (app.globalData.tablename == 'pmp') {
+            name = that.options.name.replace(/\s/g,'')
+        }
         wx.request({
-            url: url+`?name=${that.options.name}`,
+            url: url+`?name=${name}`,
             method: 'GET',
             dataType: 'json',
             success: function (res) {
                 if (res.data.code == 200) {
-                    that.setData({
-                        name:that.options.name,
-                        contentList:res.data.data[that.options.index].contentList
-                    })
+                    if (res.data.data&&res.data.data.length) {
+                        that.setData({
+                            name:name,
+                            contentList:res.data.data[that.options.index].contentList
+                        }) 
+                    }
                 } else {
                     wx.showToast({
                         title: '服务器出了点问题，请稍候重试',
@@ -52,7 +58,7 @@ Page({
     },
     detailClick:function(e){
         wx.navigateTo({
-            url: `/pages/chaptersdetail/chaptersdetail?name=${this.options.name}&book2=${this.options.book2}&albumid=${e.currentTarget.dataset.albumid}&albumid2=${e.currentTarget.dataset.albumid2}&albumid3=${e.currentTarget.dataset.albumid3}&albumid4=${e.currentTarget.dataset.albumid4}`
+            url: `/pages/chaptersdetail/chaptersdetail?name=${this.data.name}&book2=${this.options.book2}&albumid=${e.currentTarget.dataset.albumid}&albumid2=${e.currentTarget.dataset.albumid2}&albumid3=${e.currentTarget.dataset.albumid3}&albumid4=${e.currentTarget.dataset.albumid4}`
         })
     }
 })
