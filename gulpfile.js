@@ -1,6 +1,8 @@
 const gulp = require('gulp');
 const less = require('gulp-less');
 const rename = require('gulp-rename');
+const htmlmin = require('gulp-htmlmin');
+const prettyData = require('gulp-pretty-data');
 const distPath = __dirname + '/dist';
 const through2 = require('through2');
 
@@ -26,24 +28,27 @@ const copyLess = () => {
     .pipe(gulp.dest(distPath));
 }
 
-gulp.task('default',  function (done) {
-  copyFiles();
-  copyLess();
+gulp.task('minify',  function (done) {
+  // copyFiles();
+  // copyLess();
   // 压缩wxml
-  // gulp.src('dist/**/*.wxml')
-  //   .pipe(htmlmin({
-  //       removeComments: true, // 清除swan注释
-  //       collapseWhitespace: true, // 压缩swan
-  //       keepClosingSlash: true
-  //   }))
-  //   .pipe(gulp.dest('dist'));
+  gulp.src('dist/**/*.wxml')
+    .pipe(htmlmin({
+        removeComments: true, // 清除swan注释
+        collapseWhitespace: true, // 压缩swan
+        keepClosingSlash: true
+    }))
+    .pipe(gulp.dest('dist'));
 
-  // // 压缩json、css 
-  // gulp.src('dist/**/*.{json,css}')
-  //   .pipe(prettyData({
-  //     type: 'minify',
-  //     preserveComments: false //清除css注释
-  //   }))
-  //   .pipe(gulp.dest('dist'))
+  // 压缩json、css 
+  gulp.src('dist/**/*.{json,wxss}')
+    .pipe(prettyData({
+      type: 'minify',
+      preserveComments: false, //清除css注释
+      extensions: {
+        'wxss': 'css'
+      }
+    }))
+    .pipe(gulp.dest('dist'))
   done()
 })
