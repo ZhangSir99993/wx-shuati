@@ -65,6 +65,12 @@
             </view>
         </view>
     </view>
+    <view class="openVipNum">
+        <text class="title">已有999+人开通会员</text>
+        <view>
+            <image wx:for="{{avatarUrlArr}}" wx:key="key" class="userIcon" src="{{item.avatarUrl}}" mode="scaleToFill"></image>            
+        </view>
+    </view>
     <view class="privilegeVip">
         <view class="title">
             会员特权

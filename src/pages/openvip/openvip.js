@@ -32,7 +32,7 @@ Page({
             name: '真题模拟免费做',
             desc: '该科目下所有试卷都能免费不限次数作答'
         }, {
-            name: '无限次术语查询',
+            name: '无限次全书查询',
             desc: '可无限次搜索术语查看解析，方便高效'
         }, {
             name: '一对一答疑',
@@ -47,12 +47,34 @@ Page({
             name: '免费享有会员新增服务',
             desc: '我们会不断增加会员其他功能'
         }],
+        avatarUrlArr:[],
         isAuthorize: true,
         loadingStatus: false //防重复提交
     },
     onLoad: function () {
         //登录授权检测
         this.checkAuthorized();
+        this.getUserAvatarUrl();
+    },
+    getUserAvatarUrl:function(){
+        var that = this
+        wx.request({
+            url: site.m + 'getUserAvatarUrl',
+            method: 'POST',
+            data:{
+                pageNum:5
+            },
+            dataType: 'json',
+            success: function (res) {
+                if (res.data.code == 200) {
+                    if (res.data.data && res.data.data.length) {
+                        that.setData({
+                            avatarUrlArr:res.data.data
+                        })
+                    }
+                }
+            }
+        })
     },
     checkAuthorized: function () {
         var that = this;
