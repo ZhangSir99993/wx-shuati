@@ -324,6 +324,7 @@ Page({
             method: 'POST',
             data: {
                 openid: wx.getStorageSync("openid"),
+                nickName: that.data.userInfo.nickName,
                 tablename: that.data.subjectList[that.data.index],
                 total_fee: 1500 * that.data.currentIndex
             },
