@@ -9,7 +9,6 @@ const util = require('../../utils/util.js')
 Page({
     data: {
         userInfo: {},
-        tablename: "",
         canIUse: wx.canIUse('button.open-type.getUserInfo'),
         keyword: '',
         priceItems: [{
@@ -47,29 +46,42 @@ Page({
             name: '免费享有会员新增服务',
             desc: '我们会不断增加会员其他功能'
         }],
-        avatarUrlArr:[],
+        avatarUrlArr: [],
         isAuthorize: true,
-        loadingStatus: false //防重复提交
+        loadingStatus: false, //防重复提交
+        currentIndex: 0,
+        btnLoading: false,
+        subjectList: [
+            'npdp',
+            'pmp',
+            'acp'
+        ],
+        index:0
+    },
+    onShow: function () {
+        this.setData({
+            btnLoading: false
+        })
     },
     onLoad: function () {
         //登录授权检测
         this.checkAuthorized();
         this.getUserAvatarUrl();
     },
-    getUserAvatarUrl:function(){
+    getUserAvatarUrl: function () {
         var that = this
         wx.request({
             url: site.m + 'getUserAvatarUrl',
             method: 'POST',
-            data:{
-                pageNum:5
+            data: {
+                pageNum: 5
             },
             dataType: 'json',
             success: function (res) {
                 if (res.data.code == 200) {
                     if (res.data.data && res.data.data.length) {
                         that.setData({
-                            avatarUrlArr:res.data.data
+                            avatarUrlArr: res.data.data
                         })
                     }
                 }
@@ -112,27 +124,28 @@ Page({
             })
         }
         var vipInfo = {}
+        var index = 0
         switch (app.globalData.tablename) {
             case 'npdp':
                 if (userInfo.npdpVip) {
-                    vipInfo.tablename = 'npdp'
                     vipInfo.validTime = util.formatDateTime(userInfo.npdpValidTime, 'yyyy-MM-dd')
                     vipInfo.vip = userInfo.npdpVip
                 }
+                index = 0
                 break;
             case 'pmp':
                 if (userInfo.pmpVip) {
-                    vipInfo.tablename = 'pmp'
                     vipInfo.validTime = util.formatDateTime(userInfo.pmpValidTime, 'yyyy-MM-dd')
                     vipInfo.vip = userInfo.pmpVip
                 }
+                index = 1
                 break;
             case 'acp':
                 if (userInfo.acpVip) {
-                    vipInfo.tablename = 'acp'
                     vipInfo.validTime = util.formatDateTime(userInfo.acpValidTime, 'yyyy-MM-dd')
                     vipInfo.vip = userInfo.acpVip
                 }
+                index = 2
                 break;
             default:
                 break;
@@ -140,7 +153,7 @@ Page({
         this.setData({
             userInfo: userInfo,
             vipInfo: vipInfo,
-            tablename: app.globalData.tablename
+            index:index
         })
     },
     getUserInfo: function (e) {
@@ -166,15 +179,6 @@ Page({
         var that = this
         if (that.data.keyword) {
             if (that.data.keyword.length >= 15 && that.data.keyword.length <= 18) {
-                var tablename = that.data.keyword.substr(0, 3)
-                if (tablename != that.data.tablename.substr(0, 3)) {
-                    wx.showToast({
-                        title: '非该科目授权码',
-                        icon: 'none',
-                        duration: 2000
-                    })
-                    return;
-                }
                 if (that.data.loadingStatus) {
                     return
                 }
@@ -242,5 +246,80 @@ Page({
                 duration: 2000
             })
         }
+    },
+    bindPickerChange: function (e) {
+        this.setData({
+            index: e.detail.value
+        })
+    },
+    priceClick: function (e) {
+        if (e.currentTarget.dataset.index) {
+            this.setData({
+                currentIndex: e.currentTarget.dataset.index
+            })
+        }
+    },
+    buySubmit: function () {
+        var that = this
+        if (that.data.keyword) {
+            that.openVipClick()
+            return;
+        }
+        if (!that.data.currentIndex) {
+            wx.showToast({
+                title: '请选择开通的月份',
+                icon: 'none',
+                duration: 2000
+            })
+            return
+        }
+        if (!that.data.buyEventStatus) {
+            return;
+        };
+        that.data.buyEventStatus = false
+        that.setData({
+            btnLoading: true
+        });
+        wx.request({
+            url: site.m + 'miniprogram/wxpay',
+            method: 'POST',
+            data: {
+                openid: wx.getStorageSync("openid"),
+                tablename: that.data.subjectList[that.data.index],
+                total_fee: 1500 * that.data.currentIndex
+            },
+            dataType: 'json',
+            success: function (res) {
+                if (res.data.code == 200) {
+                    if (res.data.data) {
+                        var obj = res.data.data;
+                        var path = `/pages/wxpay/wxpay?timeStamp=${obj.timeStamp}&nonceStr=${obj.nonceStr}&prepay_id=${obj.prepay_id}&signType=${obj.signType}&paySign=${obj.paySign}`
+                        wx.reLaunch({
+                            url: path
+                        })
+                    }
+                } else {
+                    wx.showToast({
+                        title: '服务器出了点问题，请稍候重试',
+                        icon: 'none',
+                        duration: 2000
+                    })
+                }
+
+            },
+            fail: function (err) {
+                wx.showToast({
+                    title: '服务器出了点问题，请稍候重试',
+                    icon: 'none',
+                    duration: 2000
+                })
+            },
+            complete: function () {
+                that.data.buyEventStatus = true
+                that.setData({
+                    btnLoading: false
+                });
+            }
+        })
     }
 })

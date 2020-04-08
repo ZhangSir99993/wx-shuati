@@ -26,6 +26,18 @@
         }
 
         .subject {
+            font-size: 30rpx;
+            padding: 20rpx 0;
+            display: flex;
+            align-items: center;
+            .arrowright {
+                margin-left: 20rpx;
+                width: 24rpx;
+                height: 24rpx;
+            }
+        }
+
+        .validTime {
             font-size: 28rpx;
             color: #666666;
         }
@@ -64,6 +76,7 @@
             border: 1rpx solid #999999;
             padding: 30rpx 0;
             border-radius: 15rpx;
+            position: relative;
 
             .time {
                 font-size: 30rpx;
@@ -94,6 +107,17 @@
                 border-radius: 24rpx;
             }
 
+            .selected_icon {
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                width: 38rpx;
+                height: 38rpx;
+            }
+        }
+
+        .selected {
+            border: 2rpx solid red;
         }
 
         .priceView:nth-child(2) {
@@ -133,6 +157,7 @@
     view {
         height: 80rpx;
         position: relative;
+
         image {
             width: 80rpx;
             height: 80rpx;
@@ -190,6 +215,7 @@
         flex-direction: row;
         flex-wrap: wrap;
         margin-bottom: 30rpx;
+
         .item {
             display: flex;
             flex-direction: column;
@@ -229,6 +255,7 @@
     height: 100rpx;
     line-height: 100rpx;
     text-align: center;
+    z-index: 99;
 }
 
 .playButton {

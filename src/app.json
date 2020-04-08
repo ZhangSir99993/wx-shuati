@@ -21,7 +21,9 @@
     "pages/inputoutput/inputoutput",
     "pages/keyword/keyword",
     "pages/icontable/icontable",
-    "pages/position/position"
+    "pages/position/position",
+    "pages/wxpay/wxpay"
+
   ],
   "window": {
     "navigationBarTextStyle": "black",

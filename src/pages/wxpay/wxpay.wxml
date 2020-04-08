@@ -1,0 +1,19 @@
+<block wx:if="{{status == 1}}">
+  <view class="pay">
+    <view class="icon"><icon type="success" size="93"/></view>
+    <view class="text"><text>支付成功</text></view>
+    <button type="primary" size="default" class="button" data-type="success" bindtap="checkOrder"> 查看订单 </button>
+    <button type="default" size="default"  hover-class="other-button-hover" class="button" bindtap="goHmoe"> 返回首页 </button>
+  </view>
+</block>
+<view wx:if="{{status == 2}}">
+  <view class="pay">
+    <view class="icon"><icon type="warn" size="93"/></view>
+    <view class="text"><text>支付失败</text></view>
+    <view class="tip">
+      <text>很遗憾，本次支付未能成功</text>
+    </view>
+    <button type="primary" size="default" class="button" bindtap="requestPayment"> 继续支付 </button>
+    <button type="default" size="default"  hover-class="other-button-hover" class="button" bindtap="goHmoe"> 返回首页 </button>
+  </view>
+</view>
