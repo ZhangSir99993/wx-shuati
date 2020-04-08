@@ -56,7 +56,8 @@ Page({
             'pmp',
             'acp'
         ],
-        index:0
+        index: 0,
+        buyEventStatus: false
     },
     onShow: function () {
         this.setData({
@@ -168,7 +169,7 @@ Page({
                 userInfo: e.detail.userInfo
             })
             if (e.currentTarget.dataset.openvip) {
-                that.openVipClick()
+                that.buySubmit()
             }
         })
     },
@@ -248,9 +249,47 @@ Page({
         }
     },
     bindPickerChange: function (e) {
-        this.setData({
-            index: e.detail.value
-        })
+        var that = this;
+        auth.wxCheckSession(this, function (session_key) {
+            let sessionKey = session_key ? session_key : wx.getStorageSync("session_key");
+            if (sessionKey) {
+                that.setData({
+                    isAuthorize: true //需要授权，注册登录
+                });
+            } else {
+                that.setData({
+                    isAuthorize: false //不需要授权，已登录状态
+                });
+                var userInfo = app.globalData.userInfo
+                var vipInfo = {}
+                switch (e.detail.value) {
+                    case '0':
+                        if (userInfo.npdpVip) {
+                            vipInfo.validTime = util.formatDateTime(userInfo.npdpValidTime, 'yyyy-MM-dd')
+                            vipInfo.vip = userInfo.npdpVip
+                        }
+                        break;
+                    case '1':
+                        if (userInfo.pmpVip) {
+                            vipInfo.validTime = util.formatDateTime(userInfo.pmpValidTime, 'yyyy-MM-dd')
+                            vipInfo.vip = userInfo.pmpVip
+                        }
+                        break;
+                    case '2':
+                        if (userInfo.acpVip) {
+                            vipInfo.validTime = util.formatDateTime(userInfo.acpValidTime, 'yyyy-MM-dd')
+                            vipInfo.vip = userInfo.acpVip
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                that.setData({
+                    vipInfo: vipInfo,
+                    index: e.detail.value
+                })
+            }
+        });
     },
     priceClick: function (e) {
         if (e.currentTarget.dataset.index) {
@@ -273,10 +312,10 @@ Page({
             })
             return
         }
-        if (!that.data.buyEventStatus) {
+        if (that.data.buyEventStatus) {
             return;
         };
-        that.data.buyEventStatus = false
+        that.data.buyEventStatus = true
         that.setData({
             btnLoading: true
         });
@@ -315,7 +354,7 @@ Page({
                 })
             },
             complete: function () {
-                that.data.buyEventStatus = true
+                that.data.buyEventStatus = false
                 that.setData({
                     btnLoading: false
                 });
