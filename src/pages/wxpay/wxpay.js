@@ -19,8 +19,6 @@ Page({
     onLoad: function (options) {
         var that = this;
         that.data.obj = options
-        console.log(options);
-        
         //页面加载调取微信支付（原则上应该对options的携带的参数进行校验）
         that.requestPayment();
 

@@ -57,7 +57,8 @@ Page({
             'acp'
         ],
         index: 0,
-        buyEventStatus: false
+        buyEventStatus: false,
+        is_iOS:false
     },
     onShow: function () {
         this.setData({
@@ -68,6 +69,16 @@ Page({
         //登录授权检测
         this.checkAuthorized();
         this.getUserAvatarUrl();
+        var that = this
+        wx.getSystemInfo({
+            success (res) {
+                if (res.system.includes('iOS')) {//iOS需要隐藏微信支付功能
+                    that.setData({
+                        is_iOS:true
+                    })
+                }
+            }
+        })
     },
     getUserAvatarUrl: function () {
         var that = this
@@ -292,6 +303,9 @@ Page({
         });
     },
     priceClick: function (e) {
+        if (this.data.is_iOS) {
+            return;
+        }
         if (e.currentTarget.dataset.index) {
             this.setData({
                 currentIndex: e.currentTarget.dataset.index
@@ -300,7 +314,7 @@ Page({
     },
     buySubmit: function () {
         var that = this
-        if (that.data.keyword) {
+        if (that.data.keyword||that.data.is_iOS) {
             that.openVipClick()
             return;
         }
