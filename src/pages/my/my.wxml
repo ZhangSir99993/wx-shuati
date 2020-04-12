@@ -23,18 +23,30 @@
           <view class="section_title">相关服务</view>
       </view>
       <view class="section_service_list">
-          <button class="none_style section_item" data-index="0" bindtap="buttonClick" hover-class="defaultTap">
-              <image class="section_item_img" src="../../images/member.png" mode="aspectFit"></image>
-              <view class="section_item_name">我的会员</view>
-          </button>
-          <button class="none_style section_item" data-index="1" bindtap="buttonClick" hover-class="defaultTap">
-              <image class="section_item_img" src="../../images/feedback.png" mode="aspectFit"></image>
-              <view class="section_item_name">领取资源</view>
-          </button>
-          <button class="none_style section_item" open-type="contact" hover-class="defaultTap">
-            <image class="section_item_img" src="../../images/serve_icon.png" mode="aspectFill"></image>
-            <view class="section_item_name">联系客服</view>
-          </button>
+            <block wx:if="{{isAuthorize && canIUse}}">
+                <button class="none_style section_item" open-type="getUserInfo" bindgetuserinfo="getUserInfo" data-next="openvip">
+                    <image class="section_item_img" src="../../images/member.png" mode="aspectFit"></image>
+                    <view class="section_item_name">开通会员</view>
+                </button>
+            </block>    
+            <block wx:else>
+                <button class="none_style section_item" data-index="0" bindtap="buttonClick" hover-class="defaultTap">
+                <image class="section_item_img" src="../../images/member.png" mode="aspectFit"></image>
+                <view class="section_item_name">开通会员</view>
+                </button>
+            </block>
+            <button class="none_style section_item" data-index="1" bindtap="buttonClick" hover-class="defaultTap">
+                <image class="section_item_img" src="../../images/member.png" mode="aspectFit"></image>
+                <view class="section_item_name">我的会员</view>
+            </button>
+            <button class="none_style section_item" data-index="2" bindtap="buttonClick" hover-class="defaultTap">
+                <image class="section_item_img" src="../../images/feedback.png" mode="aspectFit"></image>
+                <view class="section_item_name">领取资源</view>
+            </button>
+            <button class="none_style section_item" open-type="contact" hover-class="defaultTap">
+                <image class="section_item_img" src="../../images/serve_icon.png" mode="aspectFill"></image>
+                <view class="section_item_name">联系客服</view>
+            </button>
           <!--
           <button class="none_style section_item" data-index="3" bindtap="buttonClick" hover-class="defaultTap">
               <image class="section_item_img" src="../../images/aboutUs.png" mode="aspectFit"></image>

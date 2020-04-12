@@ -23,10 +23,23 @@
 
         .nickname {
             font-size: 30rpx;
+            line-height: 60rpx;
         }
 
         .subject {
-            font-size: 28rpx;
+            font-size: 30rpx;
+            padding: 20rpx 0;
+            display: flex;
+            align-items: center;
+            .arrowright {
+                margin-left: 20rpx;
+                width: 24rpx;
+                height: 24rpx;
+            }
+        }
+
+        .validTime {
+            font-size: 30rpx;
             color: #666666;
         }
     }
@@ -48,7 +61,7 @@
 
     .title {
         margin-bottom: 30rpx;
-        font-size: 40rpx;
+        font-size: 36rpx;
     }
 
     .vipPrice {
@@ -63,6 +76,8 @@
             align-items: center;
             border: 1rpx solid #999999;
             padding: 30rpx 0;
+            border-radius: 15rpx;
+            position: relative;
 
             .time {
                 font-size: 30rpx;
@@ -93,6 +108,17 @@
                 border-radius: 24rpx;
             }
 
+            .selected_icon {
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                width: 38rpx;
+                height: 38rpx;
+            }
+        }
+
+        .selected {
+            border: 2rpx solid red;
         }
 
         .priceView:nth-child(2) {
@@ -105,17 +131,70 @@
         height: 80rpx;
         padding: 0 20rpx;
         font-size: 30rpx;
+        border-radius: 15rpx;
     }
 
     .descView {
-        font-size: 30rpx;
-        color: #666666;
+        font-size: 34rpx;
         margin-top: 30rpx;
-        line-height: 150%;
+        line-height: 200%;
 
         view:nth-child(1) {
             font-weight: bolder;
-            font-size: 32rpx;
+        }
+    }
+}
+
+.openVipNum {
+    margin-top: 20rpx;
+    background: white;
+    height: 100rpx;
+    padding: 10rpx 30rpx;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    view {
+        height: 80rpx;
+        position: relative;
+
+        image {
+            width: 80rpx;
+            height: 80rpx;
+            border: 2rpx solid #FFFFFF;
+            border-radius: 40rpx;
+            box-sizing: border-box;
+        }
+
+        image:nth-child(1) {
+            position: absolute;
+            right: 240rpx;
+            z-index: 5;
+        }
+
+        image:nth-child(2) {
+            position: absolute;
+            right: 180rpx;
+            z-index: 4;
+
+        }
+
+        image:nth-child(3) {
+            position: absolute;
+            right: 120rpx;
+            z-index: 3;
+        }
+
+        image:nth-child(4) {
+            position: absolute;
+            right: 60rpx;
+            z-index: 2;
+        }
+
+        image:nth-child(5) {
+            position: absolute;
+            right: 0;
+            z-index: 1;
         }
     }
 }
@@ -128,7 +207,7 @@
 
     .title {
         margin-bottom: 30rpx;
-        font-size: 40rpx;
+        font-size: 36rpx;
     }
 
     .privileges {
@@ -146,6 +225,7 @@
             margin-bottom: 20rpx;
             padding: 20rpx;
             box-sizing: border-box;
+            border-radius: 15rpx;
 
             .name {
                 font-size: 30rpx;
@@ -175,6 +255,7 @@
     height: 100rpx;
     line-height: 100rpx;
     text-align: center;
+    z-index: 99;
 }
 
 .playButton {
@@ -189,7 +270,7 @@
     justify-content: center;
     padding: 0;
     margin: 0;
-
+    z-index: 88;
     image {
         width: 60rpx;
         height: 60rpx;

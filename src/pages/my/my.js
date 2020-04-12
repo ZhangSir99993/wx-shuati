@@ -72,16 +72,22 @@ Page({
         isAuthorize: false,
         userInfo: e.detail.userInfo
       })
+      if (e.currentTarget.dataset.next == 'openvip') {
+        that.openVipClick()
+      }
     })
   },
   buttonClick: function (e) {
     switch (e.currentTarget.dataset.index) {
       case '0':
+        this.openVipClick()
+        break;
+      case '1':
         wx.navigateTo({
           url: '/pages/myvip/myvip'
         });
         break;
-      case '1':
+      case '2':
         wx.showModal({
           content: '领取PMP NPDP ACP PBA 软考等资料，请添加微信：xiaobaiyi68',
           confirmText: '复制微信',
@@ -104,14 +110,16 @@ Page({
           }
         })
         break;
-      case '2':
-        break;
       case '3':
-
         break;
       default:
         break;
     }
+  },
+  openVipClick: function () {
+    wx.navigateTo({
+      url: '/pages/openvip/openvip'
+    })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

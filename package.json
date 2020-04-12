@@ -6,7 +6,7 @@
   "scripts": {
     "start": "cross-env NODE_ENV=development node_modules/.bin/webpack --watch",
     "dev": "cross-env NODE_ENV=development node_modules/.bin/webpack",
-    "build": "cross-env NODE_ENV=production node_modules/.bin/webpack"
+    "build": "cross-env NODE_ENV=production node_modules/.bin/webpack  && gulp minify"
   },
   "author": "韩海龙",
   "license": "ISC",
@@ -19,6 +19,11 @@
     "css-loader": "^0.28.11",
     "file-loader": "1.1.11",
     "glob": "^7.1.2",
+    "gulp": "^4.0.2",
+    "gulp-less": "^4.0.1",
+    "gulp-rename": "^1.4.0",
+    "gulp-htmlmin": "^5.0.1",
+    "gulp-pretty-data": "^0.1.2",
     "less": "^3.0.4",
     "less-loader": "^4.1.0",
     "uglifyjs-webpack-plugin": "^1.2.5",
