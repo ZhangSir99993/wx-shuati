@@ -144,7 +144,7 @@ Page({
     },
     //继续联系
     continueClick: function () {
-        wx.navigateTo({
+        wx.redirectTo({
             url: `/pages/detail/detail?albumId=${this.options.albumId}&isVip=${this.options.isVip}`
         });
     },
